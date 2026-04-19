@@ -748,6 +748,7 @@
   </style>
 </head>
 <body>
+<body>
   <main class="page">
     <div class="sparkles"></div>
     <div class="ornament left"></div>
@@ -809,4 +810,260 @@
           </div>
 
           <div class="incense-wrap" id="incenseWrap">
-            <div class="stick" id="stick1"><div class="smoke"><span></span><span></span><span></span></div></div
+            <div class="stick" id="stick1"><div class="smoke"><span></span><span></span><span></span></div></div>
+            <div class="stick" id="stick2"><div class="smoke"><span></span><span></span><span></span></div></div>
+            <div class="stick" id="stick3"><div class="smoke"><span></span><span></span><span></span></div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <div class="card-head">
+            <div class="icon">🧧</div>
+            <div>
+              <h3>ถวายกระดาษเงินทอง</h3>
+              <p>แสดงความเคารพด้วยเครื่องสักการะเชิงสัญลักษณ์ เพื่อความเป็นมงคลและความราบรื่น</p>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-gold" id="paperBtn" type="button">ถวายกระดาษเงินทอง</button>
+          </div>
+
+          <div class="offering-stage" id="paperStage"></div>
+        </div>
+
+        <div class="card">
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <div class="card-head">
+            <div class="icon">🌸</div>
+            <div>
+              <h3>ถวายดอกไม้</h3>
+              <p>เติมความอ่อนโยนและความงดงามในพิธีบูชา ด้วยการถวายดอกไม้แด่องค์เทพ</p>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-gold" id="flowerBtn" type="button">ถวายดอกไม้</button>
+          </div>
+
+          <div class="offering-stage" id="flowerStage"></div>
+        </div>
+
+        <div class="card">
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <div class="card-head">
+            <div class="icon">💰</div>
+            <div>
+              <h3>บริจาค</h3>
+              <p>ร่วมสมทบศรัทธาเพื่อสนับสนุนศาลเจ้า สามารถแสดง QR เพื่อสแกนหรือกดบันทึกภาพไว้ภายหลัง</p>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-gold" id="showQrBtn" type="button">แสดง QR</button>
+            <a class="ghost-link btn-ghost" href="../images/qr.png" download>เซฟ QR</a>
+            <button class="btn-ghost" id="donateDoneBtn" type="button">บริจาคแล้ว</button>
+          </div>
+
+          <div class="qr-box" id="qrBox">
+            <div class="qr-frame">
+              <img src="../images/qr.png" alt="QR บริจาค">
+            </div>
+            <p class="qr-note">สแกนเพื่อร่วมบริจาค หรือบันทึก QR ไว้เพื่อดำเนินการภายหลัง</p>
+          </div>
+        </div>
+
+        <div class="card blessing-card">
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <div class="card-head">
+            <div class="icon">✨</div>
+            <div>
+              <h3>รับพร</h3>
+              <p>เมื่อได้ถวายสิ่งสักการะหรือร่วมสมทบศรัทธาแล้ว จึงกดรับพรเพื่อความเป็นสิริมงคล</p>
+            </div>
+          </div>
+
+          <div class="btn-row" style="justify-content:center;">
+            <button class="btn-gold" id="blessBtn" type="button" disabled>รับพรจากปึงเถ่ากงม่า</button>
+          </div>
+
+          <div class="unlock-note" id="unlockNote">
+            กรุณาทำพิธีอย่างน้อย 1 อย่าง หรือกดบริจาคแล้ว เพื่อปลดล็อกรับพร
+          </div>
+
+          <div class="blessing-panel">
+            <div class="blessing-rays" id="blessingRays"></div>
+            <p class="blessing-text" id="blessingText">
+              ขอให้ชีวิตพบความสงบ ความร่มเย็น และได้รับการคุ้มครองในทุกย่างก้าว
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer-line">
+        ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น
+        <span class="dot"></span>
+        Kongma
+        <span class="dot"></span>
+        Blessing & Faith
+      </div>
+    </div>
+  </main>
+
+  <div class="flash" id="flash"></div>
+  <div class="toast" id="toast">พิธีสำเร็จแล้ว</div>
+
+  <audio id="bellSound" src="../audio/bell.mp3"></audio>
+
+  <script>
+    const incenseBtn = document.getElementById('incenseBtn');
+    const paperBtn = document.getElementById('paperBtn');
+    const flowerBtn = document.getElementById('flowerBtn');
+    const showQrBtn = document.getElementById('showQrBtn');
+    const donateDoneBtn = document.getElementById('donateDoneBtn');
+    const qrBox = document.getElementById('qrBox');
+    const blessBtn = document.getElementById('blessBtn');
+    const unlockNote = document.getElementById('unlockNote');
+    const blessingText = document.getElementById('blessingText');
+    const blessingRays = document.getElementById('blessingRays');
+    const paperStage = document.getElementById('paperStage');
+    const flowerStage = document.getElementById('flowerStage');
+    const flash = document.getElementById('flash');
+    const toast = document.getElementById('toast');
+    const bellSound = document.getElementById('bellSound');
+    const deityImage = document.getElementById('deityImage');
+
+    let ritualCount = 0;
+    let incenseDone = false;
+    let paperDone = false;
+    let flowerDone = false;
+    let donateDone = false;
+
+    function playBell(){
+      bellSound.currentTime = 0;
+      bellSound.play().catch(()=>{});
+    }
+
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function flashAtCenter(scale = 1.45){
+      flash.style.left = '50%';
+      flash.style.top = '42%';
+      flash.style.opacity = '1';
+      flash.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      setTimeout(() => {
+        flash.style.opacity = '0';
+        flash.style.transform = 'translate(-50%, -50%) scale(.5)';
+      }, 450);
+    }
+
+    function unlockBlessingIfReady(){
+      if ((ritualCount > 0 || donateDone) && blessBtn.disabled) {
+        blessBtn.disabled = false;
+        unlockNote.textContent = 'พร้อมแล้ว คุณสามารถกดรับพรได้';
+      }
+    }
+
+    function addOffering(stage, text){
+      const item = document.createElement('div');
+      item.className = 'offering-item';
+      item.textContent = text;
+      stage.appendChild(item);
+    }
+
+    incenseBtn.addEventListener('click', () => {
+      if (incenseDone) {
+        showToast('ได้จุดธูปเทียนแล้ว');
+        return;
+      }
+
+      document.getElementById('stick1').classList.add('lit');
+      setTimeout(() => document.getElementById('stick2').classList.add('lit'), 180);
+      setTimeout(() => document.getElementById('stick3').classList.add('lit'), 360);
+
+      incenseDone = true;
+      ritualCount += 1;
+      unlockBlessingIfReady();
+      playBell();
+      flashAtCenter(1.25);
+      showToast('ถวายธูปเทียนแล้ว');
+    });
+
+    paperBtn.addEventListener('click', () => {
+      if (paperDone) {
+        showToast('ได้ถวายกระดาษเงินทองแล้ว');
+        return;
+      }
+
+      addOffering(paperStage, '🧧 กระดาษเงินทอง');
+      addOffering(paperStage, '✨ มงคล');
+      paperDone = true;
+      ritualCount += 1;
+      unlockBlessingIfReady();
+      playBell();
+      flashAtCenter(1.2);
+      showToast('ถวายกระดาษเงินทองแล้ว');
+    });
+
+    flowerBtn.addEventListener('click', () => {
+      if (flowerDone) {
+        showToast('ได้ถวายดอกไม้แล้ว');
+        return;
+      }
+
+      addOffering(flowerStage, '🌸 ดอกไม้');
+      addOffering(flowerStage, '🌼 ความร่มเย็น');
+      flowerDone = true;
+      ritualCount += 1;
+      unlockBlessingIfReady();
+      playBell();
+      flashAtCenter(1.2);
+      showToast('ถวายดอกไม้แล้ว');
+    });
+
+    showQrBtn.addEventListener('click', () => {
+      qrBox.classList.toggle('active');
+      playBell();
+      showToast(qrBox.classList.contains('active') ? 'แสดง QR แล้ว' : 'ซ่อน QR แล้ว');
+    });
+
+    donateDoneBtn.addEventListener('click', () => {
+      donateDone = true;
+      unlockBlessingIfReady();
+      playBell();
+      flashAtCenter(1.25);
+      showToast('บุญกุศลได้ถูกส่งแล้ว');
+    });
+
+    blessBtn.addEventListener('click', () => {
+      const blessings = [
+        'ขอให้ชีวิตพบความสงบ ความร่มเย็น และได้รับการคุ้มครองในทุกย่างก้าว',
+        'ขอให้ครอบครัวอยู่เย็นเป็นสุข มีความมั่นคง และเต็มไปด้วยสิริมงคล',
+        'ขอให้สิ่งที่ตั้งใจไว้ดำเนินไปอย่างราบรื่น ปลอดภัย และมีพลังใจที่มั่นคง'
+      ];
+
+      const blessing = blessings[Math.floor(Math.random() * blessings.length)];
+      blessingText.textContent = blessing;
+      blessingText.classList.remove('show');
+      void blessingText.offsetWidth;
+      blessingText.classList.add('show');
+
+      blessingRays.classList.add('show');
+      playBell();
+      flashAtCenter(1.9);
+      deityImage.style.transform = 'scale(1.03)';
+      showToast('ได้รับพรแล้ว');
+
+      setTimeout(() => {
+        blessingRays.classList.remove('show');
+        deityImage.style.transform = '';
+      }, 1400);
+    });
+  </script>
+</body>
+</html>
