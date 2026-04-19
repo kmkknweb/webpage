@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Prompt', sans-serif;
+  background: #fff;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  background: url('temple.jpg') center/cover no-repeat;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.4);
+}
+
+.hero-content {
+  position: absolute;
+  top:50%; left:50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+}
+
+.hero h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 12px 25px;
+  margin: 5px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-primary {
+  background: #d4af37;
+  color: #000;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #000;
+}
+
+/* QUICK MENU */
+.quick {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+  padding: 20px;
+}
+
+.quick div {
+  background: #f5f5f5;
+  padding: 20px;
+  text-align: center;
+  border-radius: 15px;
+  font-weight: bold;
+}
+
+/* SECTION */
+.section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.footer {
+  background: #111;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="overlay"></div>
+
+  <div class="hero-content">
+    <h1>ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</h1>
+    <p>ศรัทธาที่เชื่อมถึงกันได้ทุกที่</p>
+
+    <button class="btn btn-primary">เข้าสู่ Virtual Tour</button>
+    <button class="btn btn-secondary">ไหว้เจ้าออนไลน์</button>
+  </div>
+</section>
+
+<!-- QUICK ACCESS -->
+<section class="quick">
+  <div>🙏 ไหว้เจ้าออนไลน์</div>
+  <div>🎥 Virtual Tour</div>
+  <div>💰 ทำบุญ</div>
+  <div>🏮 องค์เทพทั้งหมด</div>
+</section>
+
+<!-- VIRTUAL TOUR -->
+<section class="section">
+  <h2>Virtual Tour</h2>
+  <p>เดินชมศาลเจ้าเสมือนจริงได้จากทุกที่</p>
+  <button class="btn btn-primary">เริ่มเดินในศาลเจ้า</button>
+</section>
+
+<!-- ABOUT -->
+<section class="section">
+  <h2>เกี่ยวกับศาลเจ้า</h2>
+  <p>
+    ศาลเจ้าปึงเถ่ากงม่า เป็นศูนย์รวมศรัทธาของชุมชน
+    ที่สืบทอดมายาวนาน และเป็นสถานที่ยึดเหนี่ยวจิตใจของผู้คน
+  </p>
+</section>
+
+<!-- DONATION -->
+<section class="section">
+  <h2>ร่วมทำบุญ</h2>
+  <p>สนับสนุนกิจกรรมของศาลเจ้า</p>
+  <button class="btn btn-primary">ดู QR บริจาค</button>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</p>
+  <p>LINE: @kongmakkkn</p>
+</footer>
+
+</body>
+</html>
