@@ -584,28 +584,22 @@ body{
 <audio id="sound" src="../audio/gong.mp3"></audio>
 
 <script>
-const data={
-'สมดุล':`วันนี้อาจมีหลายสิ่งที่ยังไม่ลงตัว
-แต่ขอให้ใจค่อยๆกลับมาอยู่ในจุดที่พอดี
+const overlay = document.getElementById('overlay');
+const sound = document.getElementById('sound');
+const card = document.getElementById('card');
+const title = document.getElementById('title');
+const text = document.getElementById('text');
 
-ไม่ต้องเร่ง ไม่ต้องฝืน
-ปล่อยให้ทุกอย่างค่อยๆคลี่คลาย
+const data = {
+'สมดุล': `วันนี้อาจมีหลายสิ่งที่ยังไม่ลงตัว
+แต่ขอให้ใจค่อยๆกลับมาอยู่ในจุดที่พอดี`,
 
-สิ่งที่หนักจะเบาลง
-สิ่งที่สับสนจะชัดขึ้น
-และชีวิตจะกลับมาอยู่ในจังหวะของมันเอง`,
+'ราบรื่น': `ขอให้ทุกสิ่งค่อยๆดำเนินไปอย่างราบรื่น`,
 
-'ราบรื่น':`ขอให้ทุกสิ่งค่อยๆดำเนินไปอย่างราบรื่น
-ปัญหาคลี่คลาย อุปสรรคเบาลง
-และเส้นทางค่อยๆเปิดออก`,
+'ชัดเจน': `สิ่งที่สับสนจะค่อยๆชัดขึ้น`,
 
-'ชัดเจน':`เมื่อใจนิ่งพอ
-สิ่งที่สับสนจะค่อยๆชัดขึ้น
-และนำทางไปในทิศที่ถูกต้อง`,
-
-'แรงใจ':`แม้วันนี้จะเหนื่อย
-แต่ขอให้ยังมีแรงก้าวต่อ
-หัวใจยังไม่ยอมแพ้`};
+'แรงใจ': `แม้วันนี้จะเหนื่อย แต่ยังมีแรงก้าวต่อ`
+};
 
 function selectWish(el,t){
 document.querySelectorAll('.option').forEach(o=>o.classList.remove('active'));
@@ -617,12 +611,25 @@ text.innerText=data[t];
 }
 
 function playGong(){
-overlay.classList.add('show','play');
-try{sound.currentTime=0; sound.play();}catch(e){}
 
+overlay.classList.add('show');
+overlay.classList.add('play');
+
+/* เล่นเสียง (กัน error) */
+try{
+sound.currentTime = 0;
+sound.play();
+}catch(e){}
+
+/* บังคับให้ animation เริ่มใหม่ทุกครั้ง */
+overlay.offsetHeight;
+
+/* หาย */
 setTimeout(()=>{
-overlay.classList.remove('show','play');
+overlay.classList.remove('show');
+overlay.classList.remove('play');
 },3200);
+
 }
 </script>
 
