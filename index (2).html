@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700;800&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#d88d14">
+<link rel="apple-touch-icon" href="icon-192.png">
+  <title>ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</title>
+  <style>
+    :root{
+      --gold-1:#ffd86b;
+      --gold-2:#f0bc3f;
+      --gold-3:#d88d14;
+      --gold-soft:rgba(240,188,63,.18);
+      --ink:#5b3b22;
+      --sub:#8a6a4d;
+      --bg:#fffdfa;
+      --line:rgba(216,141,20,.14);
+      --orange:#d96a1f;
+      --orange-2:#f1872b;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      background:#fff;
+      font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;
+      color:var(--ink);
+      overflow-x:hidden;
+    }
+
+    body{
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255,220,140,.18), transparent 20%),
+        radial-gradient(circle at 85% 12%, rgba(255,182,120,.14), transparent 18%),
+        radial-gradient(circle at 50% 85%, rgba(255,215,145,.16), transparent 24%),
+        linear-gradient(180deg,#ffffff 0%, #fffdf8 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .sparkles,
+    .sparkles::before,
+    .sparkles::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        radial-gradient(circle, rgba(255,210,110,.9) 0 1px, transparent 1.6px),
+        radial-gradient(circle, rgba(255,188,86,.75) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(255,233,180,.95) 0 1px, transparent 1.6px);
+      background-size:180px 180px, 240px 240px, 290px 290px;
+      background-position:12% 18%, 82% 24%, 46% 76%;
+      opacity:.45;
+      animation:twinkle 8s linear infinite;
+    }
+    .sparkles::before{opacity:.28;transform:rotate(9deg) scale(1.08)}
+    .sparkles::after{opacity:.22;transform:rotate(-8deg) scale(1.14)}
+
+    .ornament{
+      position:absolute;
+      width:210px;
+      height:210px;
+      border-radius:50%;
+      border:1px solid var(--line);
+      opacity:.55;
+      pointer-events:none;
+    }
+    .ornament::before,
+    .ornament::after{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border-radius:50%;
+      border:1px dashed rgba(216,141,20,.12);
+    }
+    .ornament::after{inset:42px}
+    .ornament.left{top:-70px;left:-70px}
+    .ornament.right{bottom:-90px;right:-70px}
+
+    .coin,.petal{
+      position:absolute;
+      pointer-events:none;
+      z-index:0;
+      opacity:.78;
+      animation:drift 10s ease-in-out infinite;
+    }
+
+    .coin{
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      background:radial-gradient(circle at 35% 35%, #fff3b7, #f1be47 62%, #cf8610);
+      box-shadow:
+        inset 0 0 0 4px rgba(255,230,140,.45),
+        0 4px 10px rgba(216,141,20,.18);
+    }
+    .petal{
+      width:18px;
+      height:10px;
+      background:linear-gradient(90deg, rgba(255,188,173,.92), rgba(255,227,220,.76));
+      border-radius:14px 2px 14px 2px;
+      transform:rotate(-15deg);
+    }
+
+    .coin.c1{top:17%;left:10%;animation-delay:0s}
+    .coin.c2{top:24%;right:12%;animation-delay:1.5s}
+    .coin.c3{bottom:22%;left:16%;animation-delay:2.5s}
+    .petal.p1{top:22%;left:22%;animation-delay:.8s}
+    .petal.p2{top:37%;right:18%;animation-delay:1.8s}
+    .petal.p3{bottom:17%;right:24%;animation-delay:2.8s}
+
+    .hero{
+      min-height:100vh;
+      width:min(100%,1100px);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:34px 20px 28px;
+      position:relative;
+      z-index:2;
+    }
+
+    .hero-card{
+      width:min(100%,920px);
+      text-align:center;
+      position:relative;
+      padding:16px 18px 24px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(205,180,60,.11);
+      border:1px solid rgba(216,141,20,.12);
+      color:#b77310;
+      font-size:18px;
+      margin-bottom:14px;
+      backdrop-filter:blur(6px);
+    }
+
+    .art-wrap{
+      position:relative;
+      width:min(100%,620px);
+      margin:0 auto 8px;
+      padding:18px 16px 8px;
+      background:transparent;
+    }
+
+    .art-glow{
+      position:absolute;
+      inset:10% 12% 20%;
+      background:radial-gradient(circle, rgba(255,196,74,.28), rgba(255,196,74,.08) 45%, transparent 72%);
+      filter:blur(34px);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .art-wrap img{
+      position:relative;
+      z-index:1;
+      width:50%;
+      max-width:540px;
+      background:transparent;
+      height:auto;
+      display:block;
+      margin:0 auto;
+      filter:
+        drop-shadow(0 8px 16px rgba(245,188,57,.18))
+        drop-shadow(0 18px 35px rgba(198,129,15,.14));
+      animation:float 5s ease-in-out infinite;
+    }
+
+    .title{
+      margin:8px auto 10px;
+      max-width:840px;
+      font-size:clamp(28px,5.8vw,54px);
+      line-height:1.1;
+      font-weight:800;
+      letter-spacing:-.02em;
+      color:#b14c16;
+      text-shadow:0 1px 0 rgba(255,255,255,.75);
+    }
+
+    .title span{
+      display:block;
+      color:#cf7d08;
+      margin-top:6px;
+      animation:pop 2.8s ease-in-out infinite;
+    }
+
+    .subtitle{
+      margin:0 auto 24px;
+      max-width:660px;
+      font-size:clamp(14px,2.8vw,19px);
+      line-height:1.8;
+      color:var(--sub);
+    }
+
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-width:220px;
+      padding:16px 30px;
+      border:0;
+      border-radius:999px;
+      text-decoration:none;
+      font-size:20px;
+      font-weight:800;
+      color:#fff;
+      background:linear-gradient(180deg,var(--gold-1),var(--gold-2) 55%,var(--gold-3));
+      box-shadow:
+        0 14px 30px rgba(216,141,20,.24),
+        inset 0 2px 0 rgba(255,255,255,.55);
+      transition:transform .25s ease, box-shadow .25s ease;
+      animation:pulse 2.8s ease-in-out infinite;
+    }
+    .cta:hover{
+      transform:translateY(-2px) scale(1.02);
+      box-shadow:
+        0 18px 36px rgba(216,141,20,.28),
+        inset 0 2px 0 rgba(255,255,255,.55);
+    }
+    .cta:active{transform:scale(.98)}
+
+    .mini-line{
+      margin-top:18px;
+      font-size:13px;
+      color:#b1844d;
+      letter-spacing:.02em;
+    }
+    .mini-line .dot{
+      display:inline-block;
+      width:5px;
+      height:5px;
+      margin:0 8px;
+      border-radius:50%;
+      background:rgba(216,141,20,.45);
+      vertical-align:middle;
+    }
+
+ body {
+  font-family: 'Prompt', sans-serif;
+}
+
+.title {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 800;
+}
+
+    
+
+.social-follow{
+  margin: 30px auto 20px;
+  padding: 20px 16px;
+  max-width: 1000px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255,216,107,.22), rgba(255,255,255,.95));
+  border: 1px solid rgba(216,141,20,.18);
+  box-shadow: 0 18px 40px rgba(216,141,20,.12);
+  text-align: center;
+}
+
+.social-follow-title{
+  font-family: 'Kanit', sans-serif;
+  font-size: 24px;
+  color: #a7501c;
+  margin-bottom: 14px;
+}
+
+.social-follow-links{
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.social-link{
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  transition: .25s ease;
+  position: relative;
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
+}
+
+.social-link:hover{
+  transform: translateY(-4px) scale(1.06);
+}
+
+.social-link::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:inherit;
+  filter:blur(16px);
+  opacity:.4;
+  z-index:-1;
+}
+
+.facebook{ background: linear-gradient(180deg,#1877f2,#0f5bd4); }
+.tiktok{ background: linear-gradient(180deg,#111,#333); }
+.youtube{ background: linear-gradient(180deg,#ff0000,#c40000); }
+.line{ background: linear-gradient(180deg,#06c755,#04a847); }
+.hero,
+.top-section,
+.page{
+  overflow-y: visible;
+}
+
+    
+    
+    @keyframes float{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+    @keyframes pulse{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.035)}
+    }
+    @keyframes pop{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-3px)}
+    }
+    @keyframes drift{
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-12px) rotate(8deg)}
+    }
+    @keyframes twinkle{
+      0%,100%{opacity:.35}
+      50%{opacity:.65}
+    }
+
+    @media (max-width:640px){
+      .hero{padding-top:24px}
+      .hero-card{padding-inline:8px}
+      .art-wrap{width:min(100%,440px);padding-top:10px}
+      .art-wrap img{max-width:360px}
+      .title{max-width:340px}
+      .subtitle{max-width:310px;font-size:15px}
+      .cta{min-width:190px;font-size:18px;padding:14px 24px}
+      .badge{font-size:12px}
+      .ornament{width:150px;height:150px}
+    }
+
+/* ===== SOCIAL FOLLOW BAR ===== */
+.social-follow{
+  margin: 18px auto 0;
+  padding: 18px 16px;
+  max-width: 980px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,216,107,.18), rgba(255,255,255,.92));
+  border: 1px solid rgba(216,141,20,.14);
+  box-shadow: 0 14px 30px rgba(216,141,20,.10);
+  text-align: center;
+}
+
+.social-follow-title{
+  margin: 0 0 12px;
+  font-family: 'Kanit', sans-serif;
+  font-size: 22px;
+  color: #a7501c;
+}
+
+.social-follow-links{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.social-link{
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 26px;
+  color: #fff;
+  transition: .2s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,.10);
+}
+
+.social-link:hover{
+  transform: translateY(-3px) scale(1.04);
+}
+
+.social-facebook{
+  background: #1877f2;
+}
+
+.social-tiktok{
+  background: #111111;
+}
+
+.social-youtube{
+  background: #ff0000;
+}
+
+.social-line{
+  background: #06c755;
+}
+
+@media (max-width: 640px){
+  .social-follow{
+    margin: 16px 14px 0;
+    padding: 16px 12px;
+    border-radius: 20px;
+  }
+
+  .social-follow-title{
+    font-size: 20px;
+  }
+
+  .social-link{
+    width: 52px;
+    height: 52px;
+    font-size: 23px;
+  }
+}
+
+
+    
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="sparkles"></div>
+    <div class="ornament left"></div>
+    <div class="ornament right"></div>
+    <div class="coin c1"></div>
+    <div class="coin c2"></div>
+    <div class="coin c3"></div>
+    <div class="petal p1"></div>
+    <div class="petal p2"></div>
+    <div class="petal p3"></div>
+
+    <section class="hero">
+      <div class="hero-card">
+        <div class="badge">✨ ศาลเจ้าปึงเถ่ากงม่าขอนแก่น</div>
+
+        <div class="art-wrap">
+          <div class="art-glow"></div>
+          <img src="images/kongma.png" alt="อากงอาม่า" />
+        </div>
+           
+
+        <h1 class="title">
+          อธิษฐาน…ไม่ใช่เพื่อขอ
+          <span>แต่เพื่อให้บางอย่างกับชีวิต</span>
+        </h1>
+
+        <p class="subtitle">
+          เดินชมเรื่องเล่า ฟังเรื่องราวของศาลเจ้า และเริ่มต้นบางอย่างในใจอีกครั้ง
+        </p>
+
+        <a class="cta" href="deities.html">เริ่มเลย</a>
+<section class="social-follow">
+  <h2 class="social-follow-title">ติดตามกิจกรรมศาลเจ้าได้ที่</h2>
+
+  <div class="social-follow-links">
+    <a class="social-link facebook" href="https://www.facebook.com/kongmakkn" target="_blank" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+        <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.5-3.88 3.78-3.88 1.1 0 2.24.2 2.24.2v2.46H15.2c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 2.89h-2.33v6.99A10 10 0 0 0 22 12z"/>
+      </svg>
+    </a>
+
+    <a class="social-link tiktok" href="https://www.tiktok.com/@kongmakkn" target="_blank" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+        <path d="M19.59 6.69A4.83 4.83 0 0 1 16 4.9V15.5A6.5 6.5 0 1 1 9.5 9a6.57 6.57 0 0 1 1.13.1v3.2a3.57 3.57 0 0 0-1.13-.18A3.38 3.38 0 1 0 12.88 15V2h3.07a4.84 4.84 0 0 0 3.64 4.36z"/>
+      </svg>
+    </a>
+
+    <a class="social-link youtube" href="https://www.youtube.com/@kongmakkn" target="_blank" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
+        <path d="M23.5 6.2a3 3 0 0 0-2.1-2.12C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.58A3 3 0 0 0 .5 6.2 31.8 31.8 0 0 0 0 12a31.8 31.8 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.12c1.9.58 9.4.58 9.4.58s7.5 0 9.4-.58a3 3 0 0 0 2.1-2.12A31.8 31.8 0 0 0 24 12a31.8 31.8 0 0 0-.5-5.8ZM9.75 15.52V8.48L15.98 12Z"/>
+      </svg>
+    </a>
+
+    <a class="social-link line" href="https://line.me/R/ti/p/@kongmakkn" target="_blank" aria-label="LINE Official">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+        <path d="M12 2C6.49 2 2 5.69 2 10.24c0 4.08 3.54 7.5 8.32 8.15.32.07.75.22.86.5.1.26.06.66.03.93l-.13.82c-.04.24-.18.95.83.52 1.01-.42 5.45-3.21 7.43-5.49A7.36 7.36 0 0 0 22 10.24C22 5.69 17.51 2 12 2Zm-4.3 10.46h-1.4a.39.39 0 0 1-.39-.39V8.66c0-.22.18-.39.39-.39s.39.17.39.39v3.02H7.7c.22 0 .39.18.39.39s-.17.39-.39.39Zm2.1-.39a.39.39 0 0 1-.78 0V8.66a.39.39 0 0 1 .78 0Zm4.17 0a.39.39 0 0 1-.68.27l-1.9-2.59v2.32a.39.39 0 0 1-.78 0V8.66a.39.39 0 0 1 .68-.27l1.9 2.59V8.66a.39.39 0 0 1 .78 0Zm3.15-2.62H15.8v.81h1.32c.22 0 .39.18.39.39s-.17.39-.39.39H15.8v.81h1.32c.22 0 .39.18.39.39s-.17.39-.39.39H15.4a.39.39 0 0 1-.39-.39V8.66c0-.22.18-.39.39-.39h1.72c.22 0 .39.18.39.39s-.17.39-.39.39Z"/>
+      </svg>
+    </a>
+  </div>
+</section>
+        <div class="mini-line">
+          ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น
+          <span class="dot"></span>
+          Virtual Experience
+          <span class="dot"></span>
+          Story & Faith
+        </div>
+      </div>
+
+
+
+
+    </section>
+  </main>
+  <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(() => console.log('Service Worker registered'))
+      .catch(err => console.error('Service Worker registration failed:', err));
+  });
+}
+  </script>
+  
+</body>
+</html>
