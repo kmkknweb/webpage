@@ -565,7 +565,7 @@ body{
 <div class="cta">
   <div class="cta-title">ตีฆ้องเพื่อส่งคำอธิษฐาน</div>
   <div class="cta-desc">เมื่อพร้อมแล้ว กดเพื่อส่งสิ่งที่ตั้งใจไปถึงฟ้าดิน</div>
-  <button class="btn" onclick="playGong()">ตีฆ้อง 3 ครั้ง</button>
+<button class="btn" id="gongBtn">ตีฆ้อง 3 ครั้ง</button>
 </div>
 
 </div>
@@ -584,53 +584,58 @@ body{
 <audio id="sound" src="../audio/gong.mp3"></audio>
 
 <script>
-const overlay = document.getElementById('overlay');
-const sound = document.getElementById('sound');
-const card = document.getElementById('card');
-const title = document.getElementById('title');
-const text = document.getElementById('text');
+<script>
+document.addEventListener("DOMContentLoaded", function(){
 
-const data = {
-'สมดุล': `วันนี้อาจมีหลายสิ่งที่ยังไม่ลงตัว
-แต่ขอให้ใจค่อยๆกลับมาอยู่ในจุดที่พอดี`,
+  const overlay = document.getElementById('overlay');
+  const sound = document.getElementById('sound');
+  const btn = document.getElementById('gongBtn');
 
-'ราบรื่น': `ขอให้ทุกสิ่งค่อยๆดำเนินไปอย่างราบรื่น`,
+  const card = document.getElementById('card');
+  const title = document.getElementById('title');
+  const text = document.getElementById('text');
 
-'ชัดเจน': `สิ่งที่สับสนจะค่อยๆชัดขึ้น`,
+  const data = {
+    'สมดุล': `วันนี้อาจมีหลายสิ่งที่ยังไม่ลงตัว
+แต่ขอให้ใจค่อยๆกลับมาอยู่ในจุดที่พอดี
 
-'แรงใจ': `แม้วันนี้จะเหนื่อย แต่ยังมีแรงก้าวต่อ`
-};
+ไม่ต้องเร่ง ไม่ต้องฝืน
+ปล่อยให้ทุกอย่างค่อยๆคลี่คลาย`,
 
-function selectWish(el,t){
-document.querySelectorAll('.option').forEach(o=>o.classList.remove('active'));
-el.classList.add('active');
+    'ราบรื่น': `ขอให้ทุกสิ่งค่อยๆดำเนินไปอย่างราบรื่น`,
 
-card.classList.add('show');
-title.innerText=t;
-text.innerText=data[t];
-}
+    'ชัดเจน': `สิ่งที่สับสนจะค่อยๆชัดขึ้น`,
 
-function playGong(){
+    'แรงใจ': `แม้วันนี้จะเหนื่อย แต่ยังมีแรงก้าวต่อ`
+  };
 
-overlay.classList.add('show');
-overlay.classList.add('play');
+  window.selectWish = function(el,t){
+    document.querySelectorAll('.option').forEach(o=>o.classList.remove('active'));
+    el.classList.add('active');
 
-/* เล่นเสียง (กัน error) */
-try{
-sound.currentTime = 0;
-sound.play();
-}catch(e){}
+    card.classList.add('show');
+    title.innerText=t;
+    text.innerText=data[t];
+  }
 
-/* บังคับให้ animation เริ่มใหม่ทุกครั้ง */
-overlay.offsetHeight;
+  btn.addEventListener("click", function(){
 
-/* หาย */
-setTimeout(()=>{
-overlay.classList.remove('show');
-overlay.classList.remove('play');
-},3200);
+    overlay.classList.add('show');
+    overlay.classList.add('play');
 
-}
+    try{
+      sound.currentTime = 0;
+      sound.play();
+    }catch(e){}
+
+    setTimeout(()=>{
+      overlay.classList.remove('show');
+      overlay.classList.remove('play');
+    },3200);
+
+  });
+
+});
 </script>
 
 </body>
