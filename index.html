@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700;800&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#d88d14">
+<link rel="apple-touch-icon" href="icon-192.png">
   <title>ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</title>
   <style>
     :root{
@@ -326,7 +329,6 @@
   overflow-y: visible;
 }
 
-
     
     
     @keyframes float{
@@ -520,5 +522,15 @@
 
     </section>
   </main>
+  <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(() => console.log('Service Worker registered'))
+      .catch(err => console.error('Service Worker registration failed:', err));
+  });
+}
+  </script>
+  
 </body>
 </html>
