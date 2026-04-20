@@ -124,10 +124,179 @@ body{
 }
 
 @keyframes gongAnim{
-  0%{opacity:0; transform:translate(-50%,20px) scale(.8);}
-  20%{opacity:1;}
-  60%{transform:translate(-50%,-120px) scale(1.2);}
-  100%{opacity:0; transform:translate(-50%,-200px) scale(1);}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เทพฟ้าดิน</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600;800&family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Prompt',sans-serif;
+  overflow-x:hidden;
+  overflow-y:auto;
+  background:#fffdf8;
+}
+
+/* layout */
+.main{
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  min-height:100vh;
+}
+
+.left{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.left img{
+  width:70%;
+  animation:float 5s infinite;
+}
+
+.right{
+  padding:40px;
+}
+
+h1{
+  font-family:'Kanit';
+  color:#c56a14;
+}
+
+/* options */
+.option{
+  padding:14px;
+  border:1px solid #e6c27a;
+  margin:6px;
+  display:inline-block;
+  cursor:pointer;
+  border-radius:10px;
+}
+
+/* card */
+.card{
+  margin-top:20px;
+  padding:20px;
+  border-radius:20px;
+  background:white;
+  display:none;
+}
+
+.card.show{
+  display:block;
+}
+
+.btn{
+  margin-top:20px;
+  padding:14px 20px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(#ffd86b,#d88d14);
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* ===== overlay ===== */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,.85);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  opacity:0;
+  pointer-events:none;
+  transition:.4s;
+}
+
+.overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* ===== gong CSS ===== */
+.gong{
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:radial-gradient(circle,#ffd86b,#c98a12);
+  box-shadow:0 0 50px gold;
+  position:relative;
+}
+
+.gong::after{
+  content:"";
+  width:50px;
+  height:50px;
+  background:#7a4d00;
+  border-radius:50%;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+
+/* stick */
+.stick{
+  width:160px;
+  height:14px;
+  background:#8b5a2b;
+  position:absolute;
+  right:-140px;
+  top:100px;
+  transform:rotate(-30deg);
+  transform-origin:left center;
+}
+
+/* glow effect */
+.glow{
+  position:absolute;
+  width:250px;
+  height:250px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,220,120,.5),transparent);
+  opacity:0;
+}
+
+/* animation */
+.play .stick{
+  animation:hit .4s ease 3;
+}
+
+.play .gong{
+  animation:shake .4s ease 3;
+}
+
+.play .glow{
+  animation:flash .4s ease 3;
+}
+
+@keyframes hit{
+  0%{transform:rotate(-30deg);}
+  50%{transform:rotate(10deg);}
+  100%{transform:rotate(-30deg);}
+}
+
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-6px);}
+  50%{transform:translateX(6px);}
+  75%{transform:translateX(-6px);}
+  100%{transform:translateX(0);}
+}
+
+@keyframes flash{
+  0%{opacity:0;}
+  50%{opacity:1;}
+  100%{opacity:0;}
 }
 
 @keyframes float{
@@ -135,14 +304,11 @@ body{
   50%{transform:translateY(-10px)}
 }
 
-/* mobile */
-@media(max-width:900px){
-  .main{
-    grid-template-columns:1fr;
-  }
-  .left{
-    height:300px;
-  }
+.text-overlay{
+  margin-top:20px;
+  font-size:18px;
+  color:#8a6a4d;
+  text-align:center;
 }
 </style>
 </head>
@@ -151,60 +317,89 @@ body{
 
 <div class="main">
 
-  <!-- LEFT -->
-  <div class="left">
-    <img src="../images/tiangong.png">
-  </div>
-
-  <!-- RIGHT -->
-  <div class="right">
-
-    <div class="title">เทพฟ้าดิน</div>
-    <div class="subtitle">วันนี้…อยากตั้งใจเรื่องอะไร</div>
-
-    <div class="options">
-      <div class="option" onclick="selectWish('สมดุล')">สมดุล</div>
-      <div class="option" onclick="selectWish('ราบรื่น')">ราบรื่น</div>
-      <div class="option" onclick="selectWish('ชัดเจน')">ชัดเจน</div>
-      <div class="option" onclick="selectWish('แรงใจ')">แรงใจ</div>
-    </div>
-
-    <div class="card" id="card">
-      <h3 id="wishTitle"></h3>
-      <p id="wishText"></p>
-
-      <button class="btn" onclick="playGong()">ตีฆ้อง</button>
-    </div>
-
-  </div>
-
+<div class="left">
+  <img src="../images/tiangong.png">
 </div>
 
-<!-- gong animation -->
-<div class="gong" id="gong">🔔</div>
+<div class="right">
 
-<!-- audio -->
-<audio id="gongSound" src="../audio/gong.mp3"></audio>
+<h1>เทพฟ้าดิน</h1>
+
+<div class="option" onclick="selectWish('สมดุล')">สมดุล</div>
+<div class="option" onclick="selectWish('ราบรื่น')">ราบรื่น</div>
+<div class="option" onclick="selectWish('ชัดเจน')">ชัดเจน</div>
+<div class="option" onclick="selectWish('แรงใจ')">แรงใจ</div>
+
+<div class="card" id="card">
+<h3 id="title"></h3>
+<p id="text"></p>
+
+<button class="btn" onclick="playGong()">ตีฆ้อง</button>
+</div>
+
+</div>
+</div>
+
+<!-- overlay -->
+<div class="overlay" id="overlay">
+  <div style="position:relative">
+    <div class="glow"></div>
+    <div class="gong"></div>
+    <div class="stick"></div>
+  </div>
+  <div class="text-overlay">กำลังส่งคำอธิษฐานไปถึงฟ้าดิน...</div>
+</div>
+
+<audio id="sound" src="../audio/gong.mp3"></audio>
 
 <script>
-function selectWish(text){
-  document.getElementById('card').classList.add('show');
-  document.getElementById('wishTitle').innerText = text;
 
-  document.getElementById('wishText').innerText =
-    'ขอให้สิ่งที่ตั้งใจในวันนี้ค่อยๆ คลี่คลายไปในทางที่ดี';
+const data={
+'สมดุล':`วันนี้อาจมีหลายสิ่งที่ยังไม่ลงตัว  
+แต่ขอให้ใจค่อยๆกลับมาอยู่ในจุดที่พอดี  
+
+ไม่ต้องเร่ง ไม่ต้องฝืน  
+ปล่อยให้ทุกอย่างค่อยๆคลี่คลาย  
+
+สิ่งที่หนักจะเบาลง  
+สิ่งที่สับสนจะชัดขึ้น  
+และชีวิตจะกลับมาอยู่ในจังหวะของมันเอง`,
+
+'ราบรื่น':`ขอให้ทุกสิ่งที่กำลังทำ  
+ค่อยๆดำเนินไปอย่างราบรื่น  
+
+ปัญหาจะคลี่คลาย  
+อุปสรรคจะเบาลง  
+และเส้นทางจะเปิดออกทีละนิด`,
+
+'ชัดเจน':`สิ่งที่สับสนจะค่อยๆชัดขึ้น  
+เมื่อใจนิ่งพอ  
+
+คำตอบที่ตามหา  
+จะค่อยๆปรากฏ  
+และนำทางไปในทิศที่ถูกต้อง`,
+
+'แรงใจ':`แม้วันนี้จะเหนื่อย  
+แต่ขอให้ยังมีแรงก้าวต่อ  
+
+หัวใจยังไม่ยอมแพ้  
+และยังเชื่อในเส้นทางของตัวเอง`};
+
+function selectWish(t){
+card.classList.add('show');
+title.innerText=t;
+text.innerText=data[t];
 }
 
 function playGong(){
-  document.getElementById('gongSound').play();
+overlay.classList.add('show','play');
+sound.play();
 
-  const gong = document.getElementById('gong');
-  gong.classList.add('show');
-
-  setTimeout(()=>{
-    gong.classList.remove('show');
-  },4000);
+setTimeout(()=>{
+overlay.classList.remove('show','play');
+},3000);
 }
+
 </script>
 
 </body>
