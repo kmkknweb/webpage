@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ติดตั้งแอปศาลเจ้า</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d88d14">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold-1:#ffd86b;
+      --gold-2:#f0bc3f;
+      --gold-3:#d88d14;
+      --ink:#5b3b22;
+      --sub:#8a6a4d;
+      --line:rgba(216,141,20,.14);
+      --orange:#b14c16;
+      --orange-2:#cf7d08;
+      --card-bg:rgba(255,255,255,.88);
+      --shadow:0 16px 35px rgba(216,141,20,.10);
+      --shadow-soft:0 10px 28px rgba(0,0,0,.05);
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      font-family:'Prompt',sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255,220,140,.18), transparent 20%),
+        radial-gradient(circle at 85% 12%, rgba(255,182,120,.14), transparent 18%),
+        radial-gradient(circle at 50% 85%, rgba(255,215,145,.16), transparent 24%),
+        linear-gradient(180deg,#ffffff 0%, #fffdf8 100%);
+      overflow-x:hidden;
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 16px 40px;
+    }
+
+    .sparkles,
+    .sparkles::before,
+    .sparkles::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        radial-gradient(circle, rgba(255,210,110,.9) 0 1px, transparent 1.6px),
+        radial-gradient(circle, rgba(255,188,86,.75) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(255,233,180,.95) 0 1px, transparent 1.6px);
+      background-size:180px 180px, 240px 240px, 290px 290px;
+      background-position:12% 18%, 82% 24%, 46% 76%;
+      opacity:.45;
+      animation:twinkle 8s linear infinite;
+    }
+    .sparkles::before{opacity:.28;transform:rotate(9deg) scale(1.08)}
+    .sparkles::after{opacity:.22;transform:rotate(-8deg) scale(1.14)}
+
+    .ornament{
+      position:absolute;
+      width:210px;
+      height:210px;
+      border-radius:50%;
+      border:1px solid var(--line);
+      opacity:.55;
+      pointer-events:none;
+    }
+    .ornament::before,.ornament::after{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border-radius:50%;
+      border:1px dashed rgba(216,141,20,.12);
+    }
+    .ornament::after{inset:42px}
+    .ornament.left{top:-70px;left:-70px}
+    .ornament.right{bottom:-90px;right:-70px}
+
+    .wrap{
+      width:min(100%, 520px);
+      position:relative;
+      z-index:2;
+    }
+
+    .card{
+      background:var(--card-bg);
+      border:1px solid rgba(216,141,20,.10);
+      box-shadow:var(--shadow);
+      border-radius:32px;
+      padding:24px 18px 22px;
+      text-align:center;
+      backdrop-filter:blur(6px);
+    }
+
+    .logo-wrap{
+      width:128px;
+      height:128px;
+      border-radius:50%;
+      background:#fff;
+      margin:0 auto 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:
+        0 0 40px rgba(255,200,80,.22),
+        0 12px 30px rgba(0,0,0,.08);
+      animation:glow 3.8s ease-in-out infinite;
+      overflow:hidden;
+    }
+
+    .logo-wrap img{
+      width:86%;
+      height:auto;
+      display:block;
+    }
+
+    h1{
+      margin:6px 0 8px;
+      font-family:'Kanit',sans-serif;
+      font-size:clamp(30px, 6vw, 48px);
+      line-height:1.1;
+      color:var(--orange);
+    }
+
+    .subtitle{
+      margin:0 auto 18px;
+      max-width:420px;
+      font-size:16px;
+      line-height:1.9;
+      color:var(--sub);
+    }
+
+    .install-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-width:220px;
+      padding:16px 28px;
+      border:none;
+      border-radius:999px;
+      font-family:'Kanit',sans-serif;
+      font-size:22px;
+      font-weight:700;
+      color:#fff;
+      cursor:pointer;
+      background:linear-gradient(180deg,var(--gold-1),var(--gold-2) 55%,var(--gold-3));
+      box-shadow:
+        0 14px 30px rgba(216,141,20,.24),
+        inset 0 2px 0 rgba(255,255,255,.55);
+      transition:transform .25s ease, box-shadow .25s ease;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .install-btn::after{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-120%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent);
+      transition:.55s ease;
+    }
+
+    .install-btn:hover{
+      transform:translateY(-2px) scale(1.02);
+    }
+    .install-btn:hover::after{
+      left:120%;
+    }
+
+    .hint{
+      margin:14px auto 0;
+      max-width:420px;
+      color:#9c7a55;
+      font-size:14px;
+      line-height:1.8;
+      min-height:28px;
+    }
+
+    .steps{
+      margin-top:18px;
+      text-align:left;
+      background:#fffaf0;
+      border:1px solid rgba(216,141,20,.10);
+      box-shadow:var(--shadow-soft);
+      border-radius:24px;
+      padding:16px 14px;
+    }
+
+    .steps-title{
+      margin:0 0 10px;
+      text-align:center;
+      font-family:'Kanit',sans-serif;
+      color:#a7501c;
+      font-size:22px;
+    }
+
+    .steps ol{
+      margin:0;
+      padding-left:22px;
+      color:var(--sub);
+      line-height:1.85;
+      font-size:14px;
+    }
+
+    .steps li + li{
+      margin-top:6px;
+    }
+
+    .status{
+      margin-top:12px;
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,216,107,.13);
+      border:1px solid rgba(216,141,20,.12);
+      color:#b77310;
+      font-size:13px;
+    }
+
+    .footer-link{
+      margin-top:16px;
+      display:inline-block;
+      color:#b77310;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .mini-line{
+      margin-top:16px;
+      font-size:13px;
+      color:#b1844d;
+      letter-spacing:.02em;
+    }
+    .mini-line .dot{
+      display:inline-block;
+      width:5px;
+      height:5px;
+      margin:0 8px;
+      border-radius:50%;
+      background:rgba(216,141,20,.45);
+      vertical-align:middle;
+    }
+
+    .debug{
+      margin-top:14px;
+      font-size:12px;
+      color:#8a6a4d;
+      opacity:.8;
+      word-break:break-word;
+    }
+
+    @keyframes glow{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.05)}
+    }
+    @keyframes twinkle{
+      0%,100%{opacity:.35}
+      50%{opacity:.65}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="sparkles"></div>
+    <div class="ornament left"></div>
+    <div class="ornament right"></div>
+
+    <div class="wrap">
+      <div class="card">
+        <div class="logo-wrap">
+          <img src="icon-192.png" alt="ไอคอนศาลเจ้า">
+        </div>
+
+        <h1>ติดตั้งแอปศาลเจ้า</h1>
+        <p class="subtitle">
+          เพิ่มแอปลงบนหน้าจอมือถือ เพื่อใช้งานได้สะดวก รวดเร็ว และเข้าถึงศาลเจ้าได้ทุกที่ทุกเวลา
+        </p>
+
+        <button id="installBtn" class="install-btn">📱 ติดตั้งแอป</button>
+        <div id="hint" class="hint">เปิดผ่าน Chrome บน Android เพื่อให้ติดตั้งได้สะดวกที่สุด</div>
+
+        <div class="steps">
+          <h2 class="steps-title">หากปุ่มไม่เด้งหน้าติดตั้ง</h2>
+          <ol>
+            <li>เปิดหน้านี้ผ่าน <strong>Chrome</strong> เท่านั้น</li>
+            <li>รีเฟรช 1–2 ครั้ง แล้วรอสักครู่</li>
+            <li>หากยังไม่ขึ้น ให้กดเมนู <strong>⋮</strong> มุมขวาบน</li>
+            <li>เลือก <strong>Install app</strong> หรือ <strong>Add to Home screen</strong></li>
+          </ol>
+        </div>
+
+        <div id="status" class="status">กำลังตรวจสอบความพร้อมสำหรับติดตั้ง...</div>
+        <div id="debug" class="debug"></div>
+
+        <a class="footer-link" href="index.html">← กลับไปหน้าแรก</a>
+
+        <div class="mini-line">
+          ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น
+          <span class="dot"></span>
+          Install App
+          <span class="dot"></span>
+          PWA
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let deferredPrompt = null;
+
+    const btn = document.getElementById('installBtn');
+    const hint = document.getElementById('hint');
+    const statusEl = document.getElementById('status');
+    const debugEl = document.getElementById('debug');
+
+    function setStatus(text){
+      statusEl.textContent = text;
+    }
+
+    function setHint(text){
+      hint.textContent = text;
+    }
+
+    function debug(text){
+      debugEl.textContent = text;
+      console.log(text);
+    }
+
+    function isAndroidChrome(){
+      const ua = navigator.userAgent.toLowerCase();
+      return ua.includes('android') && ua.includes('chrome');
+    }
+
+    // register service worker on this page too
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const reg = await navigator.serviceWorker.register('./service-worker.js');
+          debug('Service Worker registered');
+          setStatus('Service worker พร้อมแล้ว');
+        } catch (err) {
+          console.error(err);
+          debug('Service Worker registration failed');
+          setStatus('Service worker ยังไม่พร้อม');
+          setHint('กรุณาตรวจสอบว่า service-worker.js และ manifest.json อยู่โฟลเดอร์เดียวกับหน้าเว็บ');
+        }
+      });
+    } else {
+      setStatus('เบราว์เซอร์นี้ไม่รองรับ Service Worker');
+    }
+
+    // capture install prompt when browser allows it
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      setStatus('พร้อมติดตั้งแล้ว');
+      setHint('กดปุ่ม “ติดตั้งแอป” ได้เลย');
+      debug('beforeinstallprompt fired');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      setStatus('ติดตั้งแอปเรียบร้อยแล้ว');
+      setHint('สามารถเปิดใช้งานจากไอคอนบนหน้าจอมือถือได้เลย');
+      deferredPrompt = null;
+      debug('appinstalled fired');
+    });
+
+    btn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        setHint('กำลังเปิดหน้าติดตั้ง...');
+        deferredPrompt.prompt();
+        const result = await deferredPrompt.userChoice;
+        setHint('ผลลัพธ์: ' + result.outcome);
+        deferredPrompt = null;
+        return;
+      }
+
+      if (isAndroidChrome()) {
+        setStatus('ยังไม่เจอ install prompt อัตโนมัติ');
+        setHint('ให้กดเมนู ⋮ มุมขวาบนของ Chrome แล้วเลือก "Install app" หรือ "Add to Home screen"');
+      } else {
+        setStatus('ไม่ได้เปิดผ่าน Android Chrome');
+        setHint('กรุณาเปิดลิงก์นี้ผ่าน Chrome บน Android เพื่อให้ติดตั้งแอปได้สะดวกที่สุด');
+      }
+    });
+
+    // basic runtime checks for files
+    (async function runtimeCheck(){
+      try {
+        const [manifestRes, icon192Res, icon512Res] = await Promise.all([
+          fetch('./manifest.json', {cache:'no-store'}),
+          fetch('./icon-192.png', {cache:'no-store'}),
+          fetch('./icon-512.png', {cache:'no-store'})
+        ]);
+
+        if (!manifestRes.ok) {
+          setStatus('manifest.json เปิดไม่ได้');
+          return;
+        }
+        if (!icon192Res.ok || !icon512Res.ok) {
+          setStatus('ไฟล์ไอคอนไม่ครบ');
+          return;
+        }
+
+        const manifest = await manifestRes.json();
+        if (!manifest.start_url || !manifest.scope) {
+          setStatus('manifest ยังไม่ครบ');
+          return;
+        }
+
+        if (!isAndroidChrome()) {
+          setStatus('แนะนำให้เปิดผ่าน Chrome บน Android');
+        } else {
+          setStatus('ไฟล์พร้อมแล้ว รอ Chrome อนุญาตการติดตั้ง');
+        }
+      } catch (e) {
+        setStatus('ตรวจสอบไฟล์ไม่สำเร็จ');
+      }
+    })();
+  </script>
+</body>
+</html>
