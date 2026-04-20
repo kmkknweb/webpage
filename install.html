@@ -1,72 +1,137 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ติดตั้งแอปศาลเจ้า</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ติดตั้งแอปศาลเจ้า</title>
 
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#d88d14">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#d88d14">
 
-  <style>
-    body{
-      font-family:'Kanit',sans-serif;
-      text-align:center;
-      padding:40px 20px;
-      background:#fffdf8;
-      color:#5b3b22;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700;800&display=swap" rel="stylesheet">
 
-    .box{
-      max-width:420px;
-      margin:auto;
-      background:#fff;
-      padding:28px;
-      border-radius:24px;
-      box-shadow:0 15px 30px rgba(0,0,0,.08);
-    }
+<style>
+body{
+  margin:0;
+  font-family:'Kanit',sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,220,140,.2), transparent 30%),
+    radial-gradient(circle at 80% 90%, rgba(255,190,120,.2), transparent 30%),
+    linear-gradient(180deg,#fffdf8,#fff6e9);
+  color:#5b3b22;
+  text-align:center;
+}
 
-    h1{
-      font-size:26px;
-      color:#a7501c;
-    }
+/* container */
+.container{
+  max-width:420px;
+  margin:auto;
+  padding:40px 20px;
+}
 
-    p{
-      color:#8a6a4d;
-      line-height:1.8;
-    }
+/* logo */
+.logo{
+  width:120px;
+  height:120px;
+  margin:auto;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 12px 30px rgba(0,0,0,.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:18px;
+}
 
-    button{
-      margin-top:18px;
-      padding:14px 24px;
-      border:none;
-      border-radius:999px;
-      font-size:16px;
-      background:linear-gradient(180deg,#f0bc3f,#d88d14);
-      color:#fff;
-      cursor:pointer;
-    }
+.logo img{
+  width:80%;
+}
 
-    .hint{
-      margin-top:12px;
-      font-size:13px;
-      color:#999;
-    }
-  </style>
+/* title */
+h1{
+  font-size:26px;
+  color:#a7501c;
+  margin:10px 0 6px;
+}
+
+/* subtitle */
+p{
+  font-size:15px;
+  color:#8a6a4d;
+  line-height:1.8;
+}
+
+/* button */
+.install-btn{
+  margin-top:20px;
+  padding:14px 26px;
+  border:none;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:600;
+  color:#fff;
+  cursor:pointer;
+
+  background:linear-gradient(180deg,#f0bc3f,#d88d14);
+  box-shadow:0 10px 25px rgba(216,141,20,.3);
+  transition:.25s;
+}
+
+.install-btn:hover{
+  transform:translateY(-2px) scale(1.05);
+}
+
+/* hint */
+.hint{
+  margin-top:14px;
+  font-size:13px;
+  color:#9c7a55;
+}
+
+/* sparkle */
+.sparkle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:#ffd86b;
+  border-radius:50%;
+  opacity:.6;
+  animation:float 5s infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-20px);}
+  100%{transform:translateY(0);}
+}
+</style>
 </head>
+
 <body>
 
-<div class="box">
-  <h1>ติดตั้งแอปศาลเจ้า</h1>
-  <p>เพิ่มแอปลงหน้าจอมือถือเพื่อใช้งานได้สะดวก รวดเร็ว และเหมือนแอปจริง</p>
+<div class="container">
 
-  <button id="installBtn">ติดตั้งแอป</button>
+  <div class="logo">
+    <img src="icon-192.png">
+  </div>
+
+  <h1>ติดตั้งแอปศาลเจ้า</h1>
+
+  <p>
+    เพิ่มแอปลงบนหน้าจอมือถือ เพื่อใช้งานได้สะดวก รวดเร็ว และเข้าถึงศาลเจ้าได้ทุกที่ทุกเวลา
+  </p>
+
+  <button id="installBtn" class="install-btn">
+    📱 ติดตั้งแอป
+  </button>
 
   <div id="hint" class="hint"></div>
+
 </div>
 
 <script>
 let deferredPrompt = null;
+
 const btn = document.getElementById('installBtn');
 const hint = document.getElementById('hint');
 
@@ -80,17 +145,21 @@ btn.addEventListener('click', async () => {
     deferredPrompt.prompt();
     await deferredPrompt.userChoice;
   } else {
-    const ua = navigator.userAgent.toLowerCase();
-
-    if (ua.includes('android')) {
-      hint.textContent = "กดเมนู ⋮ แล้วเลือก Install app";
-    } else if (ua.includes('iphone')) {
-      hint.textContent = "กด Share แล้วเลือก Add to Home Screen";
-    } else {
-      hint.textContent = "เปิดผ่าน Chrome หรือ Safari";
-    }
+    showHint();
   }
 });
+
+function showHint(){
+  const ua = navigator.userAgent.toLowerCase();
+
+  if (ua.includes('android')) {
+    hint.textContent = "กดเมนู ⋮ มุมขวาบน แล้วเลือก 'Install app'";
+  } else if (ua.includes('iphone')) {
+    hint.textContent = "กดปุ่มแชร์ แล้วเลือก 'Add to Home Screen'";
+  } else {
+    hint.textContent = "เปิดผ่าน Chrome หรือ Safari เพื่อทำการติดตั้ง";
+  }
+}
 </script>
 
 </body>
