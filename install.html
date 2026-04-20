@@ -161,6 +161,22 @@ function showHint(){
   }
 }
 </script>
+  <script>
+let deferredPrompt = null;
 
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+function installApp(){
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt = null;
+  } else {
+    alert("กรุณาเปิดผ่าน Chrome และเข้าเว็บ 2 รอบก่อนติดตั้ง");
+  }
+}
+  </script>
 </body>
 </html>
