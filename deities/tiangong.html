@@ -253,38 +253,251 @@ h1{
   right:-140px;
   top:100px;
   transform:rotate(-30deg);
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เทพฟ้าดิน · เทียนกง</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --gold1:#ffd86b;
+  --gold2:#f0bc3f;
+  --gold3:#d88d14;
+  --ink:#5b3b22;
+  --sub:#8a6a4d;
+  --bg:#fffdf8;
+  --card:#ffffff;
+  --line:rgba(216,141,20,.14);
+}
+
+*{box-sizing:border-box}
+html,body{
+  margin:0;padding:0;
+  font-family:'Prompt',sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  overflow-x:hidden;
+  overflow-y:auto; /* แก้การ์ดไม่โดนตัด */
+}
+
+body{
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255,220,140,.18), transparent 20%),
+    radial-gradient(circle at 86% 12%, rgba(255,182,120,.12), transparent 18%),
+    radial-gradient(circle at 50% 85%, rgba(255,215,145,.16), transparent 24%),
+    linear-gradient(180deg,#ffffff 0%, #fffdf8 100%);
+}
+
+/* ===== Layout ===== */
+.main{
+  display:grid;
+  grid-template-columns: 1fr 1.2fr;
+  min-height:100vh;
+}
+
+/* LEFT: รูปเทียนกง (ใหญ่ขึ้น) */
+.left{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.left::before{
+  content:"";
+  position:absolute;
+  width:420px;height:420px;
+  background:radial-gradient(circle, rgba(255,200,100,.45), transparent);
+  filter:blur(50px);
+}
+.left img{
+  width:90%;           /* ⬅️ ขยายให้ใหญ่ */
+  max-width:560px;     /* ⬅️ ใหญ่ขึ้น */
+  animation:float 5s ease-in-out infinite;
+  filter:
+    drop-shadow(0 0 40px rgba(255,200,100,.45))
+    drop-shadow(0 16px 36px rgba(198,129,15,.18));
+}
+
+/* RIGHT */
+.right{
+  padding:32px 28px 80px;
+}
+
+/* back */
+.back{
+  display:inline-block;
+  text-decoration:none;
+  font-size:14px;
+  color:#b77310;
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(255,206,112,.12);
+  border:1px solid var(--line);
+  margin-bottom:14px;
+}
+
+/* heading */
+.title{
+  font-family:'Kanit';
+  font-size:clamp(30px,4.2vw,48px);
+  margin:0;
+  color:#c56a14;
+}
+.subtitle{
+  margin-top:10px;
+  color:var(--sub);
+  line-height:1.9;
+}
+
+/* options */
+.options{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.option{
+  padding:14px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#fff8e8;
+  cursor:pointer;
+  text-align:center;
+  font-weight:600;
+}
+.option.active{
+  background:linear-gradient(180deg, rgba(255,216,107,.25), rgba(255,216,107,.12));
+  color:#a7501c;
+}
+
+/* card */
+.card{
+  margin-top:20px;
+  padding:20px;
+  border-radius:20px;
+  background:var(--card);
+  box-shadow:0 16px 35px rgba(0,0,0,.05);
+  display:none;
+}
+.card.show{display:block;}
+.card h3{
+  margin:0 0 10px;
+  font-family:'Kanit';
+  color:#a7501c;
+}
+.card p{
+  line-height:1.9;
+  color:var(--sub);
+  white-space:pre-line;
+}
+
+/* CTA แยกชัด */
+.cta{
+  margin-top:22px;
+  padding:18px;
+  border-radius:18px;
+  background:#fffaf0;
+  border:1px solid var(--line);
+}
+.cta-title{
+  font-family:'Kanit';
+  font-size:20px;
+  color:#a7501c;
+}
+.cta-desc{
+  margin-top:6px;
+  color:var(--sub);
+  font-size:14px;
+}
+
+/* button */
+.btn{
+  margin-top:14px;
+  padding:14px 24px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(var(--gold1),var(--gold3));
+  color:white;
+  font-size:18px;
+  font-family:'Kanit';
+  cursor:pointer;
+}
+
+/* ===== Gong Overlay (CSS ล้วน) ===== */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(6px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  opacity:0;
+  pointer-events:none;
+  transition:.35s;
+  z-index:999;
+}
+.overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* gong */
+.gong{
+  width:240px;
+  height:240px;
+  border-radius:50%;
+  background:radial-gradient(circle,#ffd86b,#c98a12);
+  box-shadow:0 0 60px gold;
+  position:relative;
+}
+.gong::after{
+  content:"";
+  width:56px;height:56px;
+  background:#7a4d00;
+  border-radius:50%;
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+}
+
+/* stick */
+.stick{
+  width:180px;
+  height:14px;
+  background:#8b5a2b;
+  position:absolute;
+  right:-160px;
+  top:110px;
+  transform:rotate(-30deg);
   transform-origin:left center;
 }
 
-/* glow effect */
+/* glow */
 .glow{
   position:absolute;
-  width:250px;
-  height:250px;
+  width:260px;height:260px;
   border-radius:50%;
-  background:radial-gradient(circle,rgba(255,220,120,.5),transparent);
+  background:radial-gradient(circle,rgba(255,220,120,.6),transparent);
   opacity:0;
 }
 
 /* animation */
-.play .stick{
-  animation:hit .4s ease 3;
-}
-
-.play .gong{
-  animation:shake .4s ease 3;
-}
-
-.play .glow{
-  animation:flash .4s ease 3;
-}
+.play .stick{animation:hit .45s ease 3;}
+.play .gong{animation:shake .45s ease 3;}
+.play .glow{animation:flash .45s ease 3;}
 
 @keyframes hit{
   0%{transform:rotate(-30deg);}
-  50%{transform:rotate(10deg);}
+  50%{transform:rotate(12deg);}
   100%{transform:rotate(-30deg);}
 }
-
 @keyframes shake{
   0%{transform:translateX(0);}
   25%{transform:translateX(-6px);}
@@ -292,23 +505,26 @@ h1{
   75%{transform:translateX(-6px);}
   100%{transform:translateX(0);}
 }
-
 @keyframes flash{
   0%{opacity:0;}
   50%{opacity:1;}
   100%{opacity:0;}
 }
-
 @keyframes float{
   0%,100%{transform:translateY(0)}
   50%{transform:translateY(-10px)}
 }
 
-.text-overlay{
+.overlay-text{
   margin-top:20px;
-  font-size:18px;
   color:#8a6a4d;
   text-align:center;
+  font-size:16px;
+}
+
+@media(max-width:900px){
+  .main{grid-template-columns:1fr}
+  .left img{width:60%;max-width:300px;}
 }
 </style>
 </head>
@@ -317,24 +533,39 @@ h1{
 
 <div class="main">
 
+<!-- LEFT -->
 <div class="left">
-  <img src="../images/tiangong.png">
+  <img src="../images/tiangong.png" alt="เทพฟ้าดิน">
 </div>
 
+<!-- RIGHT -->
 <div class="right">
 
-<h1>เทพฟ้าดิน</h1>
+<a href="deities.html" class="back">← กลับหน้าองค์เทพ</a>
 
-<div class="option" onclick="selectWish('สมดุล')">สมดุล</div>
-<div class="option" onclick="selectWish('ราบรื่น')">ราบรื่น</div>
-<div class="option" onclick="selectWish('ชัดเจน')">ชัดเจน</div>
-<div class="option" onclick="selectWish('แรงใจ')">แรงใจ</div>
+<h1 class="title">เทพฟ้าดิน</h1>
+<p class="subtitle">
+อธิษฐานไม่ใช่เพื่อขอ แต่เพื่อให้บางอย่างกับชีวิต  
+เลือกสิ่งที่อยากตั้งใจ แล้วปล่อยให้ใจค่อยๆ กลับสู่สมดุล
+</p>
+
+<div class="options">
+  <div class="option" onclick="selectWish(this,'สมดุล')">สมดุล</div>
+  <div class="option" onclick="selectWish(this,'ราบรื่น')">ราบรื่น</div>
+  <div class="option" onclick="selectWish(this,'ชัดเจน')">ชัดเจน</div>
+  <div class="option" onclick="selectWish(this,'แรงใจ')">แรงใจ</div>
+</div>
 
 <div class="card" id="card">
-<h3 id="title"></h3>
-<p id="text"></p>
+  <h3 id="title"></h3>
+  <p id="text"></p>
+</div>
 
-<button class="btn" onclick="playGong()">ตีฆ้อง</button>
+<!-- CTA แยกชัด -->
+<div class="cta">
+  <div class="cta-title">ตีฆ้องเพื่อส่งคำอธิษฐาน</div>
+  <div class="cta-desc">เมื่อพร้อมแล้ว กดเพื่อส่งสิ่งที่ตั้งใจไปถึงฟ้าดิน</div>
+  <button class="btn" onclick="playGong()">ตีฆ้อง 3 ครั้ง</button>
 </div>
 
 </div>
@@ -347,45 +578,39 @@ h1{
     <div class="gong"></div>
     <div class="stick"></div>
   </div>
-  <div class="text-overlay">กำลังส่งคำอธิษฐานไปถึงฟ้าดิน...</div>
+  <div class="overlay-text">กำลังส่งคำอธิษฐานไปถึงฟ้าดิน...</div>
 </div>
 
 <audio id="sound" src="../audio/gong.mp3"></audio>
 
 <script>
-
 const data={
-'สมดุล':`วันนี้อาจมีหลายสิ่งที่ยังไม่ลงตัว  
-แต่ขอให้ใจค่อยๆกลับมาอยู่ในจุดที่พอดี  
+'สมดุล':`วันนี้อาจมีหลายสิ่งที่ยังไม่ลงตัว
+แต่ขอให้ใจค่อยๆกลับมาอยู่ในจุดที่พอดี
 
-ไม่ต้องเร่ง ไม่ต้องฝืน  
-ปล่อยให้ทุกอย่างค่อยๆคลี่คลาย  
+ไม่ต้องเร่ง ไม่ต้องฝืน
+ปล่อยให้ทุกอย่างค่อยๆคลี่คลาย
 
-สิ่งที่หนักจะเบาลง  
-สิ่งที่สับสนจะชัดขึ้น  
+สิ่งที่หนักจะเบาลง
+สิ่งที่สับสนจะชัดขึ้น
 และชีวิตจะกลับมาอยู่ในจังหวะของมันเอง`,
 
-'ราบรื่น':`ขอให้ทุกสิ่งที่กำลังทำ  
-ค่อยๆดำเนินไปอย่างราบรื่น  
+'ราบรื่น':`ขอให้ทุกสิ่งค่อยๆดำเนินไปอย่างราบรื่น
+ปัญหาคลี่คลาย อุปสรรคเบาลง
+และเส้นทางค่อยๆเปิดออก`,
 
-ปัญหาจะคลี่คลาย  
-อุปสรรคจะเบาลง  
-และเส้นทางจะเปิดออกทีละนิด`,
-
-'ชัดเจน':`สิ่งที่สับสนจะค่อยๆชัดขึ้น  
-เมื่อใจนิ่งพอ  
-
-คำตอบที่ตามหา  
-จะค่อยๆปรากฏ  
+'ชัดเจน':`เมื่อใจนิ่งพอ
+สิ่งที่สับสนจะค่อยๆชัดขึ้น
 และนำทางไปในทิศที่ถูกต้อง`,
 
-'แรงใจ':`แม้วันนี้จะเหนื่อย  
-แต่ขอให้ยังมีแรงก้าวต่อ  
+'แรงใจ':`แม้วันนี้จะเหนื่อย
+แต่ขอให้ยังมีแรงก้าวต่อ
+หัวใจยังไม่ยอมแพ้`};
 
-หัวใจยังไม่ยอมแพ้  
-และยังเชื่อในเส้นทางของตัวเอง`};
+function selectWish(el,t){
+document.querySelectorAll('.option').forEach(o=>o.classList.remove('active'));
+el.classList.add('active');
 
-function selectWish(t){
 card.classList.add('show');
 title.innerText=t;
 text.innerText=data[t];
@@ -393,13 +618,12 @@ text.innerText=data[t];
 
 function playGong(){
 overlay.classList.add('show','play');
-sound.play();
+try{sound.currentTime=0; sound.play();}catch(e){}
 
 setTimeout(()=>{
 overlay.classList.remove('show','play');
-},3000);
+},3200);
 }
-
 </script>
 
 </body>
