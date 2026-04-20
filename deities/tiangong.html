@@ -48,85 +48,681 @@ body::before{
 }
 
 /* รูป */
-.god{
-  position:relative;
-  width:260px;
-  animation:float 5s ease-in-out infinite;
-}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เทพฟ้าดิน · เทียนกง</title>
 
-.god img{
-  width:100%;
-  filter:
-    drop-shadow(0 0 20px rgba(255,200,100,.4))
-    drop-shadow(0 10px 25px rgba(0,0,0,.2));
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-/* ข้อความ */
-.title{
-  font-family:'Kanit',sans-serif;
-  font-size:32px;
-  margin-top:20px;
-  color:#c56a14;
-}
+  <style>
+    :root{
+      --gold-1:#ffd86b;
+      --gold-2:#f0bc3f;
+      --gold-3:#d88d14;
+      --gold-soft:rgba(240,188,63,.14);
+      --ink:#5b3b22;
+      --sub:#8a6a4d;
+      --bg:#fffdfa;
+      --line:rgba(216,141,20,.14);
+      --orange:#b14c16;
+      --orange-2:#cf7d08;
+      --card-bg:rgba(255,255,255,.78);
+    }
 
-.subtitle{
-  margin-top:12px;
-  font-size:16px;
-  color:#8a6a4d;
-}
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      background:#fff;
+      color:var(--ink);
+      font-family:'Prompt',sans-serif;
+      overflow-x:hidden;
+    }
 
-/* ปุ่ม */
-.btn{
-  margin-top:30px;
-  padding:14px 28px;
-  border-radius:30px;
-  border:none;
-  font-size:18px;
-  background:linear-gradient(45deg,#ffd86b,#d88d14);
-  color:white;
-  cursor:pointer;
-  animation:pulse 2.5s infinite;
-}
+    body{
+      background:
+        radial-gradient(circle at 14% 10%, rgba(255,220,140,.18), transparent 20%),
+        radial-gradient(circle at 86% 12%, rgba(255,182,120,.12), transparent 18%),
+        radial-gradient(circle at 50% 85%, rgba(255,215,145,.16), transparent 24%),
+        linear-gradient(180deg,#ffffff 0%, #fffdf8 100%);
+    }
 
-/* animation */
-@keyframes float{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-  100%{transform:translateY(0)}
-}
+    .page{
+      min-height:100vh;
+      position:relative;
+      overflow:hidden;
+    }
 
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.05)}
-  100%{transform:scale(1)}
-}
+    .sparkles,
+    .sparkles::before,
+    .sparkles::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        radial-gradient(circle, rgba(255,210,110,.95) 0 1px, transparent 1.7px),
+        radial-gradient(circle, rgba(255,188,86,.75) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(255,233,180,.95) 0 1px, transparent 1.6px);
+      background-size:180px 180px, 240px 240px, 300px 300px;
+      background-position:12% 18%, 82% 24%, 46% 76%;
+      opacity:.38;
+      animation:twinkle 8s linear infinite;
+    }
+    .sparkles::before{opacity:.22;transform:rotate(8deg) scale(1.06)}
+    .sparkles::after{opacity:.16;transform:rotate(-8deg) scale(1.12)}
 
-</style>
+    .coin{
+      position:absolute;
+      width:24px;height:24px;border-radius:50%;
+      background:radial-gradient(circle at 35% 35%, #fff3b7, #f1be47 62%, #cf8610);
+      box-shadow:inset 0 0 0 4px rgba(255,230,140,.45),0 4px 10px rgba(216,141,20,.18);
+      opacity:.75;pointer-events:none;animation:drift 10s ease-in-out infinite;
+    }
+    .coin.c1{top:10%;left:9%}
+    .coin.c2{top:18%;right:12%;animation-delay:1.5s}
+    .coin.c3{bottom:18%;left:14%;animation-delay:2.7s}
+
+    .container{
+      width:min(1080px, 100%);
+      margin:0 auto;
+      padding:24px 16px 40px;
+      position:relative;
+      z-index:2;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .back-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      text-decoration:none;
+      color:#b77310;
+      font-weight:500;
+      font-size:14px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,206,112,.10);
+      border:1px solid rgba(216,141,20,.12);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(255,206,112,.11);
+      border:1px solid rgba(216,141,20,.12);
+      color:#b77310;
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 360px 1fr;
+      gap:26px;
+      align-items:center;
+      margin-bottom:22px;
+    }
+
+    .art-card,
+    .panel,
+    .blessing-card{
+      background:var(--card-bg);
+      border:1px solid rgba(216,141,20,.10);
+      box-shadow:0 16px 35px rgba(216,141,20,.10);
+      border-radius:30px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .art-card{
+      padding:22px 16px 18px;
+      text-align:center;
+    }
+
+    .art-wrap{
+      position:relative;
+      min-height:360px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .art-wrap::before{
+      content:"";
+      position:absolute;
+      inset:12% 10% 18%;
+      background:radial-gradient(circle, rgba(255,196,74,.30), rgba(255,196,74,.08) 45%, transparent 72%);
+      filter:blur(28px);
+    }
+
+    .art-wrap img{
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width:260px;
+      display:block;
+      filter:drop-shadow(0 8px 18px rgba(245,188,57,.20)) drop-shadow(0 16px 30px rgba(198,129,15,.16));
+      animation:float 5s ease-in-out infinite;
+    }
+
+    .hero-text{
+      padding:6px 4px;
+    }
+
+    .zh-tag{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(255,216,107,.13);
+      border:1px solid rgba(216,141,20,.12);
+      color:#b77310;
+      font-size:13px;
+      font-weight:600;
+      margin-bottom:10px;
+    }
+
+    .title{
+      margin:0 0 10px;
+      font-family:'Kanit',sans-serif;
+      font-size:clamp(30px,4.6vw,52px);
+      line-height:1.08;
+      font-weight:800;
+      color:var(--orange);
+      letter-spacing:-.02em;
+    }
+
+    .title span{
+      display:block;
+      color:var(--orange-2);
+      margin-top:4px;
+    }
+
+    .subtitle{
+      margin:0 0 16px;
+      font-size:16px;
+      line-height:1.9;
+      color:var(--sub);
+      max-width:620px;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .chip{
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(255,216,107,.13);
+      border:1px solid rgba(216,141,20,.12);
+      color:#9a6b33;
+      font-size:14px;
+      font-weight:500;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .panel{
+      padding:22px 18px;
+    }
+
+    .section-title{
+      margin:0 0 12px;
+      font-family:'Kanit',sans-serif;
+      font-size:24px;
+      color:#a7501c;
+    }
+
+    .lead{
+      margin:0 0 16px;
+      font-size:15px;
+      color:var(--sub);
+      line-height:1.85;
+    }
+
+    .options{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .option{
+      border:none;
+      border-radius:18px;
+      padding:16px 14px;
+      background:#fffaf0;
+      border:1px solid rgba(216,141,20,.12);
+      font-family:'Prompt',sans-serif;
+      font-size:15px;
+      font-weight:600;
+      color:#8b5a28;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .option:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 20px rgba(216,141,20,.08);
+    }
+
+    .option.active{
+      background:linear-gradient(180deg, rgba(255,216,107,.24), rgba(255,216,107,.12));
+      border-color:rgba(216,141,20,.24);
+      color:#a7501c;
+    }
+
+    .rules{
+      list-style:none;
+      padding:0;
+      margin:10px 0 0;
+      display:grid;
+      gap:10px;
+    }
+
+    .rules li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      font-size:15px;
+      color:var(--sub);
+      line-height:1.8;
+      padding:12px 12px;
+      border-radius:16px;
+      background:#fffaf0;
+      border:1px solid rgba(216,141,20,.10);
+    }
+
+    .rules b{
+      color:#b14c16;
+      font-family:'Kanit',sans-serif;
+      font-weight:700;
+      min-width:26px;
+    }
+
+    .blessing-card{
+      margin-top:18px;
+      padding:22px 18px 20px;
+      display:none;
+    }
+
+    .blessing-card.show{
+      display:block;
+      animation:fadeUp .35s ease;
+    }
+
+    .blessing-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .blessing-title{
+      margin:0;
+      font-family:'Kanit',sans-serif;
+      font-size:24px;
+      color:#a7501c;
+    }
+
+    .blessing-mark{
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(255,216,107,.13);
+      border:1px solid rgba(216,141,20,.12);
+      color:#b77310;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .blessing-main{
+      font-family:'Kanit',sans-serif;
+      font-size:28px;
+      line-height:1.3;
+      color:#c26a10;
+      margin:6px 0 10px;
+    }
+
+    .blessing-text{
+      font-size:16px;
+      line-height:1.9;
+      color:var(--sub);
+      margin:0 0 14px;
+    }
+
+    .blessing-note{
+      font-size:14px;
+      color:#9a6b33;
+      padding:12px 14px;
+      border-radius:16px;
+      background:#fffaf0;
+      border:1px solid rgba(216,141,20,.10);
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-width:180px;
+      padding:14px 24px;
+      border:0;
+      border-radius:999px;
+      text-decoration:none;
+      font-size:18px;
+      font-weight:800;
+      font-family:'Kanit',sans-serif;
+      cursor:pointer;
+      transition:.25s;
+    }
+
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(180deg,var(--gold-1),var(--gold-2) 55%,var(--gold-3));
+      box-shadow:0 14px 30px rgba(216,141,20,.24), inset 0 2px 0 rgba(255,255,255,.55);
+      animation:pulse 2.8s ease-in-out infinite;
+    }
+
+    .btn-secondary{
+      color:#9a6b33;
+      background:rgba(255,216,107,.13);
+      border:1px solid rgba(216,141,20,.12);
+    }
+
+    .btn:hover{
+      transform:translateY(-2px) scale(1.01);
+    }
+
+    .mini-line{
+      margin-top:24px;
+      text-align:center;
+      font-size:13px;
+      color:#b1844d;
+      letter-spacing:.02em;
+    }
+
+    .mini-line .dot{
+      display:inline-block;
+      width:5px;
+      height:5px;
+      margin:0 8px;
+      border-radius:50%;
+      background:rgba(216,141,20,.45);
+      vertical-align:middle;
+    }
+
+    @keyframes float{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+
+    @keyframes pulse{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.035)}
+    }
+
+    @keyframes drift{
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-12px) rotate(8deg)}
+    }
+
+    @keyframes twinkle{
+      0%,100%{opacity:.35}
+      50%{opacity:.62}
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    @media (max-width: 900px){
+      .hero{
+        grid-template-columns:1fr;
+        gap:14px;
+      }
+      .layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 640px){
+      .container{padding:20px 14px 34px}
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .art-wrap{
+        min-height:280px;
+      }
+      .art-wrap img{
+        max-width:210px;
+      }
+      .title{
+        font-size:34px;
+      }
+      .subtitle,.lead,.rules li,.blessing-text{
+        font-size:14px;
+      }
+      .section-title,.blessing-title{
+        font-size:22px;
+      }
+      .blessing-main{
+        font-size:24px;
+      }
+      .options{
+        grid-template-columns:1fr;
+      }
+      .btn{
+        width:100%;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="page">
+    <div class="sparkles"></div>
+    <div class="coin c1"></div>
+    <div class="coin c2"></div>
+    <div class="coin c3"></div>
 
-<div class="container">
+    <div class="container">
+      <div class="topbar">
+        <a class="back-link" href="deities.html">← กลับหน้าเลือกองค์เทพ</a>
+        <div class="badge">✨ 天地公 · จุดเริ่มต้นของความสมดุล</div>
+      </div>
 
-  <div class="glow"></div>
+      <section class="hero">
+        <div class="art-card">
+          <div class="art-wrap">
+            <img src="images/tiangong.png" alt="เทพฟ้าดิน">
+          </div>
+        </div>
 
-  <div class="god">
-    <img src="images/tiangong.png">
-  </div>
+        <div class="hero-text">
+          <div class="zh-tag">天地公</div>
+          <h1 class="title">
+            เทพฟ้าดิน
+            <span>อธิษฐาน…ไม่ใช่เพื่อขอ</span>
+          </h1>
+          <p class="subtitle">
+            แต่เพื่อให้บางอย่างกับชีวิต หน้านี้จึงไม่ได้มีแค่การมองดู แต่เป็นพื้นที่สำหรับตั้งใจ ทบทวน และเริ่มต้นให้ใจกลับมาอยู่ในจังหวะที่สมดุลอีกครั้ง
+          </p>
 
-  <div class="title">
-    อธิษฐาน…ไม่ใช่เพื่อขอ
-  </div>
+          <div class="chips">
+            <div class="chip">สมดุล</div>
+            <div class="chip">ราบรื่น</div>
+            <div class="chip">มั่นคง</div>
+          </div>
 
-  <div class="subtitle">
-    แต่เพื่อให้บางอย่างกับชีวิต
-  </div>
+          <div class="actions">
+            <button class="btn btn-primary" id="startBlessingBtn">เริ่มอธิษฐาน</button>
+            <a class="btn btn-secondary" href="virtual-tour.html">เข้าสู่ Virtual Tour</a>
+          </div>
+        </div>
+      </section>
 
-  <button class="btn">
-    ตั้งใจ
-  </button>
+      <section class="layout">
+        <div class="panel">
+          <h2 class="section-title">ขอพลังด้านไหนในวันนี้</h2>
+          <p class="lead">
+            เลือกเพียงหนึ่งอย่าง แล้วปล่อยให้คำอธิษฐานของวันนี้กลายเป็นการย้ำกับตัวเองว่า สิ่งสำคัญยังอยู่ตรงนี้
+          </p>
 
-</div>
+          <div class="options" id="wishOptions">
+            <button class="option" data-type="balance">ความสมดุล</button>
+            <button class="option" data-type="smooth">ความราบรื่น</button>
+            <button class="option" data-type="focus">ความชัดเจน</button>
+            <button class="option" data-type="strength">แรงใจ</button>
+          </div>
+        </div>
 
+        <div class="panel">
+          <h2 class="section-title">ก่อนอธิษฐาน</h2>
+          <ul class="rules">
+            <li><b>1</b><span>หยุดใจให้ช้าลงสักนิด ก่อนเริ่มต้น ไม่จำเป็นต้องรีบ</span></li>
+            <li><b>2</b><span>เลือกเพียงเรื่องเดียวที่อยากตั้งใจในวันนี้ เพื่อให้ใจชัดขึ้น</span></li>
+            <li><b>3</b><span>อธิษฐานด้วยความสงบ ไม่ใช่เพื่อขอ แต่เพื่อมอบบางอย่างให้ชีวิต</span></li>
+            <li><b>4</b><span>เมื่อจบแล้ว ค่อยก้าวต่อไปในสิ่งที่ตั้งใจไว้จริงๆ</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="blessing-card" id="blessingCard">
+        <div class="blessing-top">
+          <h3 class="blessing-title">การ์ดอธิษฐานของวันนี้</h3>
+          <div class="blessing-mark" id="blessingMark">和</div>
+        </div>
+
+        <div class="blessing-main" id="blessingMain">
+          ขอให้ใจกลับมาอยู่ในจังหวะที่พอดี
+        </div>
+
+        <p class="blessing-text" id="blessingText">
+          บางอย่างไม่ต้องเร่งให้เกิดขึ้นทันที แค่ค่อยๆ วางใจให้มั่น แล้วปล่อยให้ฟ้าและดินพาชีวิตกลับสู่ความสมดุล
+        </p>
+
+        <div class="blessing-note" id="blessingNote">
+          คำตั้งใจของวันนี้: สมดุล
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="regenerateBtn">เปลี่ยนคำอธิษฐาน</button>
+          <a class="btn btn-secondary" href="virtual-tour.html">ไปต่อใน Virtual Tour</a>
+        </div>
+      </section>
+
+      <div class="mini-line">
+        ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น
+        <span class="dot"></span>
+        Tiangong
+        <span class="dot"></span>
+        Story & Faith
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const blessingData = {
+      balance: {
+        mark: '和',
+        label: 'สมดุล',
+        main: 'ขอให้ใจกลับมาอยู่ในจังหวะที่พอดี',
+        text: 'บางอย่างไม่ต้องเร่งให้เกิดขึ้นทันที แค่ค่อยๆ วางใจให้มั่น แล้วปล่อยให้ฟ้าและดินพาชีวิตกลับสู่ความสมดุล'
+      },
+      smooth: {
+        mark: '順',
+        label: 'ราบรื่น',
+        main: 'ขอให้สิ่งที่กำลังเริ่ม ค่อยๆ คลี่คลายอย่างราบรื่น',
+        text: 'ไม่ใช่ทุกเส้นทางจะง่าย แต่ทุกก้าวที่เดินอย่างมีสติ ย่อมพาชีวิตไปในทางที่เบาลงและชัดขึ้น'
+      },
+      focus: {
+        mark: '明',
+        label: 'ชัดเจน',
+        main: 'ขอให้ใจมองเห็นสิ่งสำคัญได้ชัดขึ้น',
+        text: 'เมื่อใจนิ่งพอ สิ่งที่เคยสับสนจะค่อยๆ คลายตัวลง และคำตอบที่ตามหาอาจอยู่ใกล้กว่าที่คิด'
+      },
+      strength: {
+        mark: '定',
+        label: 'แรงใจ',
+        main: 'ขอให้ยังมีแรงไปต่อในสิ่งที่ตั้งใจ',
+        text: 'บางวันอาจเหนื่อย บางวันอาจเงียบ แต่แรงใจที่ค่อยๆ ถูกเติมกลับมา จะพาชีวิตผ่านวันเหล่านั้นไปได้'
+      }
+    };
+
+    const options = document.querySelectorAll('.option');
+    const blessingCard = document.getElementById('blessingCard');
+    const blessingMark = document.getElementById('blessingMark');
+    const blessingMain = document.getElementById('blessingMain');
+    const blessingText = document.getElementById('blessingText');
+    const blessingNote = document.getElementById('blessingNote');
+    const startBlessingBtn = document.getElementById('startBlessingBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+
+    let currentType = 'balance';
+
+    function setBlessing(type){
+      currentType = type;
+      const data = blessingData[type];
+      blessingMark.textContent = data.mark;
+      blessingMain.textContent = data.main;
+      blessingText.textContent = data.text;
+      blessingNote.textContent = 'คำตั้งใจของวันนี้: ' + data.label;
+      blessingCard.classList.add('show');
+
+      options.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.type === type);
+      });
+
+      blessingCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    options.forEach(btn => {
+      btn.addEventListener('click', () => setBlessing(btn.dataset.type));
+    });
+
+    startBlessingBtn.addEventListener('click', () => {
+      setBlessing(currentType);
+    });
+
+    regenerateBtn.addEventListener('click', () => {
+      const keys = Object.keys(blessingData);
+      const next = keys[Math.floor(Math.random() * keys.length)];
+      setBlessing(next);
+    });
+  </script>
 </body>
 </html>
