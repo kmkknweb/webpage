@@ -1,0 +1,24 @@
+{
+  "name": "ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น",
+  "short_name": "ศาลเจ้า",
+  "description": "เว็บศาลเจ้าปึงเถ่ากงม่า ขอนแก่น สำหรับข้อมูลองค์เทพ กิจกรรม และการร่วมทำบุญ",
+  "start_url": "/webpage/index.html",
+  "scope": "/webpage/",
+  "display": "standalone",
+  "background_color": "#fffdf8",
+  "theme_color": "#d88d14",
+  "icons": [
+    {
+      "src": "/webpage/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/webpage/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
