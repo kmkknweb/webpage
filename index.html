@@ -292,6 +292,87 @@
       .ornament{width:150px;height:150px}
     }
 
+/* ===== SOCIAL FOLLOW BAR ===== */
+.social-follow{
+  margin: 18px auto 0;
+  padding: 18px 16px;
+  max-width: 980px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,216,107,.18), rgba(255,255,255,.92));
+  border: 1px solid rgba(216,141,20,.14);
+  box-shadow: 0 14px 30px rgba(216,141,20,.10);
+  text-align: center;
+}
+
+.social-follow-title{
+  margin: 0 0 12px;
+  font-family: 'Kanit', sans-serif;
+  font-size: 22px;
+  color: #a7501c;
+}
+
+.social-follow-links{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.social-link{
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 26px;
+  color: #fff;
+  transition: .2s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,.10);
+}
+
+.social-link:hover{
+  transform: translateY(-3px) scale(1.04);
+}
+
+.social-facebook{
+  background: #1877f2;
+}
+
+.social-tiktok{
+  background: #111111;
+}
+
+.social-youtube{
+  background: #ff0000;
+}
+
+.social-line{
+  background: #06c755;
+}
+
+@media (max-width: 640px){
+  .social-follow{
+    margin: 16px 14px 0;
+    padding: 16px 12px;
+    border-radius: 20px;
+  }
+
+  .social-follow-title{
+    font-size: 20px;
+  }
+
+  .social-link{
+    width: 52px;
+    height: 52px;
+    font-size: 23px;
+  }
+}
+
+
+    
   </style>
 </head>
 <body>
@@ -335,6 +416,27 @@
           Story & Faith
         </div>
       </div>
+    </section>
+    <section class="social-follow">
+  <h2 class="social-follow-title">ติดตามกิจกรรมศาลเจ้าได้ที่</h2>
+
+  <div class="social-follow-links">
+    <a class="social-link social-facebook" href="PASTE_FACEBOOK_LINK" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+      <i class="fa-brands fa-facebook-f"></i>
+    </a>
+
+    <a class="social-link social-tiktok" href="PASTE_TIKTOK_LINK" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+      <i class="fa-brands fa-tiktok"></i>
+    </a>
+
+    <a class="social-link social-youtube" href="PASTE_YOUTUBE_LINK" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+      <i class="fa-brands fa-youtube"></i>
+    </a>
+
+    <a class="social-link social-line" href="PASTE_LINE_OA_LINK" target="_blank" rel="noopener noreferrer" aria-label="LINE Official">
+      <i class="fa-brands fa-line"></i>
+    </a>
+  </div>
     </section>
   </main>
 </body>
