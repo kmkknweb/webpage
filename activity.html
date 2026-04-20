@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>กิจกรรมของศาลเจ้า</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold-1:#ffd86b;
+      --gold-2:#f0bc3f;
+      --gold-3:#d88d14;
+      --ink:#5b3b22;
+      --sub:#8a6a4d;
+      --line:rgba(216,141,20,.14);
+      --orange:#b14c16;
+      --orange-2:#cf7d08;
+      --card-bg:rgba(255,255,255,.86);
+      --shadow:0 16px 35px rgba(216,141,20,.10);
+      --shadow-soft:0 10px 28px rgba(0,0,0,.05);
+    }
+
+    *{ box-sizing:border-box; }
+
+    html,body{
+      margin:0;
+      padding:0;
+      font-family:'Prompt',sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 14% 10%, rgba(255,220,140,.18), transparent 20%),
+        radial-gradient(circle at 86% 12%, rgba(255,182,120,.12), transparent 18%),
+        radial-gradient(circle at 50% 85%, rgba(255,215,145,.16), transparent 24%),
+        linear-gradient(180deg,#ffffff 0%, #fffdf8 100%);
+      overflow-x:hidden;
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      overflow-x:hidden;
+      overflow-y:visible;
+    }
+
+    .container{
+      width:min(1120px, 100%);
+      margin:0 auto;
+      padding:24px 16px 56px;
+      position:relative;
+      z-index:2;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+
+    .back-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      text-decoration:none;
+      color:#b77310;
+      font-size:14px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,206,112,.10);
+      border:1px solid rgba(216,141,20,.12);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(255,206,112,.11);
+      border:1px solid rgba(216,141,20,.12);
+      color:#b77310;
+      font-size:13px;
+    }
+
+    .hero{
+      text-align:center;
+      margin-bottom:24px;
+    }
+
+    .hero-title{
+      margin:8px auto 8px;
+      max-width:920px;
+      font-family:'Kanit',sans-serif;
+      font-size:clamp(30px, 5.6vw, 52px);
+      line-height:1.08;
+      font-weight:800;
+      color:var(--orange);
+      letter-spacing:-.02em;
+    }
+
+    .hero-title span{
+      display:block;
+      color:var(--orange-2);
+      margin-top:4px;
+    }
+
+    .hero-subtitle{
+      max-width:760px;
+      margin:0 auto;
+      color:var(--sub);
+      line-height:1.85;
+      font-size:16px;
+    }
+
+    .panel{
+      background:var(--card-bg);
+      border:1px solid rgba(216,141,20,.10);
+      box-shadow:var(--shadow);
+      border-radius:30px;
+      padding:22px 18px 24px;
+      margin-bottom:18px;
+    }
+
+    .panel-title{
+      margin:0 0 8px;
+      font-family:'Kanit',sans-serif;
+      font-size:26px;
+      color:#a7501c;
+    }
+
+    .panel-desc{
+      margin:0 0 16px;
+      color:var(--sub);
+      line-height:1.85;
+      font-size:15px;
+    }
+
+    .feature-card{
+      border-radius:26px;
+      background:linear-gradient(180deg, rgba(255,216,107,.18), rgba(255,255,255,.96));
+      border:1px solid rgba(216,141,20,.16);
+      padding:20px 18px;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .feature-badge{
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(255,216,107,.15);
+      border:1px solid rgba(216,141,20,.12);
+      color:#b77310;
+      font-size:13px;
+      font-weight:600;
+      margin-bottom:10px;
+    }
+
+    .feature-title{
+      margin:0 0 8px;
+      font-family:'Kanit',sans-serif;
+      font-size:28px;
+      color:#a7501c;
+    }
+
+    .feature-text{
+      margin:0;
+      color:var(--sub);
+      line-height:1.9;
+      font-size:15px;
+    }
+
+    .news-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .news-card{
+      background:#fff;
+      border:1px solid rgba(216,141,20,.10);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:var(--shadow-soft);
+      transition:.2s ease;
+    }
+
+    .news-card:hover{
+      transform:translateY(-3px);
+    }
+
+    .news-thumb{
+      height:170px;
+      background:linear-gradient(135deg, rgba(255,216,107,.28), rgba(255,248,229,.95));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#b1844d;
+      font-family:'Kanit',sans-serif;
+      font-size:18px;
+    }
+
+    .news-body{
+      padding:14px;
+    }
+
+    .news-date{
+      font-size:13px;
+      color:#b1844d;
+      margin-bottom:6px;
+    }
+
+    .news-title{
+      margin:0 0 8px;
+      font-family:'Kanit',sans-serif;
+      font-size:21px;
+      color:#a7501c;
+      line-height:1.3;
+    }
+
+    .news-text{
+      margin:0;
+      color:var(--sub);
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .quick-links{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .quick-card{
+      border-radius:22px;
+      background:#fffaf0;
+      border:1px solid rgba(216,141,20,.10);
+      padding:18px 16px;
+      text-decoration:none;
+      color:inherit;
+      box-shadow:var(--shadow-soft);
+      transition:.2s ease;
+    }
+
+    .quick-card:hover{
+      transform:translateY(-3px);
+    }
+
+    .quick-title{
+      margin:0 0 8px;
+      font-family:'Kanit',sans-serif;
+      font-size:22px;
+      color:#a7501c;
+    }
+
+    .quick-text{
+      margin:0;
+      color:var(--sub);
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .mini-line{
+      margin-top:28px;
+      text-align:center;
+      font-size:13px;
+      color:#b1844d;
+      letter-spacing:.02em;
+    }
+
+    .mini-line .dot{
+      display:inline-block;
+      width:5px;
+      height:5px;
+      margin:0 8px;
+      border-radius:50%;
+      background:rgba(216,141,20,.45);
+      vertical-align:middle;
+    }
+
+    @media (max-width: 900px){
+      .news-grid,
+      .quick-links{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="container">
+      <div class="topbar">
+        <a class="back-link" href="#" onclick="history.back(); return false;">← กลับหน้าก่อนหน้า</a>
+        <div class="badge">✨ Activity · Events · Updates</div>
+      </div>
+
+      <section class="hero">
+        <h1 class="hero-title">
+          กิจกรรมของศาลเจ้า
+          <span>ติดตามความเคลื่อนไหวและกิจกรรมสำคัญ</span>
+        </h1>
+        <p class="hero-subtitle">
+          รวมกิจกรรมประจำ กิจกรรมพิเศษ และข่าวความเคลื่อนไหวของศาลเจ้าไว้ในหน้าเดียว
+          เพื่อให้ติดตามได้ง่ายและเข้าถึงได้สะดวก
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel-title">กิจกรรมประจำ</h2>
+        <p class="panel-desc">
+          ส่วนนี้เป็นกิจกรรมที่จัดอย่างต่อเนื่องตลอดทั้งปี เพื่อให้ผู้มาเยือนได้รับรู้และร่วมมีส่วนร่วมได้ง่าย
+        </p>
+
+        <div class="feature-card">
+          <div class="feature-badge">กิจกรรมประจำ</div>
+          <h3 class="feature-title">โรงทานทุกวันเสาร์แรกของเดือน</h3>
+          <p class="feature-text">
+            ศาลเจ้าจัดโรงทานเป็นประจำในทุกวันเสาร์แรกของเดือนตลอดทั้งปี
+            เพื่อส่งต่ออาหาร น้ำดื่ม และความอบอุ่นให้แก่ผู้มาร่วมกิจกรรมและผู้ที่มาเยือนศาลเจ้า
+            เป็นอีกหนึ่งกิจกรรมที่สะท้อนถึงน้ำใจ การแบ่งปัน และการร่วมสร้างกุศลร่วมกัน
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel-title">ข่าวและความเคลื่อนไหวล่าสุด</h2>
+        <p class="panel-desc">
+          ส่วนนี้สามารถใช้เป็นพื้นที่สำหรับแสดงข่าวสั้นหรือความเคลื่อนไหวล่าสุดของศาลเจ้า
+          โดยในอนาคตจะเชื่อมกับข้อมูลข่าวจาก Facebook ในรูปแบบการ์ดข่าว
+        </p>
+
+        <div class="news-grid">
+          <article class="news-card">
+            <div class="news-thumb">ข่าวกิจกรรม</div>
+            <div class="news-body">
+              <div class="news-date">อัปเดตล่าสุด</div>
+              <h3 class="news-title">หัวข้อข่าวกิจกรรมล่าสุด</h3>
+              <p class="news-text">
+                พื้นที่ตัวอย่างสำหรับข่าวจาก Facebook หรือประกาศกิจกรรมล่าสุดของศาลเจ้า
+              </p>
+            </div>
+          </article>
+
+          <article class="news-card">
+            <div class="news-thumb">ข่าวกิจกรรม</div>
+            <div class="news-body">
+              <div class="news-date">อัปเดตล่าสุด</div>
+              <h3 class="news-title">หัวข้อข่าวกิจกรรมล่าสุด</h3>
+              <p class="news-text">
+                พื้นที่ตัวอย่างสำหรับข่าวจาก Facebook หรือประกาศกิจกรรมล่าสุดของศาลเจ้า
+              </p>
+            </div>
+          </article>
+
+          <article class="news-card">
+            <div class="news-thumb">ข่าวกิจกรรม</div>
+            <div class="news-body">
+              <div class="news-date">อัปเดตล่าสุด</div>
+              <h3 class="news-title">หัวข้อข่าวกิจกรรมล่าสุด</h3>
+              <p class="news-text">
+                พื้นที่ตัวอย่างสำหรับข่าวจาก Facebook หรือประกาศกิจกรรมล่าสุดของศาลเจ้า
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel-title">ปุ่มลัด</h2>
+        <p class="panel-desc">
+          ใช้เป็นทางลัดไปยังหน้าที่เกี่ยวข้อง เช่น ร่วมทำบุญ หรือติดตามข่าวสารเพิ่มเติม
+        </p>
+
+        <div class="quick-links">
+          <a class="quick-card" href="donation.html">
+            <h3 class="quick-title">ร่วมทำบุญ</h3>
+            <p class="quick-text">ไปยังหน้าร่วมทำบุญเพื่อบำรุงศาลเจ้า หรือร่วมโรงทานของศาลเจ้า</p>
+          </a>
+
+          <a class="quick-card" href="PASTE_FACEBOOK_LINK" target="_blank" rel="noopener noreferrer">
+            <h3 class="quick-title">Facebook</h3>
+            <p class="quick-text">ติดตามข่าวสารและภาพกิจกรรมล่าสุดผ่าน Facebook ของศาลเจ้า</p>
+          </a>
+
+          <a class="quick-card" href="PASTE_LINE_LINK" target="_blank" rel="noopener noreferrer">
+            <h3 class="quick-title">LINE Official</h3>
+            <p class="quick-text">ติดตามประกาศและสอบถามข้อมูลเพิ่มเติมผ่าน LINE Official</p>
+          </a>
+        </div>
+
+        <div class="mini-line">
+          ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น
+          <span class="dot"></span>
+          Activity
+          <span class="dot"></span>
+          Community & Updates
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
