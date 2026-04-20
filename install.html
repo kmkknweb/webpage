@@ -161,22 +161,42 @@ function showHint(){
   }
 }
 </script>
-  <script>
+<script>
 let deferredPrompt = null;
+
+const btn = document.getElementById('installBtn');
+const hint = document.getElementById('hint');
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('./service-worker.js');
+      console.log('SW registered:', reg);
+    } catch (err) {
+      console.error('SW register failed:', err);
+      hint.textContent = 'Service worker ยังไม่พร้อม';
+    }
+  });
+}
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
+  console.log('beforeinstallprompt fired');
+  hint.textContent = 'พร้อมติดตั้งแล้ว';
 });
 
-function installApp(){
+btn.addEventListener('click', async () => {
   if (deferredPrompt) {
+    hint.textContent = 'กำลังเปิดหน้าติดตั้ง...';
     deferredPrompt.prompt();
+    const result = await deferredPrompt.userChoice;
+    hint.textContent = 'ผลลัพธ์: ' + result.outcome;
     deferredPrompt = null;
   } else {
-    alert("กรุณาเปิดผ่าน Chrome และเข้าเว็บ 2 รอบก่อนติดตั้ง");
+    hint.textContent = 'ยังไม่พร้อมติดตั้ง: ให้เปิดผ่าน Chrome, รีเฟรชใหม่, และเช็ก manifest/icon';
   }
-}
-  </script>
+});
+</script>
 </body>
 </html>
