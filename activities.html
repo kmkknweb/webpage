@@ -391,5 +391,14 @@
     document.getElementById('nextRongthan').textContent = formatThaiDate(getNextFirstSaturday());
     document.getElementById('nextKaechong').textContent = formatThaiDate(getNextFriday18()) + ' · 18:00 น.';
   </script>
+  <div id="nav-container"></div>
+
+<script>
+fetch('bottom-nav.html')
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById('nav-container').innerHTML = data;
+  });
+</script>
 </body>
 </html>
