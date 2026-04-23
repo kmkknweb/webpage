@@ -124,6 +124,13 @@
       .btn-main,.btn-soft{width:100%;}
     }
   </style>
+  <script>
+  if(window.self !== window.top){
+    document.addEventListener('DOMContentLoaded',()=>{
+      document.querySelectorAll('.back-link').forEach(el=>el.style.display='none');
+    });
+  }
+</script>
 </head>
 <body>
   <main class="page">
