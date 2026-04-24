@@ -768,21 +768,12 @@
         return;
       }
       await renderCertificateCanvas();
-
-const dataUrl = certificateCanvas.toDataURL('image/png');
-
-const newWindow = window.open();
-if (newWindow) {
-  newWindow.document.write(`
-    <html>
-      <body style="margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;">
-        <img src="${dataUrl}" style="max-width:100%;height:auto;display:block;">
-      </body>
-    </html>
-  `);
-} else {
-  alert('กรุณาเปิดใน Chrome หรือกดอนุญาต popup เพื่อบันทึกภาพ');
-    }
+const link = document.createElement('a');
+link.href = certificateCanvas.toDataURL('image/png');
+link.download = 'anumotana-certificate.png';
+document.body.appendChild(link);
+link.click();
+link.remove();
     });
 
     async function renderCertificateCanvas(){
