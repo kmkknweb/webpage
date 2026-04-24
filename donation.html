@@ -66,6 +66,21 @@
 
     /* QR / payment */
     .qr-wrap{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
+    .qr-left{
+  width:110px;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+}
+
+#qrNote{
+  font-size:11px;
+  color:var(--muted);
+  text-align:center;
+  line-height:1.5;
+}
     .qr-img{width:110px;height:110px;border-radius:14px;object-fit:contain;background:rgba(255,255,255,.06);border:1px solid var(--line);flex-shrink:0;}
     .meta-list{flex:1;display:flex;flex-direction:column;gap:8px;}
     .meta-item{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;padding:10px 12px;}
@@ -258,10 +273,17 @@
     <div class="card">
       <div class="card-kicker">STEP 2 · ช่องทางการโอน</div>
       <div class="card-title">สแกน QR หรือโอนตามข้อมูล</div>
+
+      
       <div class="qr-wrap">
-        <img class="qr-img" id="qrImage" src="images/qr-default.png" alt="QR Code">
-        <div id="qrNote" style="font-size:11px;color:var(--muted);text-align:center;margin-top:6px;"></div>
-        <div class="meta-list">
+  <div class="qr-left">
+    <img class="qr-img" id="qrImage" src="images/qr-default.png" alt="QR Code">
+    <div id="qrNote"></div>
+  </div>
+
+  <div class="meta-list">
+
+          
           <div class="meta-item">
             <div class="meta-label">ชื่อบัญชี</div>
             <div class="meta-value" id="accountName">ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</div>
