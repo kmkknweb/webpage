@@ -731,18 +731,44 @@
        DOWNLOAD CERTIFICATE AS PNG
     ========================================================== */
     downloadCertificateBtn.addEventListener('click', async () => {
-      if(!certificateReady){
-        alert('กรุณาสร้างใบอนุโมทนาบัตรก่อน');
-        return;
+  if(!certificateReady){
+    alert('กรุณาสร้างใบอนุโมทนาบัตรก่อน');
+    return;
+  }
+
+  await renderCertificateCanvas();
+
+  certificateCanvas.toBlob(async (blob) => {
+
+    // 👉 แชร์ก่อน (mobile app feel)
+    if (navigator.share && blob) {
+      try {
+        const file = new File([blob], 'anumotana-certificate.png', { type: 'image/png' });
+
+        await navigator.share({
+          files: [file],
+          title: 'ใบอนุโมทนาบัตร',
+          text: 'ร่วมอนุโมทนาบุญ 🙏'
+        });
+
+        return; // แชร์สำเร็จ จบเลย
+      } catch (e) {
+        // ผู้ใช้กดยกเลิก หรือ share ไม่ได้ → ไป fallback
       }
-      await renderCertificateCanvas();
-      const link = document.createElement('a');
-      link.href = certificateCanvas.toDataURL('image/png');
-      link.download = 'anumotana-certificate.png';
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    });
+    }
+
+    // 👉 fallback = ดาวน์โหลด
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'anumotana-certificate.png';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+
+  }, 'image/png');
+});
 
     async function renderCertificateCanvas(){
       const ctx = certificateCanvas.getContext('2d');
