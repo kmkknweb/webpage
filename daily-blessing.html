@@ -133,30 +133,14 @@
       flex-direction:column;align-items:center;justify-content:center;gap:16px;
     }
     .wish-overlay.show{display:flex;}
-    .overlay-deity-top{text-align:center;color:var(--gold2);font-size:13px;margin-bottom:22px;}
-    .overlay-deity-top img{
-      width:min(38vw,150px);height:min(38vw,150px);
-      max-width:150px;max-height:150px;border-radius:50%;object-fit:cover;display:block;
-      margin:0 auto 12px;border:3px solid rgba(242,196,107,.45);
-      box-shadow:0 0 34px rgba(242,196,107,.45);
-    }
+    .overlay-deity-top{text-align:center;color:var(--gold2);font-size:13px;}
     .fly-card{
       background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.05));
       border:1px solid rgba(242,196,107,.2);border-radius:20px;padding:18px;
       max-width:300px;width:90%;text-align:center;
     }
     .fly-glow{width:60px;height:4px;background:var(--gold);border-radius:999px;margin:0 auto 12px;opacity:.5;}
-    .fly-top{font-size:14px;font-weight:700;color:var(--gold2);margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:12px;}
-    .fly-top img{width:64px;height:64px;border-radius:16px;object-fit:cover;flex-shrink:0;}
-    .fly-title{font-size:15px;line-height:1.25;margin:0;color:var(--gold2);}
-    .fly-sub{font-size:11px;color:var(--muted);font-weight:500;margin-top:3px;}
-    @keyframes wishCardFloatUp{
-      0%{transform:translateY(0) scale(1);opacity:1;}
-      18%{transform:translateY(-22px) scale(1.02);opacity:1;}
-      62%{transform:translateY(-150px) scale(.88);opacity:.86;}
-      100%{transform:translateY(-300px) scale(.45);opacity:0;}
-    }
-    .wish-overlay.animate .fly-card{animation:wishCardFloatUp 3.2s ease-in forwards;}
+    .fly-top{font-size:14px;font-weight:700;color:var(--gold2);margin-bottom:8px;}
     .fly-text{font-size:13px;color:var(--muted);line-height:1.8;white-space:pre-line;}
     .fly-note{font-size:13px;color:var(--gold);text-align:center;}
     .wish-particle{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:300;}
@@ -179,7 +163,6 @@
   <div class="bg-orb orb3"></div>
   <audio id="bgAudio" src="audio/prayer.mp3" loop preload="auto"></audio>
   <audio id="gong" src="audio/gong.mp3" preload="auto"></audio>
-  <canvas id="wishCardCanvas" width="1200" height="1600" style="display:none;"></canvas>
 
   <div class="app">
 
@@ -214,16 +197,7 @@
       </div>
 
       <div class="card-wrap">
-        <div class="card-kicker">STEP 2 · เลือกองค์เทพ</div>
-        <div class="deity-section" id="predictionDeitySection">
-          <div class="deity-title">เลือกองค์เทพที่เกี่ยวข้อง</div>
-          <div class="deity-subtitle">เลือก 1 องค์ก่อนเปิดคำทำนาย</div>
-          <div class="deity-grid" id="predictionDeityGrid"></div>
-        </div>
-      </div>
-
-      <div class="card-wrap">
-        <div class="card-kicker">STEP 3 · เขย่าลูกแก้ว</div>
+        <div class="card-kicker">STEP 2 · เขย่าลูกแก้ว</div>
         <div id="crystalBallWrap">
           <div id="crystalBall" style="width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#e8d5ff,#7d4cff 45%,#3a0080 75%,#1a003a);box-shadow:0 0 30px rgba(125,76,255,.6), 0 0 60px rgba(125,76,255,.3), inset 0 0 30px rgba(255,255,255,.15);margin:0 auto 16px;cursor:pointer;position:relative;overflow:hidden;transition:box-shadow .3s ease;display:flex;align-items:center;justify-content:center;">
             <div id="crystalInner" style="font-size:36px;transition:opacity .3s;">🔮</div>
@@ -239,8 +213,14 @@
             <div class="card-title">การ์ดคำทำนาย</div>
             <div class="card-tag" id="predictionCardTag">วันนี้</div>
           </div>
-          <div class="selected-deity-inline" id="predictionSelectedDeity"></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;margin-bottom:10px;">
+            <img src="images/kongma.png" style="width:40px;height:40px;border-radius:10px;object-fit:cover;flex-shrink:0;" alt="ปึงเถ่ากงม่า">
+            <span style="font-size:13px;font-weight:600;color:#ffe5b1;">ปึงเถ่ากงม่า</span>
+          </div>
           <p class="prediction-text" id="predictionText"></p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px;">
+            <button onclick="sharePrediction()" style="width:100%;padding:12px;border-radius:14px;border:none;background:linear-gradient(135deg,#f2c46b,#ffe5b1);color:#23160d;font-family:'Kanit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;">📤 แชร์คำทำนาย</button>
+          </div>
         </div>
       </div>
 
@@ -264,16 +244,7 @@
       </div>
 
       <div class="card-wrap">
-        <div class="card-kicker">STEP 2 · เลือกองค์เทพ</div>
-        <div class="deity-section" id="wishDeitySection">
-          <div class="deity-title">เลือกองค์เทพที่เกี่ยวข้อง</div>
-          <div class="deity-subtitle">เลือก 1 องค์ก่อนเขียนคำอธิษฐาน</div>
-          <div class="deity-grid" id="wishDeityGrid"></div>
-        </div>
-      </div>
-
-      <div class="card-wrap">
-        <div class="card-kicker">STEP 3 · เขียนคำอธิษฐาน</div>
+        <div class="card-kicker">STEP 2 · เขียนคำอธิษฐาน</div>
         <div class="wish-form" id="wishForm">
           <label class="field-label" for="wishInput">เขียนคำอธิษฐานตรงนี้</label>
           <p class="field-note">เขียนในแบบที่เป็นตัวเอง ไม่จำเป็นต้องยาว แต่ให้เป็นสิ่งที่อยากย้ำกับใจจริงๆ</p>
@@ -289,12 +260,11 @@
             <div class="card-title">การ์ดคำอธิษฐาน</div>
             <div class="card-tag">วันนี้</div>
           </div>
-          <div class="selected-deity-inline" id="wishSelectedDeity"></div>
           <p class="wish-text" id="wishCardText"></p>
           <div class="action-row">
             <button class="main-btn" id="sendWishBtn">🙏 ส่งคำอธิษฐาน</button>
-            <button class="main-btn" id="downloadWishCardBtn" style="background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--text);">⬇️ ดาวน์โหลดการ์ดคำอธิษฐาน</button>
-            <div class="helper-text">สร้างการ์ดแล้วสามารถดาวน์โหลดเก็บไว้ หรือกดส่งให้การ์ดลอยขึ้นได้</div>
+            <button onclick="shareWish()" style="width:100%;padding:12px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:#fff6eb;font-family:'Kanit',sans-serif;font-size:14px;font-weight:500;cursor:pointer;">📤 แชร์คำอธิษฐาน</button>
+            <div class="helper-text">เมื่อกดส่งแล้ว การ์ดจะลอยขึ้นและค่อยๆ หายไป</div>
           </div>
         </div>
       </div>
@@ -302,6 +272,18 @@
     </section>
 
   </div><!-- end app -->
+
+
+  <!-- Hidden deity elements required by JS -->
+  <div style="display:none">
+    <div id="predictionDeityGrid"></div>
+    <div id="wishDeityGrid"></div>
+    <div id="predictionSelectedDeity"></div>
+    <div id="wishSelectedDeity"></div>
+    <div id="predictionDeitySection"></div>
+    <div id="wishDeitySection"></div>
+    <div id="overlayDeityTop"></div>
+  </div>
 
   <!-- Overlay ส่งคำอธิษฐาน -->
   <div class="wish-overlay" id="wishOverlay">
@@ -520,10 +502,10 @@
     let currentMode = 'prediction';
 
     let selectedPredictionCategory = null;
-    let selectedPredictionDeity = null;
+    let selectedPredictionDeity = 'kongma'; // fixed: ปึงเถ่ากงม่า
 
     let selectedWishCategory = null;
-    let selectedWishDeity = null;
+    let selectedWishDeity = 'kongma'; // fixed: ปึงเถ่ากงม่า
 
     /* =========================================================
        helper: วันที่วันนี้สำหรับล็อกคำทำนาย
@@ -715,13 +697,11 @@
 
     document.getElementById('openPredictionBtn').addEventListener('click', () => {
       if(!selectedPredictionCategory){ alert('กรุณาเลือกหมวดก่อน'); return; }
-      if(!selectedPredictionDeity)   { alert('กรุณาเลือกองค์เทพก่อน'); return; }
       if(!spinning){ startSpin(); } else { stopSpin(); }
     });
 
     ball.addEventListener('click', () => {
       if(!selectedPredictionCategory){ alert('กรุณาเลือกหมวดก่อน'); return; }
-      if(!selectedPredictionDeity)   { alert('กรุณาเลือกองค์เทพก่อน'); return; }
       if(!spinning){ startSpin(); } else { stopSpin(); }
     });
 
@@ -751,165 +731,6 @@
       document.getElementById('wishCard').classList.add('show');
       document.getElementById('wishCard').scrollIntoView({ behavior:'smooth', block:'start' });
     });
-
-
-    /* =========================================================
-       ดาวน์โหลดการ์ดคำอธิษฐานเป็น PNG
-    ========================================================= */
-    document.getElementById('downloadWishCardBtn').addEventListener('click', async () => {
-      const wishText = document.getElementById('wishCardText').textContent.trim();
-      if(!wishText || !selectedWishDeity){
-        alert('กรุณาสร้างการ์ดคำอธิษฐานก่อน');
-        return;
-      }
-
-      await renderWishCardCanvas();
-      const canvas = document.getElementById('wishCardCanvas');
-      const link = document.createElement('a');
-      link.href = canvas.toDataURL('image/png');
-      link.download = 'wish-card.png';
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    });
-
-    async function renderWishCardCanvas(){
-      const canvas = document.getElementById('wishCardCanvas');
-      const ctx = canvas.getContext('2d');
-      const w = canvas.width;
-      const h = canvas.height;
-      const deity = deityData[selectedWishDeity];
-      const wishText = document.getElementById('wishCardText').textContent.trim();
-      const categoryName = getCategoryThaiName(selectedWishCategory);
-
-      ctx.clearRect(0,0,w,h);
-      const bg = ctx.createLinearGradient(0,0,0,h);
-      bg.addColorStop(0,'#44101f');
-      bg.addColorStop(.45,'#1a1020');
-      bg.addColorStop(1,'#0d0b10');
-      ctx.fillStyle = bg;
-      ctx.fillRect(0,0,w,h);
-
-      drawCanvasGlow(ctx,w*0.5,210,280,'rgba(242,196,107,.22)');
-      drawCanvasGlow(ctx,w*0.15,260,220,'rgba(201,31,61,.16)');
-      drawCanvasGlow(ctx,w*0.85,380,240,'rgba(125,76,255,.15)');
-
-      roundCanvasRect(ctx,90,90,w-180,h-180,48,'rgba(255,255,255,.08)','rgba(242,196,107,.35)',3);
-      roundCanvasRect(ctx,140,140,w-280,h-280,40,'rgba(255,255,255,.06)','rgba(255,255,255,.12)',2);
-
-      const img = await loadCanvasImage(deity.image);
-      if(img){
-        drawCanvasCoverCircle(ctx,img,w/2,300,170);
-      }
-
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#ffe5b1';
-      ctx.font = '700 56px Kanit, sans-serif';
-      ctx.fillText('การ์ดคำอธิษฐาน', w/2, 535);
-
-      ctx.fillStyle = '#f2c46b';
-      ctx.font = '600 34px Kanit, sans-serif';
-      ctx.fillText(deity.name + ' • ' + categoryName, w/2, 600);
-
-      roundCanvasRect(ctx,190,690,w-380,520,34,'rgba(255,255,255,.08)','rgba(242,196,107,.20)',2);
-      ctx.fillStyle = '#fff6eb';
-      ctx.font = '500 40px Kanit, sans-serif';
-      drawCanvasWrappedCenterText(ctx,wishText,w/2,790,w-500,68);
-
-      ctx.fillStyle = '#d7c8bc';
-      ctx.font = '500 28px Kanit, sans-serif';
-      ctx.fillText('คำอธิษฐานประจำวัน', w/2, 1340);
-      ctx.fillStyle = '#f2c46b';
-      ctx.font = '600 30px Kanit, sans-serif';
-      ctx.fillText(formatThaiDate(new Date()), w/2, 1390);
-      ctx.fillStyle = '#ffe5b1';
-      ctx.font = '700 34px Kanit, sans-serif';
-      ctx.fillText('ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น', w/2, 1460);
-    }
-
-    function getCategoryThaiName(type){
-      const names = { love:'ความรัก', work:'การงาน', money:'การเงิน', study:'การเรียน', health:'สุขภาพ', life:'ชีวิต' };
-      return names[type] || 'คำอธิษฐาน';
-    }
-
-    function loadCanvasImage(src){
-      return new Promise(resolve => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => resolve(null);
-        img.src = src;
-      });
-    }
-
-    function roundCanvasRect(ctx,x,y,width,height,radius,fill,stroke,lineWidth){
-      ctx.beginPath();
-      ctx.moveTo(x+radius,y);
-      ctx.lineTo(x+width-radius,y);
-      ctx.quadraticCurveTo(x+width,y,x+width,y+radius);
-      ctx.lineTo(x+width,y+height-radius);
-      ctx.quadraticCurveTo(x+width,y+height,x+width-radius,y+height);
-      ctx.lineTo(x+radius,y+height);
-      ctx.quadraticCurveTo(x,y+height,x,y+height-radius);
-      ctx.lineTo(x,y+radius);
-      ctx.quadraticCurveTo(x,y,x+radius,y);
-      ctx.closePath();
-      ctx.fillStyle = fill;
-      ctx.fill();
-      ctx.strokeStyle = stroke;
-      ctx.lineWidth = lineWidth || 2;
-      ctx.stroke();
-    }
-
-    function drawCanvasGlow(ctx,x,y,r,color){
-      const grad = ctx.createRadialGradient(x,y,0,x,y,r);
-      grad.addColorStop(0,color);
-      grad.addColorStop(1,'rgba(255,255,255,0)');
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(x,y,r,0,Math.PI*2);
-      ctx.fill();
-    }
-
-    function drawCanvasCoverCircle(ctx,img,cx,cy,r){
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx,cy,r,0,Math.PI*2);
-      ctx.clip();
-      const size = Math.max(img.width,img.height);
-      const sx = (img.width-size)/2;
-      const sy = (img.height-size)/2;
-      ctx.drawImage(img,sx,sy,size,size,cx-r,cy-r,r*2,r*2);
-      ctx.restore();
-      ctx.beginPath();
-      ctx.arc(cx,cy,r+5,0,Math.PI*2);
-      ctx.strokeStyle = 'rgba(242,196,107,.55)';
-      ctx.lineWidth = 8;
-      ctx.stroke();
-    }
-
-    function drawCanvasWrappedCenterText(ctx,text,centerX,startY,maxWidth,lineHeight){
-      const paragraphs = text.split(/\n+/);
-      let y = startY;
-      paragraphs.forEach(paragraph => {
-        const words = paragraph.split(/\s+/).filter(Boolean);
-        let line = '';
-        words.forEach(word => {
-          const test = line ? line + ' ' + word : word;
-          if(ctx.measureText(test).width > maxWidth && line){
-            ctx.fillText(line,centerX,y);
-            y += lineHeight;
-            line = word;
-          }else{
-            line = test;
-          }
-        });
-        if(line){
-          ctx.fillText(line,centerX,y);
-          y += lineHeight;
-        }
-        y += lineHeight * .35;
-      });
-    }
 
     /* =========================================================
        ส่งคำอธิษฐาน
@@ -994,10 +815,6 @@
       }
     }
 
-    function formatThaiDate(date){
-      return date.toLocaleDateString('th-TH', { year:'numeric', month:'long', day:'numeric' });
-    }
-
     /* =========================================================
        หยุดเสียงเมื่อออกจากหน้า
     ========================================================= */
@@ -1018,6 +835,30 @@
 
     window.addEventListener('pagehide', stopAudio);
     window.addEventListener('beforeunload', stopAudio);
+    /* ── Share Functions ── */
+    async function sharePrediction(){
+      const text = document.getElementById('predictionText').textContent;
+      if(!text){ alert('กรุณาเปิดคำทำนายก่อน'); return; }
+      const shareData = {
+        title: 'คำทำนายประจำวัน · ศาลเจ้าปึงเถ่ากงม่า',
+        text: `🔮 คำทำนายประจำวัน\n\n${text}\n\n✦ ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น`,
+        url: window.location.href,
+      };
+      if(navigator.share){ try{ await navigator.share(shareData); }catch(e){} }
+      else { navigator.clipboard.writeText(shareData.text).then(()=>alert('คัดลอกคำทำนายแล้ว')); }
+    }
+
+    async function shareWish(){
+      const text = document.getElementById('wishCardText').textContent;
+      if(!text){ alert('กรุณาสร้างการ์ดคำอธิษฐานก่อน'); return; }
+      const shareData = {
+        title: 'คำอธิษฐาน · ศาลเจ้าปึงเถ่ากงม่า',
+        text: `🙏 คำอธิษฐานประจำวัน\n\n${text}\n\n✦ ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น`,
+        url: window.location.href,
+      };
+      if(navigator.share){ try{ await navigator.share(shareData); }catch(e){} }
+      else { navigator.clipboard.writeText(shareData.text).then(()=>alert('คัดลอกคำอธิษฐานแล้ว')); }
+    }
     window.addEventListener('message', (e) => { if(e.data === 'stop') stopAudio(); });
     document.addEventListener('visibilitychange', () => {
       if(document.hidden){
