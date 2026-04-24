@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>องค์เทพในศาลเจ้า • ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0d0b10;--text:#fff6eb;--muted:#d7c8bc;--gold:#f2c46b;--gold2:#ffe5b1;
+      --red:#c91f3d;--purple:#7d4cff;--line:rgba(255,255,255,.09);
+      --card:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
+      --shadow:0 18px 40px rgba(0,0,0,.38);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{
+      background:radial-gradient(circle at top,#44101f 0%,#1a1020 34%,#0d0b10 100%);
+      color:var(--text);font-family:'Kanit',sans-serif;min-height:100%;overflow-x:hidden;
+    }
+    .bg-orb{position:fixed;border-radius:999px;filter:blur(70px);pointer-events:none;opacity:.18;z-index:0;animation:floatOrb 10s ease-in-out infinite}
+    .orb1{width:200px;height:200px;left:-60px;top:80px;background:var(--red)}
+    .orb2{width:230px;height:230px;right:-80px;top:180px;background:var(--purple);animation-delay:1.6s}
+    .orb3{width:170px;height:170px;left:40%;bottom:100px;background:var(--gold);animation-delay:3s}
+    @keyframes floatOrb{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+    @keyframes rippleAnim{0%{transform:scale(0);opacity:.6}100%{transform:scale(4);opacity:0}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+    .app{position:relative;z-index:2;max-width:460px;margin:0 auto;padding:18px 14px 40px}
+
+    /* hero */
+    .hero{text-align:center;padding:10px 6px 20px}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--gold2);font-size:11px;letter-spacing:.8px;margin-bottom:12px;}
+    .hero-title{font-size:26px;font-weight:800;line-height:1.2;margin-bottom:8px;}
+    .hero-title span{color:var(--gold);}
+    .hero-sub{font-size:13px;color:var(--muted);line-height:1.75;margin:0 auto;}
+
+    /* featured deity */
+    .featured-card{
+      display:flex;gap:14px;align-items:center;
+      background:linear-gradient(145deg,rgba(242,196,107,.15),rgba(201,31,61,.08));
+      border:1px solid rgba(242,196,107,.3);border-radius:22px;
+      padding:16px;margin-bottom:14px;text-decoration:none;
+      box-shadow:var(--shadow);position:relative;overflow:hidden;cursor:pointer;
+    }
+    .featured-art{width:90px;height:90px;flex-shrink:0;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(242,196,107,.2);}
+    .featured-art img{width:100%;height:100%;object-fit:cover;}
+    .featured-tag{font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:4px;}
+    .featured-name{font-size:20px;font-weight:800;color:var(--gold2);margin-bottom:6px;}
+    .featured-text{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:6px;}
+    .featured-caption{font-size:11px;color:var(--gold);background:rgba(242,196,107,.1);border:1px solid rgba(242,196,107,.2);padding:3px 10px;border-radius:999px;display:inline-block;}
+
+    /* section label */
+    .section-label{font-size:10px;letter-spacing:1.2px;color:var(--gold);margin-bottom:12px;}
+
+    /* deity grid */
+    .deity-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+    .card{
+      background:var(--card);border:1px solid var(--line);border-radius:18px;
+      padding:14px;text-align:center;text-decoration:none;color:var(--text);
+      box-shadow:var(--shadow);cursor:pointer;position:relative;overflow:hidden;
+      transition:transform .15s ease;display:block;
+    }
+    .card:active{transform:scale(.97);}
+    .art{width:70px;height:70px;margin:0 auto 10px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid var(--line);}
+    .art img{width:100%;height:100%;object-fit:cover;}
+    .name{font-size:14px;font-weight:700;color:var(--gold2);margin-bottom:4px;}
+    .caption{font-size:11px;color:var(--muted);background:rgba(255,255,255,.05);border:1px solid var(--line);padding:3px 10px;border-radius:999px;display:inline-block;}
+
+    /* ripple */
+    .ripple{position:absolute;border-radius:50%;background:rgba(242,196,107,.35);transform:scale(0);animation:rippleAnim .5s ease-out;pointer-events:none;}
+
+    /* flash */
+    #flash{
+      position:fixed;width:60px;height:60px;border-radius:50%;
+      background:radial-gradient(circle,rgba(242,196,107,.9),transparent 70%);
+      pointer-events:none;transform:translate(-50%,-50%) scale(.6);
+      opacity:0;z-index:999;transition:opacity .3s ease,transform .3s ease;
+    }
+  </style>
+  <script>
+    if(window.self !== window.top){
+      document.addEventListener('DOMContentLoaded',()=>{
+        document.querySelectorAll('.back-link').forEach(el=>el.style.display='none');
+        document.querySelectorAll('.topbar').forEach(el=>el.style.display='none');
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
+  <div class="bg-orb orb3"></div>
+  <div id="flash"></div>
+  <audio id="sound" src="audio/bell.mp3"></audio>
+
+  <div class="app">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">⛩️ DEITIES · STORY & FAITH</div>
+      <h1 class="hero-title">องค์เทพ<br><span>ในศาลเจ้าปึงเถ่ากงม่า</span></h1>
+      <p class="hero-sub">กดที่องค์เทพเพื่อเรียนรู้เรื่องราวและความศักดิ์สิทธิ์ของแต่ละองค์</p>
+    </section>
+
+    <!-- Featured: เทพฟ้าดิน -->
+    <div class="section-label">FEATURED · องค์ประธาน</div>
+    <a class="featured-card card" href="deities/tiangong.html">
+      <div class="featured-art">
+        <img src="images/tiangong.png" alt="เทพฟ้าดิน">
+      </div>
+      <div>
+        <div class="featured-tag">天地公</div>
+        <div class="featured-name">เทพฟ้าดิน</div>
+        <p class="featured-text">จุดเริ่มต้นของความสมดุล และความราบรื่นของชีวิต</p>
+        <div class="featured-caption">สมดุล</div>
+      </div>
+    </a>
+
+    <!-- Grid องค์เทพอื่น -->
+    <div class="section-label">องค์เทพในศาลเจ้า</div>
+    <div class="deity-grid">
+
+      <a class="card" href="deities/kongma.html">
+        <div class="art"><img src="images/kongma.png" alt="ปึงเถ่ากงม่า"></div>
+        <div class="name">ปึงเถ่ากงม่า</div>
+        <div class="caption">คุ้มครอง</div>
+      </a>
+
+      <a class="card" href="deities/caishenye.html">
+        <div class="art"><img src="images/caishenye.png" alt="ไฉ่ซิงเอี๊ย"></div>
+        <div class="name">ไฉ่ซิงเอี๊ย</div>
+        <div class="caption">การเงิน</div>
+      </a>
+
+      <a class="card" href="deities/thapthim.html">
+        <div class="art"><img src="images/thapthim.png" alt="เจ้าแม่ทับทิม"></div>
+        <div class="name">เจ้าแม่ทับทิม</div>
+        <div class="caption">ปลอดภัย</div>
+      </a>
+
+      <a class="card" href="deities/guanyin.html">
+        <div class="art"><img src="images/guanyin.png" alt="เจ้าแม่กวนอิม"></div>
+        <div class="name">เจ้าแม่กวนอิม</div>
+        <div class="caption">เมตตา</div>
+      </a>
+
+      <a class="card" href="deities/naja.html">
+        <div class="art"><img src="images/naja.png" alt="นาจา"></div>
+        <div class="name">นาจา</div>
+        <div class="caption">ปกป้อง</div>
+      </a>
+
+      <a class="card" href="deities/dizhuye.html">
+        <div class="art"><img src="images/dizhuye.png" alt="ตี่จู้เอี๊ย"></div>
+        <div class="name">ตี่จู้เอี๊ย</div>
+        <div class="caption">ร่มเย็น</div>
+      </a>
+
+    </div>
+
+  </div><!-- end app -->
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+    const flash = document.getElementById('flash');
+    const sound = document.getElementById('sound');
+
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        const circle = document.createElement('span');
+        circle.classList.add('ripple');
+        circle.style.width = circle.style.height = '100px';
+        circle.style.left = e.offsetX + 'px';
+        circle.style.top = e.offsetY + 'px';
+        card.appendChild(circle);
+        setTimeout(() => circle.remove(), 500);
+
+        flash.style.left = e.clientX + 'px';
+        flash.style.top = e.clientY + 'px';
+        flash.style.opacity = 1;
+        flash.style.transform = 'translate(-50%,-50%) scale(1.4)';
+        setTimeout(() => {
+          flash.style.opacity = 0;
+          flash.style.transform = 'translate(-50%,-50%) scale(.6)';
+        }, 400);
+
+        sound.currentTime = 0;
+        sound.play().catch(() => {});
+      });
+    });
+
+    function stopDeityAudio(){
+      const s = document.getElementById('sound');
+      if(s){ s.pause(); s.currentTime = 0; }
+    }
+    window.addEventListener('message', (e) => { if(e.data === 'stop') stopDeityAudio(); });
+    document.addEventListener('visibilitychange', () => { if(document.hidden) stopDeityAudio(); });
+  </script>
+</body>
+</html>
