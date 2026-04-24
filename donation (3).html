@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ร่วมทำบุญ • ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0d0b10;--text:#fff6eb;--muted:#d7c8bc;--gold:#f2c46b;--gold2:#ffe5b1;
+      --red:#c91f3d;--purple:#7d4cff;--line:rgba(255,255,255,.09);
+      --card:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
+      --shadow:0 18px 40px rgba(0,0,0,.38);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{
+      background:radial-gradient(circle at top,#44101f 0%,#1a1020 34%,#0d0b10 100%);
+      color:var(--text);font-family:"Kanit",sans-serif;min-height:100%;overflow-x:hidden;
+    }
+    .bg-orb{position:fixed;border-radius:999px;filter:blur(70px);pointer-events:none;opacity:.18;z-index:0;animation:floatOrb 10s ease-in-out infinite}
+    .orb1{width:200px;height:200px;left:-60px;top:80px;background:var(--red)}
+    .orb2{width:230px;height:230px;right:-80px;top:180px;background:var(--purple);animation-delay:1.6s}
+    .orb3{width:170px;height:170px;left:40%;bottom:100px;background:var(--gold);animation-delay:3s}
+    @keyframes floatOrb{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    .app{position:relative;z-index:2;max-width:460px;margin:0 auto;padding:18px 14px 40px}
+
+    /* hero */
+    .hero{text-align:center;padding:10px 6px 20px}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--gold2);font-size:11px;letter-spacing:.8px;margin-bottom:12px;}
+    .hero-title{font-size:26px;font-weight:800;line-height:1.2;margin-bottom:8px;}
+    .hero-title span{color:var(--gold);}
+    .hero-sub{font-size:13px;color:var(--muted);line-height:1.75;margin:0 auto 14px;}
+
+    /* card */
+    .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);backdrop-filter:blur(12px);}
+    .card-kicker{font-size:10px;letter-spacing:1.2px;color:var(--gold);margin-bottom:6px;}
+    .card-title{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--gold2);}
+    .card-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:12px;}
+
+    /* donation type selector */
+    .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
+    .donation-card{
+      border:2px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;
+      background:rgba(255,255,255,.04);transition:.2s ease;text-align:center;
+    }
+    .donation-card.active{
+      border-color:rgba(242,196,107,.5);
+      background:rgba(242,196,107,.1);
+    }
+    .donation-title{font-size:14px;font-weight:700;color:var(--gold2);margin-bottom:4px;}
+    .donation-sub{font-size:11px;color:var(--muted);line-height:1.6;}
+
+    /* merit list */
+    .merit-lead{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:10px;}
+    .merit-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+    .merit-item{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.7;}
+    .merit-no{
+      width:22px;height:22px;border-radius:50%;flex-shrink:0;
+      background:rgba(242,196,107,.15);border:1px solid rgba(242,196,107,.3);
+      color:var(--gold);font-size:11px;font-weight:700;display:grid;place-items:center;margin-top:2px;
+    }
+
+    /* QR / payment */
+    .qr-wrap{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
+    .qr-img{width:110px;height:110px;border-radius:14px;object-fit:contain;background:rgba(255,255,255,.06);border:1px solid var(--line);flex-shrink:0;}
+    .meta-list{flex:1;display:flex;flex-direction:column;gap:8px;}
+    .meta-item{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;padding:10px 12px;}
+    .meta-label{font-size:10px;color:var(--muted);margin-bottom:2px;}
+    .meta-value{font-size:13px;font-weight:600;color:var(--gold2);}
+
+    /* slip upload */
+    .upload-zone{border:1.5px dashed rgba(242,196,107,.3);border-radius:16px;padding:16px;text-align:center;margin-bottom:12px;}
+    .upload-title{font-size:14px;font-weight:700;color:var(--gold2);margin-bottom:6px;}
+    .upload-desc{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px;}
+    .preview-wrap{display:none;margin-top:10px;}
+    .preview-wrap.show{display:block;}
+    .preview-wrap img{width:100%;border-radius:12px;max-height:200px;object-fit:contain;}
+    .upload-ok{font-size:12px;color:#6febb0;margin-top:8px;text-align:center;}
+
+    /* fields */
+    .field{margin-bottom:10px;}
+    .field label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px;}
+    .field input{
+      width:100%;padding:12px 14px;border-radius:12px;
+      border:1px solid var(--line);background:rgba(255,255,255,.05);
+      color:var(--text);font-family:"Kanit",sans-serif;font-size:14px;
+    }
+    .field input::placeholder{color:#7a6a5a;}
+
+    /* certificate */
+    .certificate-card{
+      display:none;animation:fadeUp .3s ease;
+      background:linear-gradient(180deg,#fff9f0,#fff4e0);
+      border-radius:20px;padding:20px;margin-top:12px;
+      border:1px solid rgba(242,196,107,.3);
+    }
+    .certificate-card.show{display:block;}
+    .certificate-top{text-align:center;margin-bottom:14px;}
+    .certificate-top img{width:80px;height:80px;border-radius:50%;object-fit:cover;margin-bottom:8px;}
+    .certificate-title{font-size:18px;font-weight:800;color:#a7501c;margin-bottom:4px;}
+    .certificate-subtitle{font-size:12px;color:#9a6b33;}
+    .certificate-donor{font-size:15px;font-weight:700;color:#a7501c;text-align:center;margin-bottom:10px;}
+    .certificate-blessing{font-size:13px;color:#8a6a4d;line-height:1.85;white-space:pre-line;text-align:center;margin-bottom:14px;}
+    .certificate-footer{text-align:center;font-size:12px;color:#9a6b33;margin-bottom:14px;}
+
+    /* overlay */
+    .certificate-overlay{
+      display:none;position:fixed;inset:0;z-index:200;
+      background:rgba(5,3,10,.85);backdrop-filter:blur(8px);
+      flex-direction:column;align-items:center;justify-content:center;gap:20px;
+    }
+    .certificate-overlay.show{display:flex;}
+    .overlay-agong{display:none;text-align:center;color:var(--gold2);font-size:13px;animation:fadeUp .4s ease;}
+    .overlay-agong.show{display:block;}
+    .overlay-agong img{width:100px;border-radius:50%;margin-bottom:8px;}
+    .fly-certificate{
+      background:linear-gradient(180deg,#fff9f0,#fff4e0);border-radius:20px;padding:18px;
+      max-width:320px;width:90%;border:1px solid rgba(242,196,107,.3);text-align:center;
+    }
+    .fly-certificate-top{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+    .fly-certificate-top img{width:50px;border-radius:50%;}
+    .fly-cert-title{font-size:15px;font-weight:700;color:#a7501c;}
+    .fly-cert-sub{font-size:12px;color:#9a6b33;}
+    .fly-cert-text{font-size:13px;color:#8a6a4d;line-height:1.8;white-space:pre-line;}
+    .overlay-note{font-size:13px;color:var(--gold);text-align:center;}
+    .wish-particle{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:300;}
+    .hidden-canvas{display:none;}
+
+    /* buttons */
+    .btn-main{width:100%;padding:13px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#23160d;font-family:"Kanit",sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;}
+    .btn-soft{width:100%;padding:12px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text);font-family:"Kanit",sans-serif;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;text-align:center;display:block;margin-bottom:8px;}
+    .file-input{display:none;}
+    .divider{height:1px;background:var(--line);margin:12px 0;}
+
+    /* ── Float Up Animation ── */
+    @keyframes floatUp{
+      0%  { transform:translateY(0) scale(1) rotate(0deg); opacity:1; box-shadow:0 0 30px rgba(242,196,107,.3);}
+      20% { transform:translateY(-30px) scale(1.02) rotate(-1deg); opacity:1; box-shadow:0 0 50px rgba(242,196,107,.6);}
+      60% { transform:translateY(-140px) scale(.88) rotate(1deg); opacity:.85;}
+      85% { transform:translateY(-240px) scale(.65) rotate(-1.5deg); opacity:.5;}
+      100%{ transform:translateY(-320px) scale(.3) rotate(-2deg); opacity:0;}
+    }
+    @keyframes agongAppear{
+      0%  { transform:translateY(-20px); opacity:0;}
+      100%{ transform:translateY(0); opacity:1;}
+    }
+    @keyframes paperGlow{
+      0%,100%{ box-shadow:0 0 20px rgba(242,196,107,.3);}
+      50%    { box-shadow:0 0 40px rgba(242,196,107,.7);}
+    }
+    .burn-overlay{
+      display:none;position:fixed;inset:0;z-index:500;
+      background:rgba(5,2,0,.95);backdrop-filter:blur(10px);
+      flex-direction:column;align-items:center;justify-content:center;
+      gap:24px;padding:20px;
+    }
+    .burn-overlay.show{display:flex;}
+    .burn-stage{position:relative;width:240px;display:flex;flex-direction:column;align-items:center;gap:16px;}
+    .paper{
+      width:220px;border-radius:16px;
+      background:linear-gradient(180deg,#fff9f0,#fff4e0);
+      border:1px solid rgba(242,196,107,.4);
+      padding:14px;text-align:center;z-index:2;
+      transform-origin:bottom center;
+    }
+    .paper.burning{animation:burnUp 3s ease-in forwards;}
+    .paper-title{font-size:13px;font-weight:700;color:#a7501c;margin-bottom:4px;}
+    .paper-text{font-size:11px;color:#8a6a4d;line-height:1.5;}
+    .fire-wrap{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;z-index:3;}
+    .fire{
+      width:80px;height:60px;margin:0 auto;
+      background:radial-gradient(ellipse at bottom,#ff6600,#ff3300 40%,transparent 70%);
+      border-radius:50% 50% 30% 30%;
+      animation:fireFlicker .4s ease-in-out infinite;
+      filter:blur(2px);opacity:0;transition:opacity .5s;
+    }
+    .fire.lit{opacity:1;}
+    .fire-inner{
+      width:40px;height:35px;margin:-45px auto 0;
+      background:radial-gradient(ellipse at bottom,#ffcc00,#ff9900 50%,transparent 75%);
+      border-radius:50% 50% 30% 30%;
+      animation:fireFlicker .3s ease-in-out infinite reverse;
+      filter:blur(1px);
+    }
+    .smoke{
+      position:absolute;bottom:50px;left:50%;transform:translateX(-50%);
+      width:30px;height:30px;border-radius:50%;
+      background:rgba(200,180,160,.4);filter:blur(8px);
+      opacity:0;
+    }
+    .smoke.rising{animation:smokeUp 2s ease-out infinite;}
+    .ember{
+      position:absolute;width:5px;height:5px;border-radius:50%;
+      background:#ff9900;box-shadow:0 0 4px #ff6600;
+      animation:emberFloat 1.5s ease-out forwards;pointer-events:none;
+    }
+    .burn-message{font-size:14px;color:var(--gold);text-align:center;font-weight:600;}
+    .burn-sub{font-size:12px;color:var(--muted);text-align:center;}
+
+  </style>
+  <script>
+    if(window.self !== window.top){
+      document.addEventListener("DOMContentLoaded",()=>{
+        document.querySelectorAll(".back-link").forEach(el=>el.style.display="none");
+        document.querySelectorAll(".topbar").forEach(el=>el.style.display="none");
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
+  <div class="bg-orb orb3"></div>
+  <audio id="bgAudio" src="audio/prayer.mp3" loop preload="auto"></audio>
+  <audio id="gongAudio" src="audio/gong.mp3" preload="auto"></audio>
+  <canvas class="hidden-canvas" id="certificateCanvas" width="1400" height="1900"></canvas>
+
+  <div class="app">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">🧧 DONATION · BLESSING</div>
+      <h1 class="hero-title">ร่วมทำบุญ<br><span>กับศาลเจ้าปึงเถ่ากงม่า</span></h1>
+      <p class="hero-sub">ร่วมบุญด้วยจิตศรัทธา รับใบอนุโมทนาบัตรดาวน์โหลดได้ทันที</p>
+    </section>
+
+    <!-- เลือกประเภทบุญ -->
+    <div class="card">
+      <div class="card-kicker">STEP 1 · เลือกประเภทบุญ</div>
+      <div class="card-title">ต้องการร่วมบุญด้านใด?</div>
+      <div class="type-grid" id="donationGrid">
+        <div class="donation-card" data-type="shrine">
+          <div style="font-size:28px;margin-bottom:6px;">⛩️</div>
+          <div class="donation-title">บำรุงศาลเจ้า</div>
+          <div class="donation-sub">สืบสานสถานที่ศักดิ์สิทธิ์ให้คงอยู่</div>
+        </div>
+        <div class="donation-card" data-type="food">
+          <div style="font-size:28px;margin-bottom:6px;">🍱</div>
+          <div class="donation-title">ร่วมโรงทาน</div>
+          <div class="donation-sub">ส่งต่อความอิ่มเอมให้แก่ผู้คน</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- อานิสงส์ -->
+    <div class="card">
+      <div class="card-kicker">MERIT</div>
+      <div class="card-title">อานิสงส์ของการทำบุญ</div>
+      <p class="merit-lead" id="meritLead">เลือกประเภทบุญด้านบนเพื่อดูอานิสงส์</p>
+      <ul class="merit-list" id="meritList"></ul>
+    </div>
+
+    <!-- ช่องทางโอน -->
+    <div class="card">
+      <div class="card-kicker">STEP 2 · ช่องทางการโอน</div>
+      <div class="card-title">สแกน QR หรือโอนตามข้อมูล</div>
+      <div class="qr-wrap">
+        <img class="qr-img" id="qrImage" src="images/qr-default.png" alt="QR Code">
+        <div class="meta-list">
+          <div class="meta-item">
+            <div class="meta-label">ชื่อบัญชี</div>
+            <div class="meta-value" id="accountName">ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">เลขบัญชี</div>
+            <div class="meta-value" id="accountNumber">—</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">ธนาคาร</div>
+            <div class="meta-value" id="bankName">—</div>
+          </div>
+        </div>
+      </div>
+      <button class="btn-soft" id="downloadQrBtn">⬇️ ดาวน์โหลด QR Code</button>
+    </div>
+
+    <!-- แนบสลิป -->
+    <div class="card">
+      <div class="card-kicker">STEP 3 · แนบสลิป</div>
+      <div class="card-title">แนบสลิปการโอน</div>
+      <div class="upload-zone">
+        <div class="upload-title">📎 เลือกรูปสลิป</div>
+        <div class="upload-desc">ระบบไม่ตรวจสอบความถูกต้อง เพียงแนบรูปเพื่อดำเนินการต่อ</div>
+        <button class="btn-soft" id="pickSlipBtn" style="max-width:200px;margin:0 auto;">เลือกรูปจากเครื่อง</button>
+        <input class="file-input" id="slipInput" type="file" accept="image/*">
+        <div class="preview-wrap" id="previewWrap">
+          <img id="slipPreview" alt="สลิป">
+          <div class="upload-ok">✅ แนบสลิปเรียบร้อย</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- สร้างใบอนุโมทนา -->
+    <div class="card">
+      <div class="card-kicker">STEP 4 · ใบอนุโมทนาบัตร</div>
+      <div class="card-title">สร้างใบอนุโมทนาบัตร</div>
+      <div class="card-desc">กรอกชื่อแล้วกดสร้าง สามารถส่งขึ้นสู่อากงอาม่าและดาวน์โหลดได้</div>
+      <div class="field">
+        <label for="donorName">ชื่อผู้ร่วมทำบุญ (ไม่บังคับ)</label>
+        <input id="donorName" type="text" placeholder="เว้นว่างได้หากไม่ระบุชื่อ">
+      </div>
+      <div class="field">
+        <label for="donationAmount">จำนวนเงิน (ไม่บังคับ)</label>
+        <input id="donationAmount" type="text" inputmode="numeric" placeholder="เช่น 500">
+      </div>
+      <button class="btn-main" id="createCertificateBtn">✨ สร้างใบอนุโมทนาบัตร</button>
+
+      <!-- ใบอนุโมทนา preview -->
+      <div class="certificate-card" id="certificateCard">
+        <div class="certificate-top">
+          <img id="certificateAgongImage" src="images/agong-ama.png" alt="อากงอาม่า">
+          <div class="certificate-title">ใบอนุโมทนาบัตร</div>
+          <div class="certificate-subtitle" id="certificateTypeText">ร่วมบุญด้วยจิตศรัทธา</div>
+        </div>
+        <div class="certificate-donor" id="certificateDonorInfo"></div>
+        <p class="certificate-blessing" id="certificateBlessingText"></p>
+        <div class="certificate-footer">
+          ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น<br>
+          ขออนุโมทนาในกุศลจิตอันงดงาม<br>
+          <span id="certificateMetaText"></span>
+        </div>
+        <button class="btn-main" id="sendCertificateBtn">🙏 ส่งใบอนุโมทนาขึ้นสู่อากงอาม่า</button>
+        <button id="downloadCertificateBtn" style="
+          width:100%;padding:16px;border-radius:14px;cursor:pointer;margin-top:4px;
+          background:linear-gradient(135deg,#f2c46b,#ffe5b1);
+          border:none;
+          color:#23160d;font-family:'Kanit',sans-serif;font-size:16px;font-weight:800;
+          display:flex;align-items:center;justify-content:center;gap:10px;
+          box-shadow:0 8px 24px rgba(242,196,107,.4);
+          letter-spacing:.3px;
+        ">⬇️ ดาวน์โหลดใบอนุโมทนาบัตร</button>
+      </div>
+    </div>
+
+  </div><!-- end app -->
+
+
+  <!-- Float Overlay -->
+  <div class="burn-overlay" id="burnOverlay">
+
+    <!-- อากงอาม่าด้านบน -->
+    <div id="agongTop" style="
+      text-align:center;opacity:0;
+      transition:opacity .8s ease;
+    ">
+      <img src="images/agong-ama.png" alt="อากงอาม่า" style="
+        width:100px;height:100px;border-radius:50%;object-fit:cover;
+        border:3px solid rgba(242,196,107,.6);
+        box-shadow:0 0 40px rgba(242,196,107,.5),0 0 80px rgba(242,196,107,.2);
+        display:block;margin:0 auto 8px;
+      ">
+      <div style="font-size:15px;font-weight:700;color:var(--gold2);">อากงอาม่า</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:3px;">รอรับใบอนุโมทนา...</div>
+    </div>
+
+    <!-- กระดาษที่จะลอยขึ้น -->
+    <div id="burnPaper" style="
+      background:linear-gradient(180deg,#fff9f0,#fff4e0);
+      border-radius:18px;padding:18px 20px;text-align:center;
+      border:1.5px solid rgba(242,196,107,.5);
+      box-shadow:0 0 30px rgba(242,196,107,.3),0 8px 32px rgba(0,0,0,.3);
+      width:240px;
+    ">
+      <div style="font-size:10px;color:#b77310;letter-spacing:1.5px;margin-bottom:8px;font-family:'Kanit',sans-serif;">✦ ใบอนุโมทนาบัตร ✦</div>
+      <div id="burnPaperTitle" style="font-size:15px;font-weight:700;color:#a7501c;margin-bottom:8px;font-family:'Kanit',sans-serif;"></div>
+      <div style="height:1px;background:rgba(216,141,20,.2);margin-bottom:8px;"></div>
+      <div id="burnPaperText" style="font-size:12px;color:#8a6a4d;line-height:1.7;font-family:'Kanit',sans-serif;white-space:pre-line;"></div>
+    </div>
+
+    <div id="burnNote" style="font-size:13px;color:var(--gold);text-align:center;font-weight:500;">กำลังส่งกุศลจิตขึ้นสู่อากงอาม่า…</div>
+  </div>
+
+  <!-- Float Overlay -->
+  <div class="certificate-overlay" id="certificateOverlay">
+    <div class="overlay-agong" id="overlayAgong">
+      <img src="images/agong-ama.png" alt="อากงอาม่า">
+      <div>อากงอาม่า</div>
+    </div>
+    <div class="fly-certificate">
+      <div class="fly-certificate-top">
+        <img src="images/agong-ama.png" alt="อากงอาม่า">
+        <div>
+          <div class="fly-cert-title">ใบอนุโมทนาบัตร</div>
+          <div class="fly-cert-sub" id="flyCertType">ร่วมบุญด้วยใจศรัทธา</div>
+        </div>
+      </div>
+      <p class="fly-cert-text" id="flyCertText"></p>
+    </div>
+    <div class="overlay-note">กำลังส่งความตั้งใจและกุศลจิตขึ้นสู่อากงอาม่า…</div>
+  </div>
+
+  <script>
+    /* =========================================================
+       CONFIG
+       แก้ชื่อไฟล์ / เลขบัญชี / QR ได้จากส่วนนี้
+    ========================================================== */
+    const donationData = {
+      shrine: {
+        title: 'บำรุงศาลเจ้า',
+        lead: 'การร่วมบำรุงศาลเจ้า คือการช่วยดูแลพื้นที่แห่งศรัทธาให้คงอยู่ งดงาม และพร้อมต้อนรับผู้คนที่เข้ามาสักการะด้วยใจอิ่มเอม',
+        merits: [
+          'ได้ร่วมสืบสานสถานที่ศักดิ์สิทธิ์ให้คงอยู่เป็นศูนย์รวมจิตใจของผู้คน',
+          'ส่งเสริมให้กิจกรรมของศาลเจ้าเดินต่อได้อย่างมั่นคงและงดงาม',
+          'เป็นกุศลจิตที่สะท้อนถึงการดูแลสิ่งส่วนรวมด้วยความศรัทธา',
+          'ช่วยให้พื้นที่แห่งการกราบไหว้ สงบใจ และขอพรยังคงได้รับการดูแลอย่างดี'
+        ],
+        qr: 'images/qr-shrine.png',
+        qrNote: 'QR สำหรับร่วมทำบุญบำรุงศาลเจ้า',
+        bankName: 'ธนาคารของศาลเจ้า',
+        accountName: 'ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น',
+        accountNumber: '000-0-00000-0',
+        blessing: function(name, amount){
+          const who = `ขออนุโมทนาแด่ ${name}`;
+          const amountLine = `ร่วมบุญจำนวน ${amount}`;
+          return `${who}\nในกุศลจิตแห่งการบำรุงศาลเจ้า\n${amountLine}\nขอให้อากงอาม่าคุ้มครอง ให้ชีวิตร่มเย็น การงานราบรื่น ครอบครัวเป็นสุข และใจมีกำลังในทุกก้าวต่อไป`;
+        }
+      },
+      food: {
+        title: 'ร่วมโรงทานของศาลเจ้า',
+        lead: 'การร่วมโรงทาน คือการส่งต่อความอิ่มเอมผ่านอาหารและน้ำใจ เป็นกุศลที่ให้ทั้งผู้รับและผู้ให้ได้สัมผัสความเบิกบานในเวลาเดียวกัน',
+        merits: [
+          'ได้ร่วมแบ่งปันความอิ่มท้องและความอิ่มใจแก่ผู้คนที่มาร่วมงาน',
+          'เป็นกุศลแห่งการให้ที่สัมผัสได้จริงและเกิดประโยชน์กับผู้คนโดยตรง',
+          'ช่วยเติมบรรยากาศแห่งน้ำใจและความอบอุ่นในงานของศาลเจ้า',
+          'เป็นการทำบุญที่สื่อถึงความเมตตา ความเอื้อเฟื้อ และความปรารถนาดีต่อส่วนรวม'
+        ],
+        qr: 'images/qr-food.png',
+        qrNote: 'QR สำหรับร่วมโรงทานของศาลเจ้า',
+        bankName: 'ธนาคารของศาลเจ้า',
+        accountName: 'ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น',
+        accountNumber: '000-0-00000-0',
+        blessing: function(name, amount){
+          const who = `ขออนุโมทนาแด่ ${name}`;
+          const amountLine = `ร่วมบุญจำนวน ${amount}`;
+          return `${who}\nในกุศลจิตแห่งการร่วมโรงทานของศาลเจ้า\n${amountLine}\nขอให้บุญแห่งการให้ทานหนุนนำให้ชีวิตอบอุ่น มีผู้เกื้อกูล อิ่มเอมด้วยความสุข ความเมตตา และความราบรื่นในทุกด้าน`;
+        }
+      }
+    };
+
+    /* =========================================================
+       STATE
+    ========================================================== */
+    let selectedDonationType = null;
+    let slipAttached = false;
+    let certificateReady = false;
+
+    /* =========================================================
+       ELEMENTS
+    ========================================================== */
+    const donationCards = document.querySelectorAll('.donation-card');
+    const meritLead = document.getElementById('meritLead');
+    const meritList = document.getElementById('meritList');
+    const qrImage = document.getElementById('qrImage');
+    const qrNote = document.getElementById('qrNote');
+    const accountName = document.getElementById('accountName');
+    const accountNumber = document.getElementById('accountNumber');
+    const bankName = document.getElementById('bankName');
+    const downloadQrBtn = document.getElementById('downloadQrBtn');
+
+    const pickSlipBtn = document.getElementById('pickSlipBtn');
+    const slipInput = document.getElementById('slipInput');
+    const previewWrap = document.getElementById('previewWrap');
+    const slipPreview = document.getElementById('slipPreview');
+
+    const donorName = document.getElementById('donorName');
+    const donationAmount = document.getElementById('donationAmount');
+    const createCertificateBtn = document.getElementById('createCertificateBtn');
+    const certificateCard = document.getElementById('certificateCard');
+    const certificateTypeText = document.getElementById('certificateTypeText');
+    const certificateBlessingText = document.getElementById('certificateBlessingText');
+    const certificateMetaText = document.getElementById('certificateMetaText');
+
+    const sendCertificateBtn = document.getElementById('sendCertificateBtn');
+    const downloadCertificateBtn = document.getElementById('downloadCertificateBtn');
+
+    const certificateOverlay = document.getElementById('certificateOverlay');
+    const overlayAgong = document.getElementById('overlayAgong');
+    const flyCertType = document.getElementById('flyCertType');
+    const flyCertText = document.getElementById('flyCertText');
+
+    const bgAudio = document.getElementById('bgAudio');
+    const gongAudio = document.getElementById('gongAudio');
+    const certificateCanvas = document.getElementById('certificateCanvas');
+
+    /* =========================================================
+       DONATION SELECTION
+    ========================================================== */
+    donationCards.forEach(card => {
+      card.addEventListener('click', () => {
+        donationCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        selectedDonationType = card.dataset.type;
+        renderDonationContent();
+      });
+    });
+
+    function renderDonationContent(){
+      if(!selectedDonationType) return;
+
+      const item = donationData[selectedDonationType];
+      meritLead.textContent = item.lead;
+
+      meritList.innerHTML = '';
+      item.merits.forEach((text, index) => {
+        const li = document.createElement('li');
+        li.className = 'merit-item';
+        li.innerHTML = `<div class="merit-no">${index + 1}</div><div>${text}</div>`;
+        meritList.appendChild(li);
+      });
+
+      qrImage.src = item.qr;
+      qrImage.alt = item.title;
+      qrNote.textContent = item.qrNote;
+      accountName.textContent = item.accountName;
+      accountNumber.textContent = item.accountNumber;
+      bankName.textContent = item.bankName;
+
+      certificateReady = false;
+      certificateCard.classList.remove('show');
+    }
+
+    /* =========================================================
+       QR DOWNLOAD
+    ========================================================== */
+    downloadQrBtn.addEventListener('click', () => {
+      if(!selectedDonationType){
+        alert('กรุณาเลือกประเภทบุญก่อน');
+        return;
+      }
+
+      const item = donationData[selectedDonationType];
+      downloadImage(item.qr, `qr-${selectedDonationType}.png`);
+    });
+
+    function downloadImage(src, filename){
+      const link = document.createElement('a');
+      link.href = src;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    /* =========================================================
+       SLIP UPLOAD
+    ========================================================== */
+    pickSlipBtn.addEventListener('click', () => slipInput.click());
+
+    slipInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if(!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        slipPreview.src = ev.target.result;
+        previewWrap.classList.add('show');
+        slipAttached = true;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    /* =========================================================
+       CREATE CERTIFICATE
+    ========================================================== */
+    createCertificateBtn.addEventListener('click', () => {
+      if(!selectedDonationType){
+        alert('กรุณาเลือกประเภทบุญก่อน');
+        return;
+      }
+
+      if(!slipAttached){
+        alert('กรุณาแนบสลิปก่อน');
+        return;
+      }
+
+      const item = donationData[selectedDonationType];
+      const nameInput = donorName.value.trim();
+      const amountInput = donationAmount.value.trim();
+
+      const displayName = nameInput ? nameInput : 'ไม่ประสงค์จะออกนาม';
+      const displayAmount = amountInput ? amountInput + ' บาท' : 'ไม่ระบุจำนวนเงิน';
+
+      const blessing = item.blessing(displayName, displayAmount);
+
+      certificateTypeText.textContent = item.title;
+      certificateBlessingText.textContent = blessing;
+      certificateDonorInfo.innerHTML =
+        `<span style="color:#a7501c;">${displayName}</span> <span style="color:#cf7d08;">•</span> <span style="color:#d88d14;">${displayAmount}</span>`;
+      document.getElementById('certificateDonorInfo').innerHTML =
+        `<span style="color:#a7501c;">${displayName}</span> <span style="color:#cf7d08;">•</span> <span style="color:#d88d14;">${displayAmount}</span>`;
+      certificateMetaText.textContent = `วันที่ ${formatThaiDate(new Date())}`;
+      certificateCard.classList.add('show');
+      certificateReady = true;
+
+      document.getElementById('certificateAgongImage').src = 'images/agong-ama.png';
+      certificateCard.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+
+    /* =========================================================
+       SEND CERTIFICATE
+    ========================================================== */
+    sendCertificateBtn.addEventListener('click', () => {
+      if(!certificateReady){
+        alert('กรุณาสร้างใบอนุโมทนาบัตรก่อน');
+        return;
+      }
+      startBurnAnimation();
+    });
+
+    function startBurnAnimation(){
+      const typeTitle    = certificateTypeText.textContent.trim();
+      const blessingText = certificateBlessingText.textContent.trim();
+
+      const overlay  = document.getElementById('burnOverlay');
+      const paper    = document.getElementById('burnPaper');
+      const agongTop = document.getElementById('agongTop');
+      const burnNote = document.getElementById('burnNote');
+
+      document.getElementById('burnPaperTitle').textContent = typeTitle;
+      document.getElementById('burnPaperText').textContent  = blessingText.slice(0,80) + (blessingText.length>80?'…':'');
+
+      // reset state
+      paper.style.animation = '';
+      paper.style.opacity   = '1';
+      agongTop.style.opacity = '0';
+      burnNote.textContent   = 'กำลังส่งกุศลจิตขึ้นสู่อากงอาม่า…';
+
+      overlay.classList.add('show');
+
+      // เสียง
+      try{ gongAudio.currentTime=0; gongAudio.play().catch(()=>{}); }catch(e){}
+
+      // อากงอาม่าโผล่ก่อน
+      setTimeout(()=>{
+        agongTop.style.opacity = '1';
+      }, 400);
+
+      // กระดาษลอยขึ้น
+      setTimeout(()=>{
+        paper.style.animation = 'floatUp 2.8s ease-in forwards';
+        // spawn particles ระหว่างลอย
+        spawnFloatParticles();
+      }, 1200);
+
+      // เปลี่ยนข้อความ
+      setTimeout(()=>{
+        burnNote.textContent = '✨ อากงอาม่ารับทราบกุศลจิตของท่านแล้ว';
+        burnNote.style.color = 'var(--gold2)';
+      }, 3200);
+
+      // ปิด overlay
+      setTimeout(()=>{
+        overlay.classList.remove('show');
+        paper.style.animation = '';
+        agongTop.style.opacity = '0';
+        burnNote.style.color = '';
+      }, 4800);
+    }
+
+    function spawnFloatParticles(){
+      for(let i=0; i<15; i++){
+        setTimeout(()=>{
+          const p = document.createElement('div');
+          p.className = 'wish-particle';
+          p.style.cssText = \`
+            left:\${48 + (Math.random()-0.5)*10}%;
+            bottom:\${30 + Math.random()*10}%;
+            background:\${Math.random()>.5 ? 'var(--gold)' : 'rgba(255,255,255,.6)'};
+            width:\${4+Math.random()*6}px;height:\${4+Math.random()*6}px;
+          \`;
+          document.body.appendChild(p);
+          const tx = (Math.random()-0.5)*80;
+          const ty = -(80 + Math.random()*150);
+          p.animate([
+            {transform:'translate(0,0) scale(1)', opacity:.9},
+            {transform:\`translate(\${tx}px,\${ty}px) scale(.3)\`, opacity:0}
+          ],{ duration:1500+Math.random()*800, easing:'ease-out' });
+          setTimeout(()=>p.remove(), 2400);
+        }, i*100);
+      }
+    }
+
+    function spawnEmbers(){
+      const stage = document.querySelector('.burn-stage');
+      for(let i=0;i<20;i++){
+        setTimeout(()=>{
+          const e = document.createElement('div');
+          e.className = 'ember';
+          const ex = (Math.random()-0.5)*160;
+          const ey = -(80 + Math.random()*120);
+          e.style.setProperty('--ex', ex+'px');
+          e.style.setProperty('--ey', ey+'px');
+          e.style.left = (90 + (Math.random()-0.5)*40) + 'px';
+          e.style.bottom = '30px';
+          stage.appendChild(e);
+          setTimeout(()=>e.remove(), 1600);
+        }, i*120);
+      }
+    }
+
+    function createParticles(){
+      const total = 20;
+      for(let i=0; i<total; i++){
+        const particle = document.createElement('div');
+        particle.className = 'wish-particle';
+        particle.style.left = (45 + Math.random() * 10) + '%';
+        particle.style.top = (58 + Math.random() * 10) + '%';
+        document.body.appendChild(particle);
+
+        const x = (Math.random() * 180) - 90;
+        const y = -130 - (Math.random() * 220);
+
+        particle.animate([
+          { transform:'translate(0,0) scale(1)', opacity:.95 },
+          { transform:`translate(${x}px, ${y}px) scale(.6)`, opacity:0 }
+        ], {
+          duration: 1800 + Math.random() * 900,
+          easing:'ease-out'
+        });
+
+        setTimeout(() => particle.remove(), 2800);
+      }
+    }
+
+    /* =========================================================
+       DOWNLOAD CERTIFICATE AS PNG
+    ========================================================== */
+    downloadCertificateBtn.addEventListener('click', async () => {
+      if(!certificateReady){
+        alert('กรุณาสร้างใบอนุโมทนาบัตรก่อน');
+        return;
+      }
+      await renderCertificateCanvas();
+      const link = document.createElement('a');
+      link.href = certificateCanvas.toDataURL('image/png');
+      link.download = 'anumotana-certificate.png';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    });
+
+    async function renderCertificateCanvas(){
+      const ctx = certificateCanvas.getContext('2d');
+      const w = certificateCanvas.width;
+      const h = certificateCanvas.height;
+
+      // bg
+      ctx.clearRect(0,0,w,h);
+      const bgGrad = ctx.createLinearGradient(0,0,0,h);
+      bgGrad.addColorStop(0, '#fffefb');
+      bgGrad.addColorStop(1, '#fff7ea');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0,0,w,h);
+
+      // ornaments
+      drawCircleGlow(ctx, w*0.5, 120, 220, 'rgba(255,216,107,.18)');
+      drawCircleGlow(ctx, w*0.18, 160, 140, 'rgba(255,216,107,.10)');
+      drawCircleGlow(ctx, w*0.82, 220, 160, 'rgba(255,216,107,.10)');
+
+      // main card
+      roundRect(ctx, 110, 110, w-220, h-220, 38, '#ffffff', 'rgba(216,141,20,.18)');
+      drawCircleGlow(ctx, w*0.5, h-220, 260, 'rgba(255,216,107,.12)');
+
+      // image
+      const img = await loadImageSafe('images/agong-ama.png');
+      if(img){
+        drawContain(ctx, img, w/2 - 130, 150, 260, 260);
+      }
+
+      // title
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#a7501c';
+      ctx.font = '700 66px Kanit, sans-serif';
+      ctx.fillText('ใบอนุโมทนาบัตร', w/2, 470);
+
+      ctx.fillStyle = '#9a6b33';
+      ctx.font = '700 30px Kanit, sans-serif';
+      ctx.fillText(certificateTypeText.textContent.trim(), w/2, 530);
+
+      // inner text box
+      roundRect(ctx, 180, 590, w-360, 640, 28, '#fffaf0', 'rgba(216,141,20,.14)');
+
+      ctx.fillStyle = '#8a6a4d';
+      ctx.font = '500 34px Kanit, sans-serif';
+      drawWrappedCenterText(ctx, certificateBlessingText.textContent.trim(), w/2, 670, w-480, 60);
+
+      // footer
+      ctx.fillStyle = '#a7501c';
+      ctx.font = '700 44px Kanit, sans-serif';
+      ctx.fillText('ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น', w/2, 1440);
+
+      ctx.fillStyle = '#9a6b33';
+      ctx.font = '600 28px Kanit, sans-serif';
+      ctx.fillText('ขออนุโมทนาในกุศลจิตอันงดงาม', w/2, 1492);
+
+      ctx.fillStyle = '#a07445';
+      ctx.font = '500 24px Kanit, sans-serif';
+      ctx.fillText(certificateMetaText.textContent.trim(), w/2, 1542);
+    }
+
+    function roundRect(ctx, x, y, width, height, radius, fill, stroke){
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.fill();
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function drawCircleGlow(ctx, x, y, r, color){
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+      grad.addColorStop(0, color);
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    function drawWrappedCenterText(ctx, text, centerX, startY, maxWidth, lineHeight){
+      const words = text.split(/\s+/);
+      let line = '';
+      let y = startY;
+
+      const lines = [];
+
+      for (let i = 0; i < words.length; i++) {
+        const testLine = line ? line + ' ' + words[i] : words[i];
+        const width = ctx.measureText(testLine).width;
+        if (width > maxWidth && line) {
+          lines.push(line);
+          line = words[i];
+        } else {
+          line = testLine;
+        }
+      }
+      if (line) lines.push(line);
+
+      for(const l of lines){
+        ctx.fillText(l, centerX, y);
+        y += lineHeight;
+      }
+    }
+
+    function drawContain(ctx, img, x, y, boxW, boxH){
+      const ratio = Math.min(boxW / img.width, boxH / img.height);
+      const w = img.width * ratio;
+      const h = img.height * ratio;
+      const dx = x + (boxW - w)/2;
+      const dy = y + (boxH - h)/2;
+      ctx.drawImage(img, dx, dy, w, h);
+    }
+
+    function loadImageSafe(src){
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = src;
+      });
+    }
+
+    /* =========================================================
+       HELPERS
+    ========================================================== */
+    function formatThaiDate(date){
+      return date.toLocaleDateString('th-TH', {
+        year:'numeric',
+        month:'long',
+        day:'numeric'
+      });
+    }
+
+    /* =========================================================
+       OPTIONAL AUDIO
+    ========================================================== */
+    (function setupOptionalAudio(){
+      if(!bgAudio) return;
+
+      function tryPlayAudio(){
+        const p = bgAudio.play();
+        if(p && typeof p.then === 'function'){
+          p.catch(() => {});
+        }
+      }
+
+      document.addEventListener('click', function firstInteraction(){
+        tryPlayAudio();
+        document.removeEventListener('click', firstInteraction);
+      }, { once:true });
+    })();
+
+    /* =========================================================
+       STOP AUDIO ON LEAVE
+    ========================================================== */
+    function stopAudio(){
+      if(bgAudio){
+        bgAudio.pause();
+        bgAudio.currentTime = 0;
+      }
+      if(gongAudio){
+        gongAudio.pause();
+        gongAudio.currentTime = 0;
+      }
+    }
+
+    window.addEventListener('pagehide', stopAudio);
+    window.addEventListener('beforeunload', stopAudio);
+    document.addEventListener('visibilitychange', () => {
+      if(document.hidden){
+        stopAudio();
+      }
+    });
+  </script>
+</body>
+</html>
