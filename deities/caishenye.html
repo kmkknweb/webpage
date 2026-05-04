@@ -1145,6 +1145,7 @@
   </style>
 </head>
 <body>
+  <audio id="bgMusic" src="../audio/temple-bell.mp3" loop></audio>
   <main class="page">
     <div class="sparkles"></div>
     <div class="ornament left"></div>
@@ -1520,6 +1521,19 @@
       link.click();
       controls.style.display='flex';
     });
+    const bgMusic = document.getElementById('bgMusic');
+
+document.addEventListener('click', () => {
+  bgMusic.volume = 0.10;
+  bgMusic.play().catch(()=>{});
+}, { once: true });
+    window.addEventListener('beforeunload', () => {
+  bgMusic.pause();
+});
+
+window.addEventListener('pagehide', () => {
+  bgMusic.pause();
+});
   </script>
 </body>
 </html>
