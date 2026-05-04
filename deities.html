@@ -89,6 +89,7 @@
   </script>
 </head>
 <body>
+  <audio id="bgMusic" src="audio/temple-bell.mp3" loop></audio>
   <div class="bg-orb orb1"></div>
   <div class="bg-orb orb2"></div>
   <div class="bg-orb orb3"></div>
@@ -197,6 +198,20 @@
     }
     window.addEventListener('message', (e) => { if(e.data === 'stop') stopDeityAudio(); });
     document.addEventListener('visibilitychange', () => { if(document.hidden) stopDeityAudio(); });
+    const bgMusic = document.getElementById('bgMusic');
+
+document.addEventListener('click', () => {
+  bgMusic.volume = 0.15;
+  bgMusic.play().catch(()=>{});
+}, { once: true });
+    window.addEventListener('beforeunload', () => {
+  bgMusic.pause();
+});
+
+window.addEventListener('pagehide', () => {
+  bgMusic.pause();
+});
+    
   </script>
 
     <script src="./analytics.js"></script>
