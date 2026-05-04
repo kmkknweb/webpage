@@ -531,16 +531,26 @@
     }
     .stick.lit .smoke{opacity:1}
     .smoke span{
-      position:absolute;
-      bottom:0;
-      left:50%;
-      width:10px;
-      height:10px;
-      border-radius:50%;
-      background:rgba(255,255,255,.20);
-      filter:blur(3px);
-      animation:smokeRise 2.6s ease-in-out infinite;
-    }
+  position:absolute;
+  bottom:0;
+  left:50%;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+
+  /* ควันสีขาว */
+  background: radial-gradient(circle,
+  rgba(240,240,240,0.9) 0%,
+  rgba(220,220,220,0.5) 50%,
+  rgba(200,200,200,0.2) 80%,
+  transparent 100%
+);
+    transparent 100%
+  );
+
+  filter: blur(8px); /* ฟุ้งขึ้น */
+  animation: smokeRise 3s ease-in-out infinite;
+}
     .smoke span:nth-child(2){left:40%; animation-delay:.8s}
     .smoke span:nth-child(3){left:60%; animation-delay:1.4s}
 
