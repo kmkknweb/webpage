@@ -1,255 +1,67 @@
 <!DOCTYPE html><html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>แผนที่ศาลเจ้า | สมาคมปึงเถ่ากงม่า ขอนแก่น</title>  <style>
-    * { box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แผนที่ศาลเจ้า</title><style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#200505;
+}
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100%;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #220505;
-      color: #fff4d2;
-    }
+.map-wrap{
+  max-width:900px;
+  margin:0 auto;
+}
 
-    body {
-      padding: 12px;
-    }
+.map-img{
+  width:100%;
+  display:block;
+}
 
-    .ptkm-map-page {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+.footer{
+  padding:16px;
+  background:#3a0606;
+  color:#fff4d2;
+}
 
-    .ptkm-map-card {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      border-radius: 24px;
-      background: #120202;
-      border: 1px solid rgba(244, 196, 95, 0.35);
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
-    }
+.footer h2{
+  margin:0 0 6px;
+  font-size:18px;
+}
 
-    .ptkm-map-img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
+.buttons{
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+}
 
-    .ptkm-map-top {
-      position: absolute;
-      left: 12px;
-      right: 12px;
-      top: 12px;
-      z-index: 3;
-      padding: 12px 14px;
-      border-radius: 18px;
-      background: rgba(55, 6, 6, 0.82);
-      border: 1px solid rgba(244, 196, 95, 0.35);
-      backdrop-filter: blur(10px);
-    }
+.btn{
+  flex:1;
+  text-align:center;
+  padding:12px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:bold;
+}
 
-    .ptkm-map-title {
-      font-size: 20px;
-      font-weight: 900;
-      line-height: 1.25;
-    }
+.btn-map{
+  background:#f2c36b;
+  color:#3b1005;
+}
 
-    .ptkm-map-subtitle {
-      margin-top: 3px;
-      font-size: 13px;
-      color: rgba(255, 244, 210, 0.78);
-    }
+.btn-back{
+  background:#6b0d0d;
+  color:#fff;
+}
+</style></head><body><div class="map-wrap">
+  <img src="images/location-map.jpg" class="map-img">  <div class="footer">
+    <h2>📍 51/4 สมาคมปึงเถ่ากงม่า ขอนแก่น</h2>
+    <div>เปิด 06:00 – 19:00 น.</div><div class="buttons">
+  <a class="btn btn-back" href="../webapp.html">กลับ</a>
+  <a class="btn btn-map" href="https://maps.google.com/?q=San+Chao+Pung+Thao+Kong-Ma+Khon+Kaen" target="_blank">นำทาง</a>
+</div>
 
-    .ptkm-map-pin-click {
-      position: absolute;
-      left: 64%;
-      top: 15%;
-      width: 78px;
-      height: 78px;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      z-index: 4;
-      text-decoration: none;
-    }
-
-    .ptkm-map-pin-click::before,
-    .ptkm-map-pin-click::after {
-      content: "";
-      position: absolute;
-      inset: 8px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 224, 139, 0.95);
-      animation: ptkmPulse 1.8s ease-out infinite;
-      box-shadow: 0 0 22px rgba(244, 196, 95, 0.7);
-    }
-
-    .ptkm-map-pin-click::after {
-      animation-delay: 0.65s;
-    }
-
-    .ptkm-map-bottom {
-      position: absolute;
-      left: 12px;
-      right: 12px;
-      bottom: 12px;
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 12px;
-      border-radius: 18px;
-      background: rgba(55, 6, 6, 0.84);
-      border: 1px solid rgba(244, 196, 95, 0.35);
-      backdrop-filter: blur(10px);
-    }
-
-    .ptkm-map-info {
-      min-width: 0;
-      font-size: 13px;
-      line-height: 1.45;
-      color: rgba(255, 244, 210, 0.82);
-    }
-
-    .ptkm-map-info strong {
-      display: block;
-      color: #fff4d2;
-      font-size: 15px;
-    }
-
-    .ptkm-map-actions {
-      display: flex;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-
-    .ptkm-map-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .ptkm-map-btn-main {
-      color: #351602;
-      background: linear-gradient(135deg, #ffe6a3, #d89b31);
-    }
-
-    .ptkm-map-btn-back {
-      color: #fff4d2;
-      background: rgba(100, 10, 10, 0.9);
-      border: 1px solid rgba(244, 196, 95, 0.25);
-    }
-
-    @keyframes ptkmPulse {
-      from { transform: scale(0.45); opacity: 1; }
-      to { transform: scale(1.45); opacity: 0; }
-    }
-
-    @media (max-width: 640px) {
-      body { padding: 8px; }
-
-      .ptkm-map-card {
-        border-radius: 18px;
-      }
-
-      .ptkm-map-img {
-        width: 145%;
-        max-width: none;
-        margin-left: -24%;
-      }
-
-      .ptkm-map-top {
-        left: 8px;
-        right: 8px;
-        top: 8px;
-        padding: 10px 12px;
-      }
-
-      .ptkm-map-title {
-        font-size: 17px;
-      }
-
-      .ptkm-map-subtitle {
-        font-size: 12px;
-      }
-
-      .ptkm-map-pin-click {
-        left: 67%;
-        top: 15%;
-        width: 70px;
-        height: 70px;
-      }
-
-      .ptkm-map-bottom {
-        position: static;
-        margin: 0;
-        border-radius: 0;
-        flex-direction: column;
-        align-items: stretch;
-        background: #3a0606;
-      }
-
-      .ptkm-map-actions {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .ptkm-map-btn {
-        width: 100%;
-      }
-    }
-  </style></head>
-<body>
-  <main class="ptkm-map-page">
-    <section class="ptkm-map-card" aria-label="แผนที่สมาคมปึงเถ่ากงม่า ขอนแก่น">
-      <img
-        class="ptkm-map-img"
-        src="images/location-map.jpg"
-        alt="แผนที่การเดินทางไปสมาคมปึงเถ่ากงม่า ขอนแก่น"
-      /><div class="ptkm-map-top">
-    <div class="ptkm-map-title">📍 แผนที่ศาลเจ้า</div>
-    <div class="ptkm-map-subtitle">สมาคมปึงเถ่ากงม่า ขอนแก่น • เปิด 06:00 – 19:00 น.</div>
   </div>
-
-  <a
-    class="ptkm-map-pin-click"
-    href="https://maps.google.com/?q=San+Chao+Pung+Thao+Kong-Ma+Khon+Kaen"
-    target="_blank"
-    rel="noopener"
-    aria-label="เปิดตำแหน่งศาลเจ้าใน Google Maps"
-  ></a>
-
-  <div class="ptkm-map-bottom">
-    <div class="ptkm-map-info">
-      <strong>51/4 สมาคมปึงเถ่ากงม่า ขอนแก่น</strong>
-      แตะปุ่มนำทาง หรือแตะจุดเรืองแสงบนแผนที่
-    </div>
-
-    <div class="ptkm-map-actions">
-      <a class="ptkm-map-btn ptkm-map-btn-back" href="../webapp.html">← กลับ</a>
-      <a
-        class="ptkm-map-btn ptkm-map-btn-main"
-        href="https://maps.google.com/?q=San+Chao+Pung+Thao+Kong-Ma+Khon+Kaen"
-        target="_blank"
-        rel="noopener"
-      >🧭 นำทาง</a>
-    </div>
-  </div>
-</section>
-
-  </main>
-</body>
+</div></body>
 </html>
