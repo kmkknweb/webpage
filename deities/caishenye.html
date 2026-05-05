@@ -1599,7 +1599,18 @@ window.addEventListener('beforeunload', () => {
 window.addEventListener('pagehide', () => {
   bgMusic.pause();
 });
-    window.onunload = () => bgMusic.pause();
+    function stopMusic(){
+  if (!bgMusic) return;
+  bgMusic.pause();
+  bgMusic.currentTime = 0;
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopMusic();
+});
+
+window.addEventListener('pagehide', stopMusic);
+window.addEventListener('blur', stopMusic);
 
   </script>
 </body>
