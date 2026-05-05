@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ประวัติศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --red:#7b1010;
+  --deep:#1b0303;
+  --gold:#f3c56b;
+  --cream:#fff7df;
+  --ivory:#fffaf0;
+  --text:#332018;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:'Kanit',sans-serif;
+  color:var(--cream);
+  background:
+    radial-gradient(circle at top, rgba(243,197,107,.20), transparent 34%),
+    linear-gradient(180deg,#310707 0%,#160202 48%,#080000 100%);
+  overflow-x:hidden;
+}
+
+.top-nav{
+  position:fixed;
+  left:14px;
+  right:14px;
+  top:12px;
+  z-index:20;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  pointer-events:none;
+}
+
+.nav-pill{
+  pointer-events:auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:42px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(243,197,107,.35);
+  background:rgba(54,6,6,.76);
+  color:var(--cream);
+  text-decoration:none;
+  font-weight:700;
+  backdrop-filter:blur(14px);
+  box-shadow:0 12px 30px rgba(0,0,0,.28);
+}
+
+.hero{
+  position:relative;
+  min-height:78vh;
+  display:grid;
+  align-items:end;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.15), rgba(25,0,0,.80)),
+    radial-gradient(circle at 50% 44%, transparent 0%, rgba(0,0,0,.34) 72%);
+  z-index:1;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:-30%;
+  background:linear-gradient(115deg, transparent 42%, rgba(255,239,190,.20), transparent 58%);
+  transform:translateX(-55%) skewX(-12deg);
+  animation:lightSweep 8s ease-in-out infinite;
+  z-index:2;
+  pointer-events:none;
+}
+
+.hero-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  animation:heroBreath 14s ease-in-out infinite alternate;
+  z-index:0;
+}
+
+.hero-content{
+  position:relative;
+  z-index:4;
+  width:min(1080px,100%);
+  margin:0 auto;
+  padding:120px 20px 58px;
+}
+
+.eyebrow-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.sound-pill-inline{
+  border:1px solid rgba(255,240,184,.72);
+  border-radius:999px;
+  padding:8px 14px;
+  font-family:'Kanit',sans-serif;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+  color:#3b1005;
+  background:linear-gradient(135deg,#fff8d6,#e0a43a);
+  box-shadow:0 10px 24px rgba(0,0,0,.28),0 0 22px rgba(243,197,107,.32);
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 13px;
+  border-radius:999px;
+  color:#3b1005;
+  background:linear-gradient(135deg,#fff0b8,#d99b31);
+  font-weight:800;
+  box-shadow:0 10px 28px rgba(0,0,0,.25);
+}
+
+.hero h1{
+  margin:0;
+  max-width:780px;
+  font-size:clamp(34px,7vw,76px);
+  line-height:1.04;
+  letter-spacing:-.05em;
+  text-shadow:0 12px 38px rgba(0,0,0,.58);
+}
+
+.hero-lead{
+  max-width:680px;
+  margin:18px 0 0;
+  color:rgba(255,247,223,.84);
+  font-size:clamp(16px,2.2vw,21px);
+  line-height:1.75;
+}
+
+main{
+  width:min(1080px,100%);
+  margin:0 auto;
+  padding:28px 16px 58px;
+}
+
+.section{
+  margin-top:26px;
+}
+
+.card{
+  border-radius:30px;
+  background:
+    linear-gradient(180deg,rgba(255,250,240,.98),rgba(255,244,220,.96));
+  color:var(--text);
+  box-shadow:0 22px 60px rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.72);
+  overflow:hidden;
+}
+
+.story-card{
+  padding:26px;
+}
+
+.section-title{
+  margin:0 0 14px;
+  color:#7b1010;
+  font-size:clamp(24px,4vw,38px);
+  line-height:1.2;
+  letter-spacing:-.03em;
+}
+
+.story-text{
+  font-size:16px;
+  line-height:1.95;
+  color:#4c352b;
+}
+
+.story-text p{
+  margin:0 0 16px;
+}
+
+.highlight-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:22px 0;
+}
+
+.highlight{
+  padding:16px;
+  border-radius:22px;
+  background:linear-gradient(180deg,#fffaf0,#ffedc6);
+  border:1px solid rgba(216,155,49,.25);
+  box-shadow:0 10px 28px rgba(216,155,49,.12);
+}
+
+.highlight strong{
+  display:block;
+  color:#8c160f;
+  font-size:24px;
+  line-height:1.2;
+}
+
+.highlight span{
+  display:block;
+  color:#765341;
+  margin-top:4px;
+  font-size:13px;
+}
+
+.time-compare{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.photo-panel{
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.28);
+  background:linear-gradient(180deg,#fffaf0,#fff1cf);
+}
+
+.photo-panel img{
+  width:100%;
+  height:360px;
+  object-fit:cover;
+  display:block;
+  transition:transform 7s ease;
+}
+
+.photo-panel:hover img{
+  transform:scale(1.06);
+}
+
+.photo-label{
+  padding:14px 16px 16px;
+  color:#4a2d20;
+  background:linear-gradient(180deg,#fffaf0,#fff1cf);
+}
+
+.photo-label b{
+  display:block;
+  font-size:18px;
+  color:#8a160f;
+}
+
+.photo-label span{
+  display:block;
+  margin-top:3px;
+  color:#765341;
+  font-size:13px;
+  line-height:1.55;
+}
+
+.gallery-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:16px;
+}
+
+.gallery-side{
+  display:grid;
+  gap:16px;
+}
+
+.gallery-item{
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 18px 46px rgba(0,0,0,.25);
+  background:linear-gradient(180deg,#fffaf0,#fff1cf);
+}
+
+.gallery-item.large{
+  min-height:auto;
+}
+
+.gallery-item img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  display:block;
+}
+
+.gallery-item.large img{
+  height:520px;
+}
+
+.gallery-caption{
+  padding:13px 15px 15px;
+  color:#4a2d20;
+  background:linear-gradient(180deg,#fffaf0,#fff1cf);
+  font-weight:700;
+  line-height:1.55;
+}
+
+.old-strip{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:14px;
+}
+
+.old-photo{
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 16px 40px rgba(0,0,0,.24);
+  background:linear-gradient(180deg,#fffaf0,#fff1cf);
+}
+
+.old-photo img{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  display:block;
+  filter:sepia(.18) contrast(1.03);
+}
+
+.old-photo span{
+  display:block;
+  padding:12px 14px 14px;
+  background:linear-gradient(180deg,#fffaf0,#fff1cf);
+  color:#8a160f;
+  font-size:13px;
+  font-weight:700;
+  line-height:1.55;
+}
+
+.cta{
+  margin-top:26px;
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:center;
+  padding:18px;
+  border-radius:28px;
+  background:linear-gradient(135deg,rgba(80,8,8,.94),rgba(42,4,4,.96));
+  border:1px solid rgba(243,197,107,.34);
+  box-shadow:0 18px 46px rgba(0,0,0,.30);
+}
+
+.cta-text{
+  color:rgba(255,247,223,.86);
+  line-height:1.6;
+}
+
+.cta-text b{
+  display:block;
+  color:#fff7df;
+  font-size:18px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:46px;
+  padding:12px 18px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.btn-gold{
+  color:#341504;
+  background:linear-gradient(135deg,#fff0b8,#d99b31);
+  box-shadow:0 12px 28px rgba(216,155,49,.22);
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  animation:fadeUp .75s ease forwards;
+}
+
+.reveal.delay1{animation-delay:.15s}
+.reveal.delay2{animation-delay:.3s}
+.reveal.delay3{animation-delay:.45s}
+
+@keyframes heroBreath{
+  from{transform:scale(1)}
+  to{transform:scale(1.055)}
+}
+
+@keyframes lightSweep{
+  0%,46%{transform:translateX(-55%) skewX(-12deg);opacity:0}
+  56%{opacity:.85}
+  82%,100%{transform:translateX(55%) skewX(-12deg);opacity:0}
+}
+
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0)}
+}
+
+@media(max-width:760px){
+  .top-nav{
+    left:10px;
+    right:10px;
+    top:10px;
+  }
+
+  .nav-pill{
+    min-height:38px;
+    padding:9px 11px;
+    font-size:13px;
+  }
+
+  .hero{
+    min-height:72vh;
+  }
+
+  .hero-content{
+    padding:92px 16px 40px;
+  }
+
+  .hero-lead{
+    font-size:15px;
+  }
+
+  main{
+    padding:22px 10px 42px;
+  }
+
+  .story-card{
+    padding:20px;
+  }
+
+  .highlight-row,
+  .time-compare,
+  .gallery-grid,
+  .old-strip{
+    grid-template-columns:1fr;
+  }
+
+  .photo-panel img,
+  .gallery-item img,
+  .gallery-item.large img,
+  .old-photo img{
+    height:auto;
+  }
+
+  .cta{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .btn{
+    width:100%;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-img,
+  .hero::after,
+  .photo-panel img,
+  .reveal{
+    animation:none;
+    transition:none;
+    opacity:1;
+    transform:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+
+<audio id="ambientAudio" loop preload="none">
+  <source src="audio/shrine-ambient.mp3" type="audio/mpeg">
+</audio>
+
+<header class="hero">
+  <img class="hero-img" src="images/shrine-night-front.jpg" alt="ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น ยามค่ำคืน">
+  <div class="hero-content">
+    <div class="eyebrow-row reveal">
+      <div class="eyebrow">🏮 ประวัติศาลเจ้า</div>
+      <button class="sound-pill-inline" id="soundToggle" type="button">♪ กดเพื่อฟังเสียงบรรยาย</button>
+    </div>
+    <h1 class="reveal delay1">จากศรัทธาเก่าแก่<br>สู่ศาลเจ้าที่งดงามในวันนี้</h1>
+    <p class="hero-lead reveal delay2">
+      ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น คือสถานที่รวมใจของชุมชนและผู้ศรัทธา
+      ผ่านกาลเวลาจากศาลเจ้าเดิม สู่การก่อสร้างใหม่จนเป็นศาลเจ้าที่ตั้งอยู่ในปัจจุบัน
+    </p>
+  </div>
+</header>
+
+<main>
+
+  <section class="section time-compare reveal">
+    <div class="photo-panel">
+      <img src="images/history-old-collage.jpg" alt="ภาพศาลเจ้าเดิม">
+      <div class="photo-label">
+        <b>ศาลเจ้าเดิม</b>
+        <span>ภาพความทรงจำจากยุคแรก ก่อนการก่อสร้างศาลเจ้าหลังใหม่</span>
+      </div>
+    </div>
+
+    <div class="photo-panel">
+      <img src="images/shrine-day.jpg" alt="ศาลเจ้าปัจจุบันช่วงกลางวัน">
+      <div class="photo-label">
+        <b>ศาลเจ้าปัจจุบัน</b>
+        <span>ความงดงามของสถาปัตยกรรมจีนที่เป็นศูนย์รวมศรัทธา</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section card story-card reveal delay1">
+    <h2 class="section-title">ประวัติศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</h2>
+
+    <div class="story-text">
+      <p>
+        ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น ได้ก่อสร้างอยู่ในบริเวณศาลเจ้าปู่ครูเย็น
+        ซึ่งมีอยู่ก่อนแล้วตั้งแต่ปี พ.ศ. 2504 โดยการนำของเถ้าแก่กิมฮง
+        และประชาชนชาวขอนแก่น
+      </p>
+
+      <p>
+        หลังจากเวลาผ่านไปนานกว่า 30 ปี อาคารศาลเจ้าปึงเถ่ากงม่าและศาลเจ้าปู่ครูเย็น
+        ได้ชำรุดทรุดโทรมตามสภาพ อีกทั้งพื้นที่เดิมมีขนาดเล็ก
+        ไม่เพียงพอต่อศรัทธาของชาวเมืองที่เข้ามากราบไหว้เพิ่มขึ้นทุกปี
+      </p>
+
+      <div class="highlight-row">
+        <div class="highlight">
+          <strong>2504</strong>
+          <span>พื้นที่ศาลเจ้าปู่ครูเย็นเดิม</span>
+        </div>
+        <div class="highlight">
+          <strong>2536</strong>
+          <span>เริ่มแนวคิดสร้างศาลเจ้าหลังใหม่</span>
+        </div>
+        <div class="highlight">
+          <strong>2539</strong>
+          <span>สมโภชศาลเจ้าหลังใหม่</span>
+        </div>
+      </div>
+
+      <p>
+        ราวปี พ.ศ. 2536 ผู้อาวุโส 3 ท่าน ได้แก่ คุณวีระชัย นิธิวัฒน์ศักดิ์,
+        คุณชุมพล อรุณยะเดช และคุณเลี่ยงฮี่ แซ่ตั้ง ได้ร่วมกันเป็นแกนนำในการก่อสร้างศาลเจ้าหลังใหม่
+        ร่วมกับคณะกรรมการฯ โดยเปิดรับบริจาคเงินจากพ่อค้า ประชาชนชาวขอนแก่น
+        และจังหวัดใกล้เคียง
+      </p>
+
+      <p>
+        ด้วยแรงศรัทธาของผู้คน จึงได้ร่วมกันสร้างศาลเจ้าหลังใหม่ถวายแด่องค์ปึงเถ่ากง,
+        องค์ปึงเถ่าม่า, องค์เจ้าแม่ทับทิม, องค์เทพไฉ่ซิงเอี๊ย และศาลเจ้าปู่ครูเย็น
+        ณ สถานที่ที่เห็นอยู่ในปัจจุบัน โดยใช้งบประมาณก่อสร้างกว่า 12 ล้านบาท
+      </p>
+
+      <p>
+        อาคารศาลเจ้าปึงเถ่ากงม่าและศาลเจ้าปู่ครูเย็นหลังใหม่
+        ได้จัดงานฉลองสมโภชระหว่างวันที่ 21–30 มีนาคม พ.ศ. 2539
+        กลายเป็นหมุดหมายสำคัญของศรัทธาที่สืบทอดมาจนถึงปัจจุบัน
+      </p>
+    </div>
+  </section>
+
+  <section class="section old-strip reveal delay2">
+    <div class="old-photo">
+      <img src="images/history-old-group.jpg" alt="ภาพหมู่ในอดีต">
+      <span>คณะผู้เกี่ยวข้องในยุคแรก</span>
+    </div>
+    <div class="old-photo">
+      <img src="images/history-old-survey.jpg" alt="ภาพสำรวจพื้นที่ก่อสร้าง">
+      <span>ภาพขณะสำรวจพื้นที่ก่อสร้าง</span>
+    </div>
+    <div class="old-photo">
+      <img src="images/history-old-collage.jpg" alt="ภาพศาลเจ้าเก่า">
+      <span>ภาพศาลเจ้าเดิมและบรรยากาศก่อนสร้างใหม่</span>
+    </div>
+  </section>
+
+  <section class="section gallery-grid reveal delay3">
+    <div class="gallery-item large">
+      <img src="images/shrine-interior.jpg" alt="ภายในศาลเจ้าปึงเถ่ากงม่า">
+      <div class="gallery-caption">ภายในศาลเจ้า • เสามังกรและงานศิลป์จีนอันละเอียดงดงาม</div>
+    </div>
+
+    <div class="gallery-side">
+      <div class="gallery-item">
+        <img src="images/shrine-night-front.jpg" alt="ศาลเจ้ายามค่ำคืน">
+        <div class="gallery-caption">ศาลเจ้ายามค่ำคืน</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/shrine-moon-night.jpg" alt="บรรยากาศศาลเจ้ายามกลางคืน">
+        <div class="gallery-caption">บรรยากาศสงบงามใต้แสงจันทร์</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const soundBtn = document.getElementById('soundToggle');
+const audio = document.getElementById('ambientAudio');
+let isPlaying = false;
+
+function stopAmbientAudio() {
+  if (!audio) return;
+  audio.pause();
+  audio.currentTime = 0;
+  isPlaying = false;
+  if (soundBtn) soundBtn.textContent = '♪ เสียงบรรยาย';
+}
+
+soundBtn.addEventListener('click', async () => {
+  try {
+    if (!isPlaying) {
+      await audio.play();
+      isPlaying = true;
+      soundBtn.textContent = '♪ ปิดเสียง';
+    } else {
+      stopAmbientAudio();
+    }
+  } catch (err) {
+    soundBtn.textContent = 'ยังไม่มีไฟล์เสียง';
+    setTimeout(() => soundBtn.textContent = '♪ เสียงบรรยาย', 1800);
+  }
+});
+
+window.addEventListener('beforeunload', stopAmbientAudio);
+window.addEventListener('pagehide', stopAmbientAudio);
+
+document.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', stopAmbientAudio);
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopAmbientAudio();
+});
+</script>
+
+</body>
+</html>
