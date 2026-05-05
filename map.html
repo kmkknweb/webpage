@@ -55,84 +55,70 @@ body{
   color:#fff;
 }
   /* ===== SOCIAL FOLLOW BAR ===== */
+
 .social-follow{
-  margin: 18px auto 0;
-  padding: 18px 16px;
-  max-width: 980px;
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(255,216,107,.18), rgba(255,255,255,.92));
-  border: 1px solid rgba(216,141,20,.14);
-  box-shadow: 0 14px 30px rgba(216,141,20,.10);
+  margin: 30px auto 20px;
+  padding: 20px 16px;
+  max-width: 1000px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255,216,107,.22), rgba(255,255,255,.95));
+  border: 1px solid rgba(216,141,20,.18);
+  box-shadow: 0 18px 40px rgba(216,141,20,.12);
   text-align: center;
 }
 
 .social-follow-title{
-  margin: 0 0 12px;
   font-family: 'Kanit', sans-serif;
-  font-size: 22px;
+  font-size: 24px;
   color: #a7501c;
+  margin-bottom: 14px;
 }
 
 .social-follow-links{
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
 .social-link{
-  width: 58px;
-  height: 58px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
-  font-size: 26px;
   color: #fff;
-  transition: .2s ease;
-  box-shadow: 0 10px 20px rgba(0,0,0,.10);
+  text-decoration: none;
+  transition: .25s ease;
+  position: relative;
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
 }
 
 .social-link:hover{
-  transform: translateY(-3px) scale(1.04);
+  transform: translateY(-4px) scale(1.06);
 }
 
-.social-facebook{
-  background: #1877f2;
+.social-link::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:inherit;
+  filter:blur(16px);
+  opacity:.4;
+  z-index:-1;
 }
 
-.social-tiktok{
-  background: #111111;
+.facebook{ background: linear-gradient(180deg,#1877f2,#0f5bd4); }
+.tiktok{ background: linear-gradient(180deg,#111,#333); }
+.youtube{ background: linear-gradient(180deg,#ff0000,#c40000); }
+.line{ background: linear-gradient(180deg,#06c755,#04a847); }
+.hero,
+.top-section,
+.page{
+  overflow-y: visible;
 }
-
-.social-youtube{
-  background: #ff0000;
-}
-
-.social-line{
-  background: #06c755;
-}
-
-@media (max-width: 640px){
-  .social-follow{
-    margin: 16px 14px 0;
-    padding: 16px 12px;
-    border-radius: 20px;
-  }
-
-  .social-follow-title{
-    font-size: 20px;
-  }
-
-  .social-link{
-    width: 52px;
-    height: 52px;
-    font-size: 23px;
-  }
-}
-
   
 </style></head><body><div class="map-wrap">
   <img src="images/location-map.png" class="map-img">  <div class="footer">
