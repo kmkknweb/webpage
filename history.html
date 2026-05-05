@@ -682,6 +682,10 @@ soundBtn.addEventListener('click', async () => {
     setTimeout(() => soundBtn.textContent = '♪ เสียงบรรยากาศ', 1800);
   }
 });
+  window.addEventListener('beforeunload', () => {
+  audio.pause();
+  audio.currentTime = 0;
+});
 </script>
 
 </body>
