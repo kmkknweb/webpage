@@ -1145,7 +1145,7 @@
   </style>
 </head>
 <body>
-  <audio id="bgMusic" src="audio/temple-bell.mp3" loop></audio>
+<audio id="bgMusic" src="../audio/temple-bell.mp3" loop preload="auto"></audio>
   <main class="page">
     <div class="sparkles"></div>
     <div class="ornament left"></div>
@@ -1426,6 +1426,7 @@
 
 
     incenseBtn.addEventListener('click', () => {
+      startMusic();
       if (incenseDone) {
         showToast('ได้จุดธูปเทียนแล้ว');
         return;
@@ -1443,6 +1444,7 @@
     });
 
     paperBtn.addEventListener('click', () => {
+      startMusic();
       if (paperDone) {
         showToast('ได้ถวายกระดาษเงินทองแล้ว');
         return;
@@ -1457,6 +1459,7 @@
     });
 
     flowerBtn.addEventListener('click', () => {
+      startMusic();
       if (flowerDone) {
         showToast('ได้ถวายดอกไม้แล้ว');
         return;
@@ -1521,19 +1524,25 @@
       link.click();
       controls.style.display='flex';
     });
-    const bgMusic = document.getElementById('bgMusic');
+const bgMusic = document.getElementById('bgMusic');
+let musicStarted = false;
 
-document.addEventListener('click', () => {
+function startMusic(){
+  if (musicStarted) return;
+
   bgMusic.volume = 0.10;
-  bgMusic.play().catch(()=>{});
-}, { once: true });
-    window.addEventListener('beforeunload', () => {
+  bgMusic.play().then(() => {
+    musicStarted = true;
+  }).catch(() => {});
+}
+window.addEventListener('beforeunload', () => {
   bgMusic.pause();
 });
 
 window.addEventListener('pagehide', () => {
   bgMusic.pause();
 });
+
   </script>
 </body>
 </html>
