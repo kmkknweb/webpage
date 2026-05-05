@@ -686,6 +686,23 @@ soundBtn.addEventListener('click', async () => {
   audio.pause();
   audio.currentTime = 0;
 });
+  function stopAmbientAudio() {
+  if (!audio) return;
+  audio.pause();
+  audio.currentTime = 0;
+  isPlaying = false;
+}
+
+window.addEventListener("beforeunload", stopAmbientAudio);
+window.addEventListener("pagehide", stopAmbientAudio);
+
+document.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", stopAmbientAudio);
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) stopAmbientAudio();
+});
 </script>
 
 </body>
