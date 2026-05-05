@@ -1142,6 +1142,52 @@
       .title{ font-size:clamp(28px,8vw,42px); }
       .offering-stage{ min-height:80px; }
     }
+    .candle{
+  position:relative;
+  width:18px;
+  height:54px;
+  border-radius:8px 8px 4px 4px;
+  background:linear-gradient(180deg,#fff4cf,#e8b74f);
+  box-shadow:0 8px 14px rgba(0,0,0,.22);
+  z-index:2;
+}
+
+.candle-left{ margin-right:18px; }
+.candle-right{ margin-left:18px; }
+
+.candle-flame{
+  position:absolute;
+  top:-24px;
+  left:50%;
+  width:16px;
+  height:26px;
+  transform:translateX(-50%);
+  border-radius:50% 50% 45% 45%;
+  background:radial-gradient(circle at 50% 70%,
+    #fff5a8 0 18%,
+    #ffb13b 19% 55%,
+    #e64a19 56% 78%,
+    transparent 80%
+  );
+  filter:drop-shadow(0 0 10px rgba(255,150,50,.75));
+  animation:candleFlicker .45s ease-in-out infinite alternate;
+  opacity:0;
+}
+
+.candle.lit .candle-flame{
+  opacity:1;
+}
+
+@keyframes candleFlicker{
+  from{
+    transform:translateX(-50%) scale(.9) rotate(-3deg);
+    opacity:.85;
+  }
+  to{
+    transform:translateX(-50%) scale(1.08) rotate(4deg);
+    opacity:1;
+  }
+}
   </style>
 </head>
 <body>
@@ -1204,10 +1250,17 @@
           </div>
           <div class="incense-wrap" id="incenseWrap">
             <div class="ember-field" id="incenseEmbers"></div>
+<div class="candle candle-left">
+    <div class="candle-flame"></div>
+</div>
+            
             <div class="incense-base"></div>
             <div class="stick" id="stick1"><div class="smoke"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
             <div class="stick" id="stick2"><div class="smoke"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
             <div class="stick" id="stick3"><div class="smoke"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+          <div class="candle candle-right">
+    <div class="candle-flame"></div>
+          </div>
           </div>
         </div>
 
@@ -1431,6 +1484,9 @@
         showToast('ได้จุดธูปเทียนแล้ว');
         return;
       }
+      document.querySelectorAll('.candle').forEach(candle => {
+  candle.classList.add('lit');
+});
       document.getElementById('stick1').classList.add('lit');
       setTimeout(() => document.getElementById('stick2').classList.add('lit'), 180);
       setTimeout(() => document.getElementById('stick3').classList.add('lit'), 360);
