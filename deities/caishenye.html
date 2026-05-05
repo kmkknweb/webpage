@@ -1154,7 +1154,11 @@
 
 .candle-left{ margin-right:18px; }
 .candle-right{ margin-left:18px; }
-
+.candle.lit .candle-flame{
+  opacity:1;
+  visibility:visible;
+  animation:candleFlicker .45s ease-in-out infinite alternate;
+}
 .candle-flame{
   position:absolute;
   top:-24px;
@@ -1170,22 +1174,15 @@
     transparent 80%
   );
   filter:drop-shadow(0 0 10px rgba(255,150,50,.75));
-  animation:candleFlicker .45s ease-in-out infinite alternate;
   opacity:0;
+  visibility:hidden;
 }
-
-.candle.lit .candle-flame{
-  opacity:1;
-}
-
 @keyframes candleFlicker{
   from{
     transform:translateX(-50%) scale(.9) rotate(-3deg);
-    opacity:.85;
   }
   to{
     transform:translateX(-50%) scale(1.08) rotate(4deg);
-    opacity:1;
   }
 }
   </style>
@@ -1479,25 +1476,29 @@
 
 
     incenseBtn.addEventListener('click', () => {
-      startMusic();
-      if (incenseDone) {
-        showToast('ได้จุดธูปเทียนแล้ว');
-        return;
-      }
-      document.querySelectorAll('.candle').forEach(candle => {
-  candle.classList.add('lit');
+  startMusic();
+
+  if (incenseDone) {
+    showToast('ได้จุดธูปเทียนแล้ว');
+    return;
+  }
+
+  document.querySelectorAll('.candle').forEach(candle => {
+    candle.classList.add('lit');
+  });
+
+  document.getElementById('stick1').classList.add('lit');
+  setTimeout(() => document.getElementById('stick2').classList.add('lit'), 180);
+  setTimeout(() => document.getElementById('stick3').classList.add('lit'), 360);
+
+  startIncenseEmbers();
+  incenseDone = true;
+  ritualCount += 1;
+  unlockBlessingIfReady();
+  playBell();
+  flashAtCenter(1.25);
+  showToast('ถวายธูปเทียนแล้ว');
 });
-      document.getElementById('stick1').classList.add('lit');
-      setTimeout(() => document.getElementById('stick2').classList.add('lit'), 180);
-      setTimeout(() => document.getElementById('stick3').classList.add('lit'), 360);
-      startIncenseEmbers();
-      incenseDone = true;
-      ritualCount += 1;
-      unlockBlessingIfReady();
-      playBell();
-      flashAtCenter(1.25);
-      showToast('ถวายธูปเทียนแล้ว');
-    });
 
     paperBtn.addEventListener('click', () => {
       startMusic();
