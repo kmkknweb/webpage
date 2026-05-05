@@ -1599,6 +1599,7 @@ window.addEventListener('beforeunload', () => {
 window.addEventListener('pagehide', () => {
   bgMusic.pause();
 });
+    window.onunload = () => bgMusic.pause();
 
   </script>
 </body>
